@@ -246,7 +246,8 @@ export default function PortfolioHome() {
                 <p className="text-blue-500">[SYSTEM] Life-Systems Orchestrator: INITIALIZED</p>
                 <p className="text-[#666]">[INFO] Scope: Career | R&D | Fitness | Systems</p>
                 <p className="text-[#666]">[INFO] Lead Architect: Aoi (Blue Lobster Protocol)</p>
-                <p className="text-[#666]">[INFO] Cross-system sync: OK</p>
+                <p className="text-[#666]">[INFO] Deployment: Verified Assets (RobotArm, RoboMop, ISA, AGV)</p>
+                <p className="text-[#666]">[INFO] Interactivity: Active states & smooth-scroll enabled</p>
                 <p className="text-white font-bold">{">"} MISSION: HOLISTIC_OPTIMIZATION</p>
               </div>
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
