@@ -10,11 +10,12 @@ export default function PortfolioHome() {
           <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse" />
           <h1 className="text-sm tracking-widest uppercase font-bold">Sebastian Barrio // Systems Architect</h1>
         </div>
-        <nav className="hidden md:flex gap-8 text-[10px] tracking-[0.2em] uppercase text-[#666]">
-          <a href="#projects" className="hover:text-white transition-colors">Projects</a>
-          <a href="#stack" className="hover:text-white transition-colors">Stack</a>
-          <a href="#status" className="hover:text-white transition-colors">System Status</a>
-        </nav>
+          <nav className="hidden md:flex gap-8 text-[10px] tracking-[0.2em] uppercase text-[#666]">
+            <a href="#history" className="hover:text-white transition-colors">History</a>
+            <a href="#projects" className="hover:text-white transition-colors">Repos</a>
+            <a href="#stack" className="hover:text-white transition-colors">Stack</a>
+            <a href="#status" className="hover:text-white transition-colors">System Status</a>
+          </nav>
       </header>
 
       <main className="max-w-6xl mx-auto px-6 pt-24 pb-12">
@@ -73,6 +74,55 @@ export default function PortfolioHome() {
           </div>
         </section>
 
+        {/* Timeline / History Section */}
+        <section id="history" className="mb-32">
+          <div className="flex justify-between items-end mb-12 border-b border-[#1f1f1f] pb-4">
+            <h3 className="text-sm uppercase tracking-[0.3em] text-[#666]">Trajectory Log</h3>
+            <span className="text-[10px] text-[#333]">/ WORK_AND_EDUCATION</span>
+          </div>
+          
+          <div className="space-y-12">
+            {/* Entry 01 */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+              <div className="text-blue-500 font-bold text-xs pt-1">2025 // PRESENT</div>
+              <div className="md:col-span-3 border-l border-[#1f1f1f] pl-8 pb-4 relative">
+                <div className="absolute w-2 h-2 bg-blue-500 rounded-full -left-[4.5px] top-1.5" />
+                <h4 className="text-white font-bold text-xl uppercase tracking-tight">AI Research & Development Engineer</h4>
+                <div className="text-[#666] text-sm mb-4">Siemens R&D // Munich, Germany</div>
+                <p className="text-[#888] text-sm max-w-2xl leading-relaxed">
+                  Engineered ML pipelines for automated assembly planning (Python/C#) and YOLO-based digitization of line diagrams (>98% accuracy). Developed novel Fourier-transform methods for discrete inverse kinematics.
+                </p>
+              </div>
+            </div>
+
+            {/* Entry 02 */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+              <div className="text-[#444] font-bold text-xs pt-1">2021 // 2025</div>
+              <div className="md:col-span-3 border-l border-[#1f1f1f] pl-8 pb-4 relative">
+                <div className="absolute w-2 h-2 bg-[#1f1f1f] rounded-full -left-[4.5px] top-1.5" />
+                <h4 className="text-white font-bold text-xl uppercase tracking-tight">BSc. Mechatronics Engineering</h4>
+                <div className="text-[#666] text-sm mb-4">Tecnológico de Monterrey // Mexico</div>
+                <p className="text-[#888] text-sm max-w-2xl leading-relaxed">
+                  Entrepreneurial & Academic Scholarship holder. Specialized in Robotics, Control Systems, and Industrial Automation. Includes exchange at TU Dresden, Germany.
+                </p>
+              </div>
+            </div>
+
+            {/* Entry 03 */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+              <div className="text-[#444] font-bold text-xs pt-1">2023 // 2023</div>
+              <div className="md:col-span-3 border-l border-[#1f1f1f] pl-8 pb-4 relative">
+                <div className="absolute w-2 h-2 bg-[#1f1f1f] rounded-full -left-[4.5px] top-1.5" />
+                <h4 className="text-white font-bold text-xl uppercase tracking-tight">Jr. Front-End Developer</h4>
+                <div className="text-[#666] text-sm mb-4">La Brujula // Mexico City</div>
+                <p className="text-[#888] text-sm max-w-2xl leading-relaxed">
+                  Implemented design systems and CI/CD pipelines. Integrated third-party APIs for real-time translation and automated deployment processes.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Featured Project Preview */}
         <section id="projects" className="mb-32">
           <div className="flex justify-between items-end mb-12 border-b border-[#1f1f1f] pb-4">
@@ -80,6 +130,70 @@ export default function PortfolioHome() {
             <ChevronRight className="text-[#333]" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {/* Project 01: RobotArm */}
+            <div className="group cursor-crosshair">
+              <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
+                <div className="absolute inset-0 opacity-10 pointer-events-none" 
+                  style={{ backgroundImage: 'linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-[#333] uppercase">pkg: robot-arm-cv</div>
+              </div>
+              <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">01 / RobotArm</h4>
+              <p className="text-[#666] text-sm mb-4">ESP32, IoT, and computer vision enabled servo robot arm. Features a real-time OpenCV pipeline for precise pick-and-place.</p>
+              <div className="flex gap-2">
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">C++</span>
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Python</span>
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">OpenCV</span>
+              </div>
+            </div>
+
+            {/* Project 02: RoboMop */}
+            <div className="group cursor-crosshair">
+              <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
+                <div className="absolute inset-0 opacity-10 pointer-events-none" 
+                  style={{ backgroundImage: 'linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-[#333] uppercase">pkg: robomop-slam</div>
+              </div>
+              <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">02 / RoboMop</h4>
+              <p className="text-[#666] text-sm mb-4">Autonomous cleaning robot featuring SLAM, path planning, and a React-based monitoring dashboard.</p>
+              <div className="flex gap-2">
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Python</span>
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">React</span>
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">SLAM</span>
+              </div>
+            </div>
+
+            {/* Project 03: ISA */}
+            <div className="group cursor-crosshair">
+              <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
+                <div className="absolute inset-0 opacity-10 pointer-events-none" 
+                  style={{ backgroundImage: 'linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-[#333] uppercase">pkg: isa-watering-ai</div>
+              </div>
+              <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">03 / ISA System</h4>
+              <p className="text-[#666] text-sm mb-4">Automatic, sustainable watering system using AI and IoT based on the ESP-32 chip for scalable agriculture.</p>
+              <div className="flex gap-2">
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Embedded</span>
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">IoT</span>
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">ESP32</span>
+              </div>
+            </div>
+
+            {/* Project 04: FaceTracker */}
+            <div className="group cursor-crosshair">
+              <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
+                <div className="absolute inset-0 opacity-10 pointer-events-none" 
+                  style={{ backgroundImage: 'linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-[#333] uppercase">pkg: face-tracker-arduino</div>
+              </div>
+              <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">04 / Face Tracker</h4>
+              <p className="text-[#666] text-sm mb-4">Python and OpenCV image recognition tracking using physical servo actuators driven by Arduino.</p>
+              <div className="flex gap-2">
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Python</span>
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Arduino</span>
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">CV</span>
+              </div>
+            </div>
+
             {/* Terminal Style Log Component */}
             <div className="md:col-span-2 bg-[#050505] border border-[#1f1f1f] p-6 font-mono text-[11px] leading-tight overflow-hidden relative group">
               <div className="flex justify-between items-center mb-4 border-b border-[#1f1f1f] pb-2 text-[#444]">
@@ -87,46 +201,16 @@ export default function PortfolioHome() {
                 <span className="animate-pulse">● LIVE</span>
               </div>
               <div className="space-y-1">
-                <p className="text-blue-500">[SYSTEM] Syncing CV data with R&D experience...</p>
-                <p className="text-[#666]">[INFO] Siemens Munich Internship: Discovered</p>
-                <p className="text-[#666]">[INFO] Fourier-IK Optimization: Integrated</p>
+                <p className="text-blue-500">[SYSTEM] Syncing repository data from GitHub...</p>
+                <p className="text-[#666]">[INFO] Starred repos detected: RobotArm, RoboMop, ISA, FaceTracker</p>
+                <p className="text-[#666]">[INFO] Trajectory Log: Siemens Munich, TU Dresden, ITESM</p>
                 <p className="text-[#666]">[INFO] Scanning active mechatronics repositories...</p>
-                <p className="text-white font-bold">{">"} DEPLOYMENT_READY: PORTFOLIO_V1.1.0</p>
+                <p className="text-white font-bold">{">"} DEPLOYMENT_READY: PORTFOLIO_V1.2.0</p>
               </div>
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
                  <Terminal size={40} className="text-blue-500" />
               </div>
             </div>
-
-            <div className="group cursor-crosshair">
-              <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
-                {/* Simulated Grid Overlay */}
-                <div className="absolute inset-0 opacity-10 pointer-events-none" 
-                  style={{ backgroundImage: 'linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
-                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-[#333] uppercase">Image_Placeholder:Autonomous_Rover</div>
-              </div>
-              <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">01 / assembly-by-disassembly</h4>
-              <p className="text-[#666] text-sm mb-4">Engineered an ML pipeline for AI-driven assembly planning (Python/C#) at Siemens, featuring ML-RRT*, D*, and RL for path-finding.</p>
-              <div className="flex gap-2">
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Python</span>
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">C#</span>
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">RL</span>
-              </div>
-            </div>
-            <div className="group cursor-crosshair">
-              <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
-                <div className="absolute inset-0 opacity-10 pointer-events-none" 
-                  style={{ backgroundImage: 'linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
-                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-[#333] uppercase">Image_Placeholder:Kinematics_Fourier</div>
-              </div>
-              <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">02 / Fourier-IK</h4>
-              <p className="text-[#666] text-sm mb-4">Novel method for constrained component placement using Fourier transforms to estimate solution density for discrete inverse kinematics.</p>
-              <div className="flex gap-2">
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Python</span>
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Mechatronics</span>
-              </div>
-            </div>
-          </div>
         </section>
       </main>
 
