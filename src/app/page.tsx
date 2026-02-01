@@ -195,11 +195,11 @@ export default function PortfolioHome() {
                 <span className="animate-pulse">● LIVE</span>
               </div>
               <div className="space-y-1">
-                <p className="text-blue-500">[SYSTEM] Syncing repository data from GitHub...</p>
-                <p className="text-[#666]">[INFO] Starred repos detected: RobotArm, RoboMop, ISA, FaceTracker</p>
-                <p className="text-[#666]">[INFO] Trajectory Log: Siemens Munich, TU Dresden, ITESM</p>
-                <p className="text-[#666]">[INFO] Scanning active mechatronics repositories...</p>
-                <p className="text-white font-bold">{">"} DEPLOYMENT_READY: PORTFOLIO_V1.2.1</p>
+                <p className="text-blue-500">[SYSTEM] Portfolio Manager Mode: ACTIVE</p>
+                <p className="text-[#666]">[INFO] AI Agent "Aoi" assigned as Lead Architect</p>
+                <p className="text-[#666]">[INFO] LinkedIn sync protocol: INITIALIZING</p>
+                <p className="text-[#666]">[INFO] Deployment Monitoring: ENABLED</p>
+                <p className="text-white font-bold">{">"} STATUS: OPTIMIZING_FOR_VISIBILITY</p>
               </div>
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
                  <Terminal size={40} className="text-blue-500" />
