@@ -31,10 +31,16 @@ export default function PortfolioHome() {
             AI & Robotics Engineer with a foundation in Mechatronics and a proven record of applying cutting-edge AI to solve complex automation challenges.
           </p>
           <div className="flex gap-4">
-            <button className="bg-white text-black px-6 py-3 text-sm font-bold uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-all duration-300">
+            <button 
+              onClick={() => window.location.href = 'mailto:sebastianbarrio@example.com'}
+              className="bg-white text-black px-6 py-3 text-sm font-bold uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-all duration-300 active:scale-95"
+            >
               Initiate Contact
             </button>
-            <button className="border border-[#333] px-6 py-3 text-sm font-bold uppercase tracking-widest hover:border-white transition-all">
+            <button 
+              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              className="border border-[#333] px-6 py-3 text-sm font-bold uppercase tracking-widest hover:border-white transition-all active:scale-95"
+            >
               View Log (Projects)
             </button>
           </div>
@@ -125,11 +131,21 @@ export default function PortfolioHome() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Project 01: RobotArm */}
-            <div className="group cursor-crosshair">
+            <a 
+              href="https://github.com/papalino456/RobotArm" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group cursor-crosshair block active:scale-[0.98] transition-transform"
+            >
               <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
+                <img 
+                  src="/projects/robotarm.jpg" 
+                  alt="RobotArm" 
+                  className="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity"
+                />
                 <div className="absolute inset-0 opacity-10 pointer-events-none" 
                   style={{ backgroundImage: 'linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
-                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-[#333] uppercase">pkg: robot-arm-cv</div>
+                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-white/20 uppercase group-hover:text-blue-500 transition-colors">pkg: robot-arm-cv</div>
               </div>
               <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">01 / RobotArm</h4>
               <p className="text-[#666] text-sm mb-4">ESP32, IoT, and computer vision enabled servo robot arm. Features a real-time OpenCV pipeline for precise pick-and-place.</p>
@@ -138,14 +154,24 @@ export default function PortfolioHome() {
                 <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Python</span>
                 <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">OpenCV</span>
               </div>
-            </div>
+            </a>
 
             {/* Project 02: RoboMop */}
-            <div className="group cursor-crosshair">
+            <a 
+              href="https://github.com/papalino456/RoboMop" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group cursor-crosshair block active:scale-[0.98] transition-transform"
+            >
               <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
+                <img 
+                  src="/projects/robomop.jpg" 
+                  alt="RoboMop" 
+                  className="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity"
+                />
                 <div className="absolute inset-0 opacity-10 pointer-events-none" 
                   style={{ backgroundImage: 'linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
-                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-[#333] uppercase">pkg: robomop-slam</div>
+                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-white/20 uppercase group-hover:text-blue-500 transition-colors">pkg: robomop-slam</div>
               </div>
               <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">02 / RoboMop</h4>
               <p className="text-[#666] text-sm mb-4">Autonomous cleaning robot featuring SLAM, path planning, and a React-based monitoring dashboard.</p>
@@ -154,14 +180,24 @@ export default function PortfolioHome() {
                 <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">React</span>
                 <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">SLAM</span>
               </div>
-            </div>
+            </a>
 
             {/* Project 03: ISA */}
-            <div className="group cursor-crosshair">
+            <a 
+              href="https://github.com/papalino456/ISA" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group cursor-crosshair block active:scale-[0.98] transition-transform"
+            >
               <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
+                <img 
+                  src="/projects/isa.jpg" 
+                  alt="ISA" 
+                  className="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity"
+                />
                 <div className="absolute inset-0 opacity-10 pointer-events-none" 
                   style={{ backgroundImage: 'linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
-                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-[#333] uppercase">pkg: isa-watering-ai</div>
+                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-white/20 uppercase group-hover:text-blue-500 transition-colors">pkg: isa-watering-ai</div>
               </div>
               <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">03 / ISA System</h4>
               <p className="text-[#666] text-sm mb-4">Automatic, sustainable watering system using AI and IoT based on the ESP-32 chip for scalable agriculture.</p>
@@ -170,23 +206,33 @@ export default function PortfolioHome() {
                 <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">IoT</span>
                 <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">ESP32</span>
               </div>
-            </div>
+            </a>
 
             {/* Project 04: FaceTracker */}
-            <div className="group cursor-crosshair">
+            <a 
+              href="https://github.com/papalino456/AGV" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group cursor-crosshair block active:scale-[0.98] transition-transform"
+            >
               <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
+                <img 
+                  src="/projects/agv.jpg" 
+                  alt="AGV" 
+                  className="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity"
+                />
                 <div className="absolute inset-0 opacity-10 pointer-events-none" 
                   style={{ backgroundImage: 'linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
-                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-[#333] uppercase">pkg: face-tracker-arduino</div>
+                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-white/20 uppercase group-hover:text-blue-500 transition-colors">pkg: agv-raspberry-pi</div>
               </div>
-              <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">04 / Face Tracker</h4>
-              <p className="text-[#666] text-sm mb-4">Python and OpenCV image recognition tracking using physical servo actuators driven by Arduino.</p>
+              <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">04 / AGV Robot</h4>
+              <p className="text-[#666] text-sm mb-4">Automatic Guided Vehicle using Raspberry Pi, IR line following, and PID control for industrial logistics.</p>
               <div className="flex gap-2">
                 <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Python</span>
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Arduino</span>
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">CV</span>
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">RaspberryPi</span>
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">PID</span>
               </div>
-            </div>
+            </a>
 
             {/* Terminal Style Log Component */}
             <div className="md:col-span-2 bg-[#050505] border border-[#1f1f1f] p-6 font-mono text-[11px] leading-tight overflow-hidden relative group">
