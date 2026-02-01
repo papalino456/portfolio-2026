@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Terminal, Cpu, Database, Activity, ChevronRight } from 'lucide-react';
 
