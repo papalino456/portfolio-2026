@@ -141,7 +141,7 @@ export default function PortfolioHome() {
             >
               <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
                 <img 
-                  src="/projects/robotarm.jpg" 
+                  src="/portfolio-2026/projects/robotarm.jpg" 
                   alt="RobotArm" 
                   className="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity"
                 />
@@ -167,7 +167,7 @@ export default function PortfolioHome() {
             >
               <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
                 <img 
-                  src="/projects/robomop.jpg" 
+                  src="/portfolio-2026/projects/robomop.jpg" 
                   alt="RoboMop" 
                   className="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity"
                 />
@@ -193,7 +193,7 @@ export default function PortfolioHome() {
             >
               <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
                 <img 
-                  src="/projects/isa.jpg" 
+                  src="/portfolio-2026/projects/isa.jpg" 
                   alt="ISA" 
                   className="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity"
                 />
@@ -219,7 +219,7 @@ export default function PortfolioHome() {
             >
               <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
                 <img 
-                  src="/projects/agv.jpg" 
+                  src="/portfolio-2026/projects/agv.jpg" 
                   alt="AGV" 
                   className="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity"
                 />
