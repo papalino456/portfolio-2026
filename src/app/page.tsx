@@ -89,7 +89,7 @@ export default function PortfolioHome() {
               <h4 className="text-white font-bold text-lg uppercase tracking-tight mb-1">AI R&D Engineer</h4>
               <div className="text-[#666] text-[10px] uppercase mb-4 tracking-wider">Siemens // Munich</div>
               <p className="text-[#888] text-xs leading-relaxed">
-                ML pipelines for assembly planning and YOLO-based digitization (>98% accuracy). Novel Fourier-IK methods.
+                ML pipelines for assembly planning and YOLO-based digitization (&gt;98% accuracy). Novel Fourier-IK methods.
               </p>
             </div>
 
