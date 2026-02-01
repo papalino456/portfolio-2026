@@ -247,6 +247,7 @@ export default function PortfolioHome() {
                 <p className="text-[#666]">[INFO] Scope: Career | R&D | Fitness | Systems</p>
                 <p className="text-[#666]">[INFO] Lead Architect: Aoi (Blue Lobster Protocol)</p>
                 <p className="text-[#666]">[INFO] Deployment: Verified Assets (RobotArm, RoboMop, ISA, AGV)</p>
+                <p className="text-[#666]">[INFO] Fix: Replaced broken assets with GH OpenGraph renders</p>
                 <p className="text-[#666]">[INFO] Inboxes: LinkedIn/Gmail monitored. No urgent updates (Ricardo).</p>
                 <p className="text-white font-bold">{">"} MISSION: HOLISTIC_OPTIMIZATION</p>
               </div>
