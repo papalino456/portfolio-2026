@@ -10,12 +10,12 @@ export default function PortfolioHome() {
           <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse" />
           <h1 className="text-sm tracking-widest uppercase font-bold">Sebastian Barrio // Systems Architect</h1>
         </div>
-          <nav className="hidden md:flex gap-8 text-[10px] tracking-[0.2em] uppercase text-[#666]">
-            <a href="#history" className="hover:text-white transition-colors">History</a>
-            <a href="#projects" className="hover:text-white transition-colors">Repos</a>
-            <a href="#stack" className="hover:text-white transition-colors">Stack</a>
-            <a href="#status" className="hover:text-white transition-colors">System Status</a>
-          </nav>
+        <nav className="hidden md:flex gap-8 text-[10px] tracking-[0.2em] uppercase text-[#666]">
+          <a href="#history" className="hover:text-white transition-colors">History</a>
+          <a href="#projects" className="hover:text-white transition-colors">Repos</a>
+          <a href="#stack" className="hover:text-white transition-colors">Stack</a>
+          <a href="#status" className="hover:text-white transition-colors">System Status</a>
+        </nav>
       </header>
 
       <main className="max-w-6xl mx-auto px-6 pt-24 pb-12">
@@ -74,51 +74,45 @@ export default function PortfolioHome() {
           </div>
         </section>
 
-        {/* Timeline / History Section */}
+        {/* Timeline / History Section - Horizontal Layout */}
         <section id="history" className="mb-32">
           <div className="flex justify-between items-end mb-12 border-b border-[#1f1f1f] pb-4">
             <h3 className="text-sm uppercase tracking-[0.3em] text-[#666]">Trajectory Log</h3>
             <span className="text-[10px] text-[#333]">/ WORK_AND_EDUCATION</span>
           </div>
           
-          <div className="space-y-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Entry 01 */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
-              <div className="text-blue-500 font-bold text-xs pt-1">2025 // PRESENT</div>
-              <div className="md:col-span-3 border-l border-[#1f1f1f] pl-8 pb-4 relative">
-                <div className="absolute w-2 h-2 bg-blue-500 rounded-full -left-[4.5px] top-1.5" />
-                <h4 className="text-white font-bold text-xl uppercase tracking-tight">AI Research & Development Engineer</h4>
-                <div className="text-[#666] text-sm mb-4">Siemens R&D // Munich, Germany</div>
-                <p className="text-[#888] text-sm max-w-2xl leading-relaxed">
-                  Engineered ML pipelines for automated assembly planning (Python/C#) and YOLO-based digitization of line diagrams (>98% accuracy). Developed novel Fourier-transform methods for discrete inverse kinematics.
-                </p>
-              </div>
+            <div className="relative pt-8 border-t border-[#1f1f1f]">
+              <div className="absolute -top-1.5 left-0 w-3 h-3 bg-blue-500 rounded-full animate-pulse" />
+              <div className="text-blue-500 font-bold text-[10px] mb-4 tracking-widest uppercase">2025 // PRESENT</div>
+              <h4 className="text-white font-bold text-lg uppercase tracking-tight mb-1">AI R&D Engineer</h4>
+              <div className="text-[#666] text-[10px] uppercase mb-4 tracking-wider">Siemens // Munich</div>
+              <p className="text-[#888] text-xs leading-relaxed">
+                ML pipelines for assembly planning and YOLO-based digitization (>98% accuracy). Novel Fourier-IK methods.
+              </p>
             </div>
 
             {/* Entry 02 */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
-              <div className="text-[#444] font-bold text-xs pt-1">2021 // 2025</div>
-              <div className="md:col-span-3 border-l border-[#1f1f1f] pl-8 pb-4 relative">
-                <div className="absolute w-2 h-2 bg-[#1f1f1f] rounded-full -left-[4.5px] top-1.5" />
-                <h4 className="text-white font-bold text-xl uppercase tracking-tight">BSc. Mechatronics Engineering</h4>
-                <div className="text-[#666] text-sm mb-4">Tecnológico de Monterrey // Mexico</div>
-                <p className="text-[#888] text-sm max-w-2xl leading-relaxed">
-                  Entrepreneurial & Academic Scholarship holder. Specialized in Robotics, Control Systems, and Industrial Automation. Includes exchange at TU Dresden, Germany.
-                </p>
-              </div>
+            <div className="relative pt-8 border-t border-[#1f1f1f]">
+              <div className="absolute -top-1.5 left-0 w-3 h-3 bg-[#333] rounded-full" />
+              <div className="text-[#444] font-bold text-[10px] mb-4 tracking-widest uppercase">2021 // 2025</div>
+              <h4 className="text-white font-bold text-lg uppercase tracking-tight mb-1">BSc. Mechatronics</h4>
+              <div className="text-[#666] text-[10px] uppercase mb-4 tracking-wider">ITESM // Mexico</div>
+              <p className="text-[#888] text-xs leading-relaxed">
+                Scholarship holder. Specialized in Robotics & Industrial Automation. Exchange at TU Dresden, Germany.
+              </p>
             </div>
 
             {/* Entry 03 */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
-              <div className="text-[#444] font-bold text-xs pt-1">2023 // 2023</div>
-              <div className="md:col-span-3 border-l border-[#1f1f1f] pl-8 pb-4 relative">
-                <div className="absolute w-2 h-2 bg-[#1f1f1f] rounded-full -left-[4.5px] top-1.5" />
-                <h4 className="text-white font-bold text-xl uppercase tracking-tight">Jr. Front-End Developer</h4>
-                <div className="text-[#666] text-sm mb-4">La Brujula // Mexico City</div>
-                <p className="text-[#888] text-sm max-w-2xl leading-relaxed">
-                  Implemented design systems and CI/CD pipelines. Integrated third-party APIs for real-time translation and automated deployment processes.
-                </p>
-              </div>
+            <div className="relative pt-8 border-t border-[#1f1f1f]">
+              <div className="absolute -top-1.5 left-0 w-3 h-3 bg-[#333] rounded-full" />
+              <div className="text-[#444] font-bold text-[10px] mb-4 tracking-widest uppercase">2023 // 2023</div>
+              <h4 className="text-white font-bold text-lg uppercase tracking-tight mb-1">Jr. Front-End Dev</h4>
+              <div className="text-[#666] text-[10px] uppercase mb-4 tracking-wider">La Brujula // CDMX</div>
+              <p className="text-[#888] text-xs leading-relaxed">
+                Design systems, CI/CD pipelines, and API integrations for real-time translation and automation.
+              </p>
             </div>
           </div>
         </section>
@@ -205,12 +199,13 @@ export default function PortfolioHome() {
                 <p className="text-[#666]">[INFO] Starred repos detected: RobotArm, RoboMop, ISA, FaceTracker</p>
                 <p className="text-[#666]">[INFO] Trajectory Log: Siemens Munich, TU Dresden, ITESM</p>
                 <p className="text-[#666]">[INFO] Scanning active mechatronics repositories...</p>
-                <p className="text-white font-bold">{">"} DEPLOYMENT_READY: PORTFOLIO_V1.2.0</p>
+                <p className="text-white font-bold">{">"} DEPLOYMENT_READY: PORTFOLIO_V1.2.1</p>
               </div>
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
                  <Terminal size={40} className="text-blue-500" />
               </div>
             </div>
+          </div>
         </section>
       </main>
 
