@@ -27,7 +27,7 @@ export default function PortfolioHome() {
             Bridging the gap between <span className="text-blue-500">Silicon</span> and <span className="text-[#444]">Steel</span>.
           </h2>
           <p className="max-w-xl text-[#888] text-lg leading-relaxed mb-12">
-            Mechatronics and Software Engineer specializing in Robotics and AI. Building autonomous systems that interact with the physical world with precision.
+            AI & Robotics Engineer with a foundation in Mechatronics and a proven record of applying cutting-edge AI to solve complex automation challenges.
           </p>
           <div className="flex gap-4">
             <button className="bg-white text-black px-6 py-3 text-sm font-bold uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-all duration-300">
@@ -87,11 +87,11 @@ export default function PortfolioHome() {
                 <span className="animate-pulse">● LIVE</span>
               </div>
               <div className="space-y-1">
-                <p className="text-blue-500">[SYSTEM] Initializing portfolio build...</p>
-                <p className="text-[#666]">[INFO] Est. connection to ROS 2 Node: OK</p>
-                <p className="text-[#666]">[INFO] Fetching MacroFactor data via Fit Bridge...</p>
+                <p className="text-blue-500">[SYSTEM] Syncing CV data with R&D experience...</p>
+                <p className="text-[#666]">[INFO] Siemens Munich Internship: Discovered</p>
+                <p className="text-[#666]">[INFO] Fourier-IK Optimization: Integrated</p>
                 <p className="text-[#666]">[INFO] Scanning active mechatronics repositories...</p>
-                <p className="text-white font-bold">{">"} DEPLOYMENT_READY: PORTFOLIO_V1.0.4</p>
+                <p className="text-white font-bold">{">"} DEPLOYMENT_READY: PORTFOLIO_V1.1.0</p>
               </div>
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
                  <Terminal size={40} className="text-blue-500" />
@@ -105,24 +105,25 @@ export default function PortfolioHome() {
                   style={{ backgroundImage: 'linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
                 <div className="absolute inset-0 flex items-center justify-center text-[10px] text-[#333] uppercase">Image_Placeholder:Autonomous_Rover</div>
               </div>
-              <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">01 / Project Helios</h4>
-              <p className="text-[#666] text-sm mb-4">Autonomous obstacle avoidance using Lidar and custom PID controllers in ROS 2.</p>
+              <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">01 / assembly-by-disassembly</h4>
+              <p className="text-[#666] text-sm mb-4">Engineered an ML pipeline for AI-driven assembly planning (Python/C#) at Siemens, featuring ML-RRT*, D*, and RL for path-finding.</p>
               <div className="flex gap-2">
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">C++</span>
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">ROS 2</span>
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Python</span>
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">C#</span>
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">RL</span>
               </div>
             </div>
             <div className="group cursor-crosshair">
               <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
                 <div className="absolute inset-0 opacity-10 pointer-events-none" 
                   style={{ backgroundImage: 'linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
-                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-[#333] uppercase">Image_Placeholder:Agent_Orchestrator</div>
+                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-[#333] uppercase">Image_Placeholder:Kinematics_Fourier</div>
               </div>
-              <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">02 / Neural Bridge</h4>
-              <p className="text-[#666] text-sm mb-4">Multi-agent framework for managing industrial automation pipelines with real-time feedback loops.</p>
+              <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">02 / Fourier-IK</h4>
+              <p className="text-[#666] text-sm mb-4">Novel method for constrained component placement using Fourier transforms to estimate solution density for discrete inverse kinematics.</p>
               <div className="flex gap-2">
                 <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Python</span>
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">LangChain</span>
+                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Mechatronics</span>
               </div>
             </div>
           </div>
