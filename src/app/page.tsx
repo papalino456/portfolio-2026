@@ -254,6 +254,7 @@ export default function PortfolioHome() {
                 <p className="text-[#666]">[INFO] Optimization: Refined proactive ideas for Career and R&D momentum.</p>
                 <p className="text-[#666]">[INFO] Health: Verified system integrity and deployment stability.</p>
                 <p className="text-[#666]">[INFO] Self-Healing: Resolved cron model mismatch for Macro-Coach.</p>
+                <p className="text-[#666]">[INFO] Monitoring: Career trajectories and R&D benchmarks synced.</p>
                 <p className="text-white font-bold">{">"} MISSION: HOLISTIC_OPTIMIZATION</p>
               </div>
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
