@@ -240,7 +240,7 @@ export default function PortfolioHome() {
             {/* Terminal Style Log Component */}
             <div className="md:col-span-2 bg-[#050505] border border-[#1f1f1f] p-6 font-mono text-[11px] leading-tight overflow-hidden relative group">
               <div className="flex justify-between items-center mb-4 border-b border-[#1f1f1f] pb-2 text-[#444]">
-                <span>SESSION_LOG: PROACTIVE_AGENT_V1</span>
+                <span>SESSION_LOG: PROACTIVE_AGENT_V3</span>
                 <span className="animate-pulse">● LIVE</span>
               </div>
               <div className="space-y-1">
@@ -259,6 +259,8 @@ export default function PortfolioHome() {
                 <p className="text-[#666]">[INFO] Monitoring: Career trajectories and R&D benchmarks synced.</p>
                 <p className="text-[#666]">[INFO] Dashboard: Initialized Phase 1 research for Masters 2027.</p>
                 <p className="text-[#666]">[INFO] Dashboard: Deployed Masters Application Tracker 2027.</p>
+                <p className="text-green-500">[COMPLETED] Masters Research Phases 1 & 2: ETH/TUM/Delft/US data synced.</p>
+                <p className="text-blue-400">[DEPLOYED] Masters Dashboard v2.0: Interactive requirements & financial roadmap live.</p>
                 <p className="text-white font-bold">{">"} MISSION: HOLISTIC_OPTIMIZATION</p>
               </div>
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
