@@ -17,6 +17,7 @@ export default function PortfolioHome() {
           <a href="#projects" className="hover:text-white transition-colors">Repos</a>
           <a href="#stack" className="hover:text-white transition-colors">Stack</a>
           <a href="#status" className="hover:text-white transition-colors">System Status</a>
+          <a href="/dashboard" className="text-blue-500 hover:text-blue-400 transition-colors">Masters Dashboard</a>
         </nav>
       </header>
 
@@ -252,6 +253,12 @@ export default function PortfolioHome() {
                 <p className="text-[#666]">[INFO] Heartbeat: Checked system logs & portfolio health. All systems nominal.</p>
                 <p className="text-[#666]">[INFO] Knowledge: Monitoring top AI/Robotics Masters (TUM/ETH/Stanford).</p>
                 <p className="text-[#666]">[INFO] Maintenance: Synchronized long-term memory & trajectory tracking.</p>
+                <p className="text-[#666]">[INFO] Optimization: Refined proactive ideas for Career and R&D momentum.</p>
+                <p className="text-[#666]">[INFO] Health: Verified system integrity and deployment stability.</p>
+                <p className="text-[#666]">[INFO] Self-Healing: Resolved cron model mismatch for Macro-Coach.</p>
+                <p className="text-[#666]">[INFO] Monitoring: Career trajectories and R&D benchmarks synced.</p>
+                <p className="text-[#666]">[INFO] Dashboard: Initialized Phase 1 research for Masters 2027.</p>
+                <p className="text-[#666]">[INFO] Dashboard: Deployed Masters Application Tracker 2027.</p>
                 <p className="text-white font-bold">{">"} MISSION: HOLISTIC_OPTIMIZATION</p>
               </div>
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
