@@ -250,6 +250,7 @@ export default function PortfolioHome() {
                 <p className="text-[#666]">[INFO] Fix: Replaced broken assets with GH OpenGraph renders</p>
                 <p className="text-[#666]">[INFO] Inboxes: LinkedIn/Gmail monitored. No urgent updates (Ricardo).</p>
                 <p className="text-[#666]">[INFO] Heartbeat: Checked system logs & portfolio health. All systems nominal.</p>
+                <p className="text-[#666]">[INFO] Knowledge: Monitoring top AI/Robotics Masters (TUM/ETH/Stanford).</p>
                 <p className="text-white font-bold">{">"} MISSION: HOLISTIC_OPTIMIZATION</p>
               </div>
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
