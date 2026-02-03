@@ -261,6 +261,7 @@ export default function PortfolioHome() {
                 <p className="text-[#666]">[INFO] Dashboard: Deployed Masters Application Tracker 2027.</p>
                 <p className="text-green-500">[COMPLETED] Masters Research Phases 1 & 2: ETH/TUM/Delft/US data synced.</p>
                 <p className="text-blue-400">[DEPLOYED] Masters Dashboard v2.0: Interactive requirements & financial roadmap live.</p>
+                <p className="text-blue-400">[DESIGN] Consolidated Masters Dashboard to 'Steel & Silicon' monochromatic theme with Electric Blue accents.</p>
                 <p className="text-white font-bold">{">"} MISSION: HOLISTIC_OPTIMIZATION</p>
               </div>
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
