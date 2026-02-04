@@ -263,6 +263,8 @@ export default function PortfolioHome() {
                 <p className="text-blue-400">[DEPLOYED] Masters Dashboard v2.0: Interactive requirements & financial roadmap live.</p>
                 <p className="text-blue-400">[DESIGN] Consolidated Masters Dashboard to 'Steel & Silicon' monochromatic theme with Electric Blue accents.</p>
                 <p className="text-[#666]">[INFO] Heartbeat: Synced daily systems (Calendar/Inbox). Flagged maintenance task (DINN). Deployment: Stable.</p>
+                <p className="text-blue-400">[PROACTIVE] User feedback: Increased heartbeat frequency. New content generation: ACTIVE.</p>
+                <p className="text-blue-400">[IDEA] Research Note: Google AI's RT-2 model shows promise for bridging high-level reasoning with low-level robotic control—directly relevant to Siemens R&D trajectory.</p>
                 <p className="text-white font-bold">{">"} MISSION: HOLISTIC_OPTIMIZATION</p>
               </div>
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
