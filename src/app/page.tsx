@@ -265,6 +265,8 @@ export default function PortfolioHome() {
                 <p className="text-[#666]">[INFO] Heartbeat: Synced daily systems (Calendar/Inbox). Flagged maintenance task (DINN). Deployment: Stable.</p>
                 <p className="text-blue-400">[PROACTIVE] User feedback: Increased heartbeat frequency. New content generation: ACTIVE.</p>
                 <p className="text-blue-400">[IDEA] Research Note: Google AI's RT-2 model shows promise for bridging high-level reasoning with low-level robotic control—directly relevant to Siemens R&D trajectory.</p>
+                <p className="text-blue-400">[RESEARCH] TU Delft Cognitive Robotics Lab (Prof. Kober): Perfect alignment found. Inverse kinematics + learning-based manipulation research matches Fourier-IK expertise. Program at capacity—early application critical.</p>
+                <p className="text-green-500">[ACTION] TOEFL/IELTS scheduled for February 2026. SOP draft v0.1 complete. Masters 2027 trajectory: ON TRACK.</p>
                 <p className="text-white font-bold">{">"} MISSION: HOLISTIC_OPTIMIZATION</p>
               </div>
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
