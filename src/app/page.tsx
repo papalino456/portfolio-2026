@@ -266,7 +266,13 @@ export default function PortfolioHome() {
                 <p className="text-blue-400">[PROACTIVE] User feedback: Increased heartbeat frequency. New content generation: ACTIVE.</p>
                 <p className="text-blue-400">[IDEA] Research Note: Google AI's RT-2 model shows promise for bridging high-level reasoning with low-level robotic control—directly relevant to Siemens R&D trajectory.</p>
                 <p className="text-blue-400">[RESEARCH] TU Delft Cognitive Robotics Lab (Prof. Kober): Perfect alignment found. Inverse kinematics + learning-based manipulation research matches Fourier-IK expertise. Program at capacity—early application critical.</p>
+                <p className="text-blue-400">[RESEARCH] ETH Zurich ASL (Prof. Siegwart): Perfect match for Siemens background. Focus on control + autonomous systems. Deadline: Nov 30.</p>
+                <p className="text-blue-400">[RESEARCH] TUM (MSc Robotics): German B2 hurdle identified. Tuition shift to €4k-6k/sem verified.</p>
+                <p className="text-green-500">[STATUS] Job Hunter Phase 1: Lead acquisition from Amazon (Frontier AI), Samsung, and Waymo active.</p>
                 <p className="text-green-500">[ACTION] TOEFL/IELTS scheduled for February 2026. SOP draft v0.1 complete. Masters 2027 trajectory: ON TRACK.</p>
+                <p className="text-green-500">[RESEARCH] TUM MSc Robotics documented: English sufficient (EU), May 31 2027 deadline, Munich ecosystem ideal for Siemens alumni.</p>
+                <p className="text-blue-400">[CONTENT] LinkedIn drafts (3 angles) + SOP draft ready. Job Hunter: 17 leads, top 3 prioritized (Edison Smart, FieldAI, Prehensio).</p>
+                <p className="text-[#666]">[HEARTBEAT] Portfolio verified (HTTP 200). No recruiter updates. Systems nominal.</p>
                 <p className="text-white font-bold">{">"} MISSION: HOLISTIC_OPTIMIZATION</p>
               </div>
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
