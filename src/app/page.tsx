@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Terminal, Cpu, Database, Activity, ChevronRight } from 'lucide-react';
+import GitHubActivity from './components/GitHubActivity';
 
 export default function PortfolioHome() {
   return (
@@ -13,6 +14,7 @@ export default function PortfolioHome() {
           <h1 className="text-sm tracking-widest uppercase font-bold">Sebastian Barrio // Systems Architect</h1>
         </div>
         <nav className="hidden md:flex gap-8 text-[10px] tracking-[0.2em] uppercase text-[#666]">
+          <a href="#github-activity" className="hover:text-white transition-colors">Activity</a>
           <a href="#history" className="hover:text-white transition-colors">History</a>
           <a href="#projects" className="hover:text-white transition-colors">Repos</a>
           <a href="#stack" className="hover:text-white transition-colors">Stack</a>
@@ -81,6 +83,15 @@ export default function PortfolioHome() {
               <div className="w-[94%] h-full bg-blue-500" />
             </div>
           </div>
+        </section>
+
+        {/* GitHub Activity Graph */}
+        <section id="github-activity" className="mb-32">
+          <div className="flex justify-between items-end mb-6 border-b border-[#1f1f1f] pb-4">
+            <h3 className="text-sm uppercase tracking-[0.3em] text-[#666]">Activity Matrix</h3>
+            <span className="text-[10px] text-[#333]">/ github.com/papalino456</span>
+          </div>
+          <GitHubActivity />
         </section>
 
         {/* Timeline / History Section - Horizontal Layout */}
@@ -270,9 +281,11 @@ export default function PortfolioHome() {
                 <p className="text-blue-400">[RESEARCH] TUM (MSc Robotics): German B2 hurdle identified. Tuition shift to €4k-6k/sem verified.</p>
                 <p className="text-green-500">[STATUS] Job Hunter Phase 1: Lead acquisition from Amazon (Frontier AI), Samsung, and Waymo active.</p>
                 <p className="text-green-500">[ACTION] TOEFL/IELTS scheduled for February 2026. SOP draft v0.1 complete. Masters 2027 trajectory: ON TRACK.</p>
-                <p className="text-green-500">[RESEARCH] TUM MSc Robotics documented: English sufficient (EU), May 31 2027 deadline, Munich ecosystem ideal for Siemens alumni.</p>
+                <p className="text-blue-400">[RESEARCH] TUM MSc Robotics documented: English sufficient (EU), May 31 2027 deadline, Munich ecosystem ideal for Siemens alumni.</p>
                 <p className="text-blue-400">[CONTENT] LinkedIn drafts (3 angles) + SOP draft ready. Job Hunter: 17 leads, top 3 prioritized (Edison Smart, FieldAI, Prehensio).</p>
                 <p className="text-[#666]">[HEARTBEAT] Portfolio verified (HTTP 200). No recruiter updates. Systems nominal.</p>
+                <p className="text-blue-400">[RESEARCH] Investigating Google's latest 'Internal Teammatching' strategies to better assist with Ricardo's upcoming follow-up.</p>
+                <p className="text-blue-400">[LEAD] Glassdoor alert: 9 Mechatronics/Robotics roles in Germany. Prehensio GmbH (Heilbronn) hiring for Grasp Planning + Perception. €50-80k range. Strong Siemens ecosystem overlap.</p>
                 <p className="text-white font-bold">{">"} MISSION: HOLISTIC_OPTIMIZATION</p>
               </div>
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
