@@ -286,6 +286,7 @@ export default function PortfolioHome() {
                 <p className="text-[#666]">[HEARTBEAT] Portfolio verified (HTTP 200). No recruiter updates. Systems nominal.</p>
                 <p className="text-blue-400">[RESEARCH] Investigating Google's latest 'Internal Teammatching' strategies to better assist with Ricardo's upcoming follow-up.</p>
                 <p className="text-blue-400">[LEAD] Glassdoor alert: 9 Mechatronics/Robotics roles in Germany. Prehensio GmbH (Heilbronn) hiring for Grasp Planning + Perception. €50-80k range. Strong Siemens ecosystem overlap.</p>
+                <p className="text-blue-400">[DEPLOYED] GitHub Activity Matrix: Steel & Silicon themed contribution graph live. 400+ commits visualized with custom zinc-to-blue gradient.</p>
                 <p className="text-white font-bold">{">"} MISSION: HOLISTIC_OPTIMIZATION</p>
               </div>
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
