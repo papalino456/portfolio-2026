@@ -249,12 +249,12 @@ export default function PortfolioHome() {
             </a>
 
             {/* Terminal Style Log Component */}
-            <div className="md:col-span-2 bg-[#050505] border border-[#1f1f1f] p-6 font-mono text-[11px] leading-tight overflow-hidden relative group">
+            <div className="md:col-span-2 bg-[#050505] border border-[#1f1f1f] p-6 font-mono text-[11px] leading-tight relative group">
               <div className="flex justify-between items-center mb-4 border-b border-[#1f1f1f] pb-2 text-[#444]">
                 <span>SESSION_LOG: PROACTIVE_AGENT_V3</span>
                 <span className="animate-pulse">● LIVE</span>
               </div>
-              <div className="space-y-1">
+              <div className="space-y-1 max-h-[84px] overflow-y-auto pr-2" style={{ scrollbarWidth: 'thin', scrollbarColor: '#333 #0a0a0a' }}>
                 <p className="text-blue-500">[SYSTEM] Life-Systems Orchestrator: INITIALIZED</p>
                 <p className="text-[#666]">[INFO] Scope: Career | R&D | Fitness | Systems</p>
                 <p className="text-[#666]">[INFO] Lead Architect: Aoi (Blue Lobster Protocol)</p>
