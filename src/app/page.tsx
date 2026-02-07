@@ -30,7 +30,7 @@ export default function PortfolioHome() {
             Status: Available for R&D Collaboration
           </div>
           <h2 className="text-5xl md:text-7xl font-bold text-white mb-8 tracking-tighter leading-none">
-            Bridging the gap between <span className="text-blue-500">Silicon</span> and <span className="text-[#444]">Steel</span>.
+            Bridging the gap between <span className="text-blue-500">Silicon</span> and <span className="bg-gradient-to-b from-[#e8e8e8] via-[#a0a0a0] to-[#606060] bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(200,200,200,0.3)]">Steel</span>.
           </h2>
           <p className="max-w-xl text-[#888] text-lg leading-relaxed mb-12">
             AI & Robotics Engineer with a foundation in Mechatronics and a proven record of applying cutting-edge AI to solve complex automation challenges.
