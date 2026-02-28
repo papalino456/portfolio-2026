@@ -19,7 +19,7 @@ export default function PortfolioHome() {
           <a href="#projects" className="hover:text-white transition-colors">Repos</a>
           <a href="#stack" className="hover:text-white transition-colors">Stack</a>
           <a href="#status" className="hover:text-white transition-colors">System Status</a>
-          <a href="/dashboard" className="text-blue-500 hover:text-blue-400 transition-colors">Masters Dashboard</a>
+          <a href="/masters-research-2027" className="text-blue-500 hover:text-blue-400 transition-colors">Masters Dashboard</a>
         </nav>
       </header>
 
