@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Terminal, Cpu, Database, Activity, ChevronRight } from 'lucide-react';
+import { Terminal, Cpu, Database, Activity, ChevronRight, Code2, Brain, Bot, Wrench, Layers, GitBranch, Microchip } from 'lucide-react';
 import GitHubActivity from './components/GitHubActivity';
 
 export default function PortfolioHome() {
@@ -92,6 +92,199 @@ export default function PortfolioHome() {
             <span className="text-[10px] text-[#333]">/ github.com/papalino456</span>
           </div>
           <GitHubActivity />
+        </section>
+
+        {/* Tech Stack - Skill Constellation */}
+        <section id="stack" className="mb-32">
+          <div className="flex justify-between items-end mb-12 border-b border-[#1f1f1f] pb-4">
+            <h3 className="text-sm uppercase tracking-[0.3em] text-[#666]">Tech Stack</h3>
+            <span className="text-[10px] text-[#333]">/ CORE_COMPETENCIES</span>
+          </div>
+
+          {/* Skill Radar Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            {/* AI & Machine Learning */}
+            <div className="group relative bg-[#0a0a0a] border border-[#1f1f1f] p-6 hover:border-blue-500/30 transition-all duration-500">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-2 bg-blue-500/10 border border-blue-500/20">
+                    <Brain size={18} className="text-blue-500" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold text-sm uppercase tracking-wider">AI / ML</h4>
+                    <span className="text-[10px] text-[#444] uppercase tracking-widest">Neural Systems</span>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  {[
+                    { name: 'Python', level: 95, color: 'bg-blue-500' },
+                    { name: 'Computer Vision / OpenCV', level: 90, color: 'bg-blue-400' },
+                    { name: 'YOLO / Object Detection', level: 88, color: 'bg-blue-400' },
+                    { name: 'LLM Agents / RAG', level: 82, color: 'bg-blue-300' },
+                    { name: 'PyTorch / TensorFlow', level: 78, color: 'bg-blue-300' },
+                  ].map((skill) => (
+                    <div key={skill.name} className="space-y-1.5">
+                      <div className="flex justify-between text-[10px] uppercase tracking-wider">
+                        <span className="text-[#666] group-hover:text-white transition-colors">{skill.name}</span>
+                        <span className="text-[#333] group-hover:text-blue-500 transition-colors">{skill.level}%</span>
+                      </div>
+                      <div className="h-0.5 bg-[#1f1f1f] overflow-hidden">
+                        <div 
+                          className={`h-full ${skill.color} transition-all duration-1000 ease-out group-hover:animate-pulse`}
+                          style={{ width: `${skill.level}%` }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Robotics & Embedded */}
+            <div className="group relative bg-[#0a0a0a] border border-[#1f1f1f] p-6 hover:border-blue-500/30 transition-all duration-500">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-2 bg-blue-500/10 border border-blue-500/20">
+                    <Bot size={18} className="text-blue-500" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold text-sm uppercase tracking-wider">Robotics</h4>
+                    <span className="text-[10px] text-[#444] uppercase tracking-widest">Physical Systems</span>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  {[
+                    { name: 'ROS 2 / Navigation', level: 92, color: 'bg-blue-500' },
+                    { name: 'SLAM / Path Planning', level: 88, color: 'bg-blue-400' },
+                    { name: 'C++ / Embedded', level: 85, color: 'bg-blue-400' },
+                    { name: 'ESP32 / IoT', level: 90, color: 'bg-blue-500' },
+                    { name: 'PID / Control Systems', level: 86, color: 'bg-blue-300' },
+                  ].map((skill) => (
+                    <div key={skill.name} className="space-y-1.5">
+                      <div className="flex justify-between text-[10px] uppercase tracking-wider">
+                        <span className="text-[#666] group-hover:text-white transition-colors">{skill.name}</span>
+                        <span className="text-[#333] group-hover:text-blue-500 transition-colors">{skill.level}%</span>
+                      </div>
+                      <div className="h-0.5 bg-[#1f1f1f] overflow-hidden">
+                        <div 
+                          className={`h-full ${skill.color} transition-all duration-1000 ease-out`}
+                          style={{ width: `${skill.level}%` }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Software Engineering */}
+            <div className="group relative bg-[#0a0a0a] border border-[#1f1f1f] p-6 hover:border-blue-500/30 transition-all duration-500">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-2 bg-blue-500/10 border border-blue-500/20">
+                    <Code2 size={18} className="text-blue-500" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold text-sm uppercase tracking-wider">Software</h4>
+                    <span className="text-[10px] text-[#444] uppercase tracking-widest">Full Stack</span>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  {[
+                    { name: 'TypeScript / React', level: 88, color: 'bg-blue-500' },
+                    { name: 'Next.js / Node.js', level: 85, color: 'bg-blue-400' },
+                    { name: 'System Architecture', level: 82, color: 'bg-blue-300' },
+                    { name: 'API Design / GraphQL', level: 80, color: 'bg-blue-300' },
+                    { name: 'Testing / CI/CD', level: 84, color: 'bg-blue-400' },
+                  ].map((skill) => (
+                    <div key={skill.name} className="space-y-1.5">
+                      <div className="flex justify-between text-[10px] uppercase tracking-wider">
+                        <span className="text-[#666] group-hover:text-white transition-colors">{skill.name}</span>
+                        <span className="text-[#333] group-hover:text-blue-500 transition-colors">{skill.level}%</span>
+                      </div>
+                      <div className="h-0.5 bg-[#1f1f1f] overflow-hidden">
+                        <div 
+                          className={`h-full ${skill.color} transition-all duration-1000 ease-out`}
+                          style={{ width: `${skill.level}%` }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Skill Constellation - Visual Representation */}
+          <div className="border border-[#1f1f1f] bg-[#050505] p-8 relative overflow-hidden">
+            <div className="absolute inset-0 opacity-5" style={{ 
+              backgroundImage: 'radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.2) 0%, transparent 40%)'
+            }} />
+            
+            <div className="relative">
+              <div className="flex items-center gap-3 mb-8">
+                <Layers size={14} className="text-blue-500" />
+                <span className="text-[10px] uppercase tracking-[0.3em] text-[#444]">Technology Constellation</span>
+              </div>
+
+              {/* Hexagonal Skill Grid */}
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                {[
+                  { name: 'Python', category: 'ai', icon: '🐍' },
+                  { name: 'C++', category: 'robotics', icon: '⚡' },
+                  { name: 'ROS 2', category: 'robotics', icon: '🤖' },
+                  { name: 'OpenCV', category: 'ai', icon: '👁️' },
+                  { name: 'PyTorch', category: 'ai', icon: '🔥' },
+                  { name: 'TensorFlow', category: 'ai', icon: '🧠' },
+                  { name: 'ESP32', category: 'hardware', icon: '🔌' },
+                  { name: 'React', category: 'software', icon: '⚛️' },
+                  { name: 'TypeScript', category: 'software', icon: '📘' },
+                  { name: 'Next.js', category: 'software', icon: '▲' },
+                  { name: 'Node.js', category: 'software', icon: '🟢' },
+                  { name: 'Docker', category: 'tools', icon: '🐳' },
+                  { name: 'Git', category: 'tools', icon: '🌲' },
+                  { name: 'Linux', category: 'tools', icon: '🐧' },
+                  { name: 'YOLO', category: 'ai', icon: '🎯' },
+                  { name: 'SLAM', category: 'robotics', icon: '🗺️' },
+                  { name: 'CUDA', category: 'ai', icon: '⚙️' },
+                  { name: 'MQTT', category: 'hardware', icon: '📡' },
+                ].map((tech, i) => (
+                  <div 
+                    key={tech.name}
+                    className="group relative bg-[#0a0a0a] border border-[#1f1f1f] hover:border-blue-500/40 p-3 flex items-center gap-2 transition-all duration-300 hover:bg-blue-500/5"
+                    style={{ animationDelay: `${i * 50}ms` }}
+                  >
+                    <span className="text-xs opacity-30 group-hover:opacity-60 transition-opacity">{tech.icon}</span>
+                    <span className="text-[10px] uppercase tracking-wider text-[#666] group-hover:text-white transition-colors">{tech.name}</span>
+                    <div className="absolute -bottom-px left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-500" />
+                  </div>
+                ))}
+              </div>
+
+              {/* Category Legend */}
+              <div className="flex flex-wrap gap-6 mt-8 pt-6 border-t border-[#1f1f1f]">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                  <span className="text-[10px] uppercase tracking-wider text-[#444]">AI / ML</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full" />
+                  <span className="text-[10px] uppercase tracking-wider text-[#444]">Robotics</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-blue-300 rounded-full" />
+                  <span className="text-[10px] uppercase tracking-wider text-[#444]">Software</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-[#666] rounded-full" />
+                  <span className="text-[10px] uppercase tracking-wider text-[#444]">Tools</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Timeline / History Section - Horizontal Layout */}
