@@ -590,6 +590,8 @@ export default function PortfolioHome() {
                 <p className="text-[#666]">[INFO] Deployment: Verified Assets (RobotArm, RoboMop, ISA, AGV)</p>
                 <p className="text-[#666]">[INFO] Fix: Replaced broken assets with GH OpenGraph renders</p>
                 <p className="text-[#666]">[INFO] Inboxes: LinkedIn/Gmail monitored. No urgent updates (Ricardo).</p>
+                <p className="text-blue-400">[HEARTBEAT] Mar 04 23:50 CST: Pipeline scan complete — 19 jobs tracked. 4 ready to apply (Google DeepMind, FieldAI, Edison Smart, Skydio). 9 in research queue. WhatsApp reconnect cycle nominal. Systems healthy.</p>
+                <p className="text-blue-400">[HEARTBEAT] Mar 04 21:00 CST: Portfolio verified (HTTP 200). No recruiter updates. CV-Tailor skill deployed — automated job-specific CV generation pipeline active. Systems nominal.</p>
                 <p className="text-[#666]">[INFO] Heartbeat: Checked system logs & portfolio health. All systems nominal.</p>
                 <p className="text-[#666]">[INFO] Knowledge: Monitoring top AI/Robotics Masters (TUM/ETH/Stanford).</p>
                 <p className="text-[#666]">[INFO] Maintenance: Synchronized long-term memory & trajectory tracking.</p>
@@ -621,6 +623,7 @@ export default function PortfolioHome() {
                 <p className="text-[#666]">[HEARTBEAT] Afternoon check: Portfolio healthy, no recruiter updates. Deep work period active.</p>
                 <p className="text-blue-400">[HEARTBEAT] Feb 28 15:00 CST: Scanned inboxes — 6 new US research roles flagged (DeepMind Applied Robotics, Amazon FAR, Apple ML Research). Mercedes-Benz connection pending. German applications due for follow-up.</p>
                 <p className="text-blue-400">[HEARTBEAT] Feb 28 21:00 CST: Portfolio verified (HTTP 200, screenshot captured). Gmail storage at 89% — cleanup recommended. No updates from Ricardo (team-matching continues). Calendar clear next 7 days.</p>
+                <p className="text-blue-400">[HEARTBEAT] Mar 01 09:00 CST: Portfolio healthy (HTTP 200). No new emails from Ricardo/Google. DAAD deadline 214 days away (Oct 1). Systems nominal — awaiting team-matching updates.</p>
                 <p className="text-white font-bold">{">"} MISSION: HOLISTIC_OPTIMIZATION</p>
               </div>
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
