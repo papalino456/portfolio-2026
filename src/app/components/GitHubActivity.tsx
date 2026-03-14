@@ -1,40 +1,53 @@
 'use client';
 
-'use client';
-
 import React from 'react';
+import { motion } from 'framer-motion';
 import { GitHubCalendar } from 'react-github-calendar';
-import { Github, GitCommit, GitBranch } from 'lucide-react';
+import { Github, GitCommit, GitBranch, Star } from 'lucide-react';
+import { CountUp } from './animations';
 
 // Steel & Silicon theme for the contribution graph
 const customTheme = {
-  dark: ['#0a0a0a', '#1f1f1f', '#333333', '#3b82f6', '#60a5fa'],
+  dark: ['#0a0a0a', '#1a1a1a', '#2a2a2a', '#3b82f6', '#60a5fa'],
 };
+
+const STATS = [
+  { icon: GitCommit, label: 'Total Commits', value: 400, suffix: '+' },
+  { icon: GitBranch, label: 'Active Repos', value: 12, suffix: '' },
+  { icon: Star, label: 'Contributions', value: 50, suffix: '+' },
+];
 
 export default function GitHubActivity() {
   return (
-    <div className="border border-[#1f1f1f] bg-[#0a0a0a] p-6">
+    <div className="border border-[#1f1f1f] bg-[#0a0a0a] p-6 hover:border-[#2a2a2a] transition-colors duration-500">
       {/* Header */}
       <div className="flex items-center justify-between mb-6 border-b border-[#1f1f1f] pb-4">
         <div className="flex items-center gap-3">
-          <Github size={18} className="text-blue-500" />
+          <motion.div
+            whileHover={{ rotate: 360 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Github size={18} className="text-blue-500" />
+          </motion.div>
           <span className="text-[10px] uppercase tracking-[0.2em] text-[#666]">Commit Activity Stream</span>
         </div>
         <div className="flex items-center gap-4 text-[10px] text-[#444]">
-          <span className="flex items-center gap-1">
-            <span className="w-2 h-2 bg-[#1f1f1f] rounded-sm" /> None
-          </span>
-          <span className="flex items-center gap-1">
-            <span className="w-2 h-2 bg-[#333] rounded-sm" /> Low
-          </span>
-          <span className="flex items-center gap-1">
-            <span className="w-2 h-2 bg-blue-500 rounded-sm" /> High
-          </span>
+          {[
+            { color: 'bg-[#0a0a0a]', label: 'None' },
+            { color: 'bg-[#1a1a1a]', label: 'Low' },
+            { color: 'bg-[#2a2a2a]', label: 'Med' },
+            { color: 'bg-blue-500', label: 'High' },
+          ].map((item) => (
+            <span key={item.label} className="flex items-center gap-1.5">
+              <span className={`w-2.5 h-2.5 ${item.color} rounded-sm`} /> 
+              {item.label}
+            </span>
+          ))}
         </div>
       </div>
 
       {/* Activity Graph */}
-      <div className="flex justify-center overflow-x-auto">
+      <div className="flex justify-center overflow-x-auto py-2">
         <GitHubCalendar
           username="papalino456"
           theme={customTheme}
@@ -55,27 +68,24 @@ export default function GitHubActivity() {
 
       {/* Stats Row */}
       <div className="grid grid-cols-3 gap-1 mt-6 pt-4 border-t border-[#1f1f1f]">
-        <div className="flex items-center gap-3 p-4 bg-[#111]">
-          <GitCommit size={14} className="text-blue-500" />
-          <div>
-            <div className="text-[10px] uppercase tracking-widest text-[#444]">Total Commits</div>
-            <div className="text-lg font-light text-white">400+</div>
-          </div>
-        </div>
-        <div className="flex items-center gap-3 p-4 bg-[#111]">
-          <GitBranch size={14} className="text-blue-500" />
-          <div>
-            <div className="text-[10px] uppercase tracking-widest text-[#444]">Active Repos</div>
-            <div className="text-lg font-light text-white">12</div>
-          </div>
-        </div>
-        <div className="flex items-center gap-3 p-4 bg-[#111]">
-          <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
-          <div>
-            <div className="text-[10px] uppercase tracking-widest text-[#444]">Current Streak</div>
-            <div className="text-lg font-light text-white">Active</div>
-          </div>
-        </div>
+        {STATS.map((stat, index) => (
+          <motion.div 
+            key={stat.label}
+            className="flex items-center gap-3 p-4 bg-[#111] group hover:bg-[#161616] transition-colors"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.1, duration: 0.5 }}
+          >
+            <stat.icon size={16} className="text-blue-500 group-hover:scale-110 transition-transform" />
+            <div>
+              <div className="text-[10px] uppercase tracking-widest text-[#444]">{stat.label}</div>
+              <div className="text-xl font-light text-white">
+                <CountUp end={stat.value} suffix={stat.suffix} duration={2} />
+              </div>
+            </div>
+          </motion.div>
+        ))}
       </div>
     </div>
   );

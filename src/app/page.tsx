@@ -1,648 +1,682 @@
 'use client';
 
 import React from 'react';
-import { Terminal, Cpu, Database, Activity, ChevronRight, Code2, Brain, Bot, Layers, Microchip } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { 
+  Terminal, 
+  Cpu, 
+  Database, 
+  Activity, 
+  ChevronRight, 
+  Code2, 
+  Brain, 
+  Bot, 
+  Layers, 
+  Microchip,
+  ArrowUpRight,
+  Github,
+  Linkedin,
+  Mail
+} from 'lucide-react';
 import GitHubActivity from './components/GitHubActivity';
+import { FadeIn, StaggerContainer, StaggerItem, CountUp } from './components/animations';
+
+// --- Configuration Data ---
+const SYSTEM_STATS = [
+  { icon: Cpu, label: 'Compute Priority', value: 'Robotics / ROS 2', level: 85 },
+  { icon: Database, label: 'Neural Load', value: 'AI / LLM Agents', level: 72 },
+  { icon: Activity, label: 'Physical Integration', value: 'Mechatronics', level: 94 },
+];
+
+const SKILL_CATEGORIES = [
+  {
+    icon: Brain,
+    title: 'AI / ML',
+    subtitle: 'Neural Systems',
+    skills: [
+      { name: 'Python', level: 95 },
+      { name: 'Computer Vision / OpenCV', level: 90 },
+      { name: 'YOLO / Object Detection', level: 88 },
+      { name: 'LLM Agents / RAG', level: 82 },
+      { name: 'PyTorch / TensorFlow', level: 78 },
+    ],
+  },
+  {
+    icon: Bot,
+    title: 'Robotics',
+    subtitle: 'Physical Systems',
+    skills: [
+      { name: 'ROS 2 / Navigation', level: 92 },
+      { name: 'SLAM / Path Planning', level: 88 },
+      { name: 'C++ / Embedded', level: 85 },
+      { name: 'ESP32 / IoT', level: 90 },
+      { name: 'PID / Control Systems', level: 86 },
+    ],
+  },
+  {
+    icon: Code2,
+    title: 'Software',
+    subtitle: 'Full Stack',
+    skills: [
+      { name: 'TypeScript / React', level: 88 },
+      { name: 'Next.js / Node.js', level: 85 },
+      { name: 'System Architecture', level: 82 },
+      { name: 'API Design / GraphQL', level: 80 },
+      { name: 'Testing / CI/CD', level: 84 },
+    ],
+  },
+];
+
+const TIMELINE = [
+  {
+    period: '2025 // PRESENT',
+    title: 'AI R&D Engineer',
+    company: 'Siemens // Munich',
+    description: 'ML pipelines for assembly planning and YOLO-based digitization (>98% accuracy). Novel Fourier-IK methods.',
+    active: true,
+  },
+  {
+    period: '2021 // 2025',
+    title: 'BSc. Mechatronics',
+    company: 'ITESM // Mexico',
+    description: 'Scholarship holder. Specialized in Robotics & Industrial Automation. Exchange at TU Dresden, Germany.',
+    active: false,
+  },
+  {
+    period: '2023 // 2023',
+    title: 'Jr. Front-End Dev',
+    company: 'La Brujula // CDMX',
+    description: 'Design systems, CI/CD pipelines, and API integrations for real-time translation and automation.',
+    active: false,
+  },
+];
+
+const PROJECTS = [
+  {
+    id: '01',
+    title: 'RobotArm',
+    pkg: 'robot-arm-cv',
+    description: 'ESP32, IoT, and computer vision enabled servo robot arm. Features a real-time OpenCV pipeline for precise pick-and-place.',
+    image: '/portfolio-2026/projects/robotarm.png',
+    tags: ['C++', 'Python', 'OpenCV'],
+    href: 'https://github.com/papalino456/RobotArm',
+  },
+  {
+    id: '02',
+    title: 'RoboMop',
+    pkg: 'robomop-slam',
+    description: 'Autonomous cleaning robot featuring SLAM, path planning, and a React-based monitoring dashboard.',
+    image: '/portfolio-2026/projects/robomop.png',
+    tags: ['Python', 'React', 'SLAM'],
+    href: 'https://github.com/papalino456/RoboMop',
+  },
+  {
+    id: '03',
+    title: 'ISA System',
+    pkg: 'isa-watering-ai',
+    description: 'Automatic, sustainable watering system using AI and IoT based on the ESP-32 chip for scalable agriculture.',
+    image: '/portfolio-2026/projects/isa.png',
+    tags: ['Embedded', 'IoT', 'ESP32'],
+    href: 'https://github.com/papalino456/ISA',
+  },
+  {
+    id: '04',
+    title: 'AGV Robot',
+    pkg: 'agv-raspberry-pi',
+    description: 'Automatic Guided Vehicle using Raspberry Pi, IR line following, and PID control for industrial logistics.',
+    image: '/portfolio-2026/projects/agv.png',
+    tags: ['Python', 'RaspberryPi', 'PID'],
+    href: 'https://github.com/papalino456/AGV',
+  },
+];
+
+interface ConstellationNodeData {
+  emoji: string;
+  label: string;
+  position: string;
+  size: 'lg' | 'md' | 'sm';
+}
+
+const CONSTELLATION_NODES: ConstellationNodeData[] = [
+  // Inner ring
+  { emoji: '🐍', label: 'Python', position: 'left-[25%] top-[25%]', size: 'lg' },
+  { emoji: '🤖', label: 'ROS 2', position: 'right-[25%] top-[22%]', size: 'lg' },
+  { emoji: '⚡', label: 'C++', position: 'right-[20%] bottom-[30%]', size: 'lg' },
+  { emoji: '⚛️', label: 'React', position: 'left-[22%] bottom-[28%]', size: 'lg' },
+  // Outer ring
+  { emoji: '👁️', label: 'OpenCV', position: 'left-[8%] top-[35%]', size: 'md' },
+  { emoji: '🔥', label: 'PyTorch', position: 'left-[15%] top-[60%]', size: 'md' },
+  { emoji: '🔌', label: 'ESP32', position: 'right-[10%] top-[40%]', size: 'md' },
+  { emoji: '▲', label: 'Next.js', position: 'right-[15%] bottom-[25%]', size: 'md' },
+  { emoji: '🐳', label: 'Docker', position: 'left-[40%] bottom-[12%]', size: 'md' },
+  { emoji: '🧠', label: 'TensorFlow', position: 'right-[35%] top-[12%]', size: 'md' },
+  { emoji: '🗺️', label: 'SLAM', position: 'left-[38%] top-[15%]', size: 'md' },
+  // Satellite
+  { emoji: '🎯', label: 'YOLO', position: 'left-[5%] top-[55%]', size: 'sm' },
+  { emoji: '🐧', label: 'Linux', position: 'right-[5%] top-[60%]', size: 'sm' },
+  { emoji: '📡', label: 'MQTT', position: 'left-[55%] bottom-[8%]', size: 'sm' },
+  { emoji: '⚙️', label: 'CUDA', position: 'right-[8%] top-[18%]', size: 'sm' },
+];
+
+// --- Components ---
+
+function SkillBar({ name, level }: { name: string; level: number }) {
+  return (
+    <div className="space-y-2">
+      <div className="flex justify-between text-[10px] uppercase tracking-wider">
+        <span className="text-[#666] group-hover:text-white transition-colors duration-300">{name}</span>
+        <span className="text-[#333] group-hover:text-blue-500 transition-colors duration-300">{level}%</span>
+      </div>
+      <div className="h-0.5 bg-[#1f1f1f] overflow-hidden">
+        <motion.div
+          className="h-full bg-gradient-to-r from-blue-600 to-blue-400 skill-bar"
+          initial={{ width: 0 }}
+          whileInView={{ width: `${level}%` }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function ConstellationNode({ 
+  emoji, 
+  label, 
+  position, 
+  size 
+}: { 
+  emoji: string; 
+  label: string; 
+  position: string; 
+  size: 'lg' | 'md' | 'sm';
+}) {
+  const sizeClasses = {
+    lg: 'w-12 h-12 text-lg border-blue-400/50 hover:border-blue-400 rounded-lg',
+    md: 'w-10 h-10 text-sm border-[#333] hover:border-blue-300 rounded-full',
+    sm: 'w-8 h-8 text-xs border-[#222] hover:border-blue-400/40 rounded-full',
+  };
+  
+  const labelClasses = {
+    lg: '-bottom-5 text-[9px] text-[#666] group-hover:text-blue-400',
+    md: '-bottom-4 text-[9px] text-[#555] group-hover:text-blue-300 opacity-0 group-hover:opacity-100',
+    sm: '-bottom-3 text-[8px] text-[#444] group-hover:text-blue-400 opacity-0 group-hover:opacity-100',
+  };
+
+  return (
+    <div className={`absolute ${position}`}>
+      <motion.div 
+        className="group relative"
+        whileHover={{ scale: 1.15 }}
+        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+      >
+        <div className={`${sizeClasses[size]} bg-[#0a0a0a] border flex flex-col items-center justify-center transition-all duration-300 hover:bg-blue-500/10 cursor-crosshair`}>
+          <span>{emoji}</span>
+        </div>
+        <span className={`absolute left-1/2 -translate-x-1/2 ${labelClasses[size]} whitespace-nowrap transition-all duration-300`}>
+          {label}
+        </span>
+      </motion.div>
+    </div>
+  );
+}
 
 export default function PortfolioHome() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#d4d4d4] font-mono selection:bg-[#333] selection:text-white">
+    <div className="min-h-screen bg-[#0a0a0a] text-[#d4d4d4] font-mono selection:bg-blue-500/30 selection:text-white relative">
+      {/* Subtle background grid */}
+      <div className="fixed inset-0 bg-grid pointer-events-none opacity-50" />
+      
       {/* HUD Header */}
-      <header className="border-b border-[#1f1f1f] p-4 flex justify-between items-center sticky top-0 bg-[#0a0a0a]/80 backdrop-blur-md z-50">
+      <motion.header 
+        className="fixed top-0 left-0 right-0 border-b border-[#1f1f1f] p-4 flex justify-between items-center z-50 glass"
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+      >
         <div className="flex items-center gap-3">
-          <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse" />
-          <h1 className="text-sm tracking-widest uppercase font-bold">Sebastian Barrio // Systems Architect</h1>
+          <motion.div 
+            className="w-2.5 h-2.5 bg-blue-500 rounded-full"
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [1, 0.7, 1]
+            }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          <h1 className="text-sm tracking-widest uppercase font-bold text-white">
+            Sebastian Barrio <span className="text-[#444]">//</span> Systems Architect
+          </h1>
         </div>
+        
         <nav className="hidden md:flex gap-8 text-[10px] tracking-[0.2em] uppercase text-[#666]">
-          <a href="#github-activity" className="hover:text-white transition-colors">Activity</a>
-          <a href="#history" className="hover:text-white transition-colors">History</a>
-          <a href="#projects" className="hover:text-white transition-colors">Repos</a>
-          <a href="#stack" className="hover:text-white transition-colors">Stack</a>
-          <a href="#status" className="hover:text-white transition-colors">System Status</a>
-          <a href="/masters-research-2027" className="text-blue-500 hover:text-blue-400 transition-colors">Masters Dashboard</a>
+          {['Activity', 'History', 'Repos', 'Stack', 'System Status'].map((item, i) => (
+            <motion.a 
+              key={item}
+              href={`#${item.toLowerCase().replace(' ', '-')}`}
+              className="hover:text-white transition-colors relative group"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * i + 0.3 }}
+            >
+              {item}
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+            </motion.a>
+          ))}
+          <motion.a 
+            href="/masters-research-2027" 
+            className="text-blue-500 hover:text-blue-400 transition-colors"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+          >
+            Masters Dashboard
+          </motion.a>
         </nav>
-      </header>
+      </motion.header>
 
-      <main className="max-w-6xl mx-auto px-6 pt-24 pb-12">
+      <main className="relative z-10 max-w-6xl mx-auto px-6 pt-32 pb-12">
         {/* Hero Section */}
-        <section className="mb-32">
-          <div className="inline-block border border-blue-500/30 bg-blue-500/5 px-3 py-1 mb-6 text-[10px] text-blue-400 tracking-tighter uppercase">
-            Status: Available for R&D Collaboration
-          </div>
-          <h2 className="text-5xl md:text-7xl font-bold text-white mb-8 tracking-tighter leading-none">
-            Bridging the gap between <span className="text-blue-500">Silicon</span> and <span className="bg-gradient-to-b from-[#e8e8e8] via-[#a0a0a0] to-[#606060] bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(200,200,200,0.3)]">Steel</span>.
-          </h2>
-          <p className="max-w-xl text-[#888] text-lg leading-relaxed mb-12">
-            AI & Robotics Engineer with a foundation in Mechatronics and a proven record of applying cutting-edge AI to solve complex automation challenges.
-          </p>
-          <div className="flex gap-4">
-            <button 
-              onClick={() => window.location.href = 'mailto:sebastianbarrio@example.com'}
-              className="bg-white text-black px-6 py-3 text-sm font-bold uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-all duration-300 active:scale-95"
-            >
-              Initiate Contact
-            </button>
-            <button 
-              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-              className="border border-[#333] px-6 py-3 text-sm font-bold uppercase tracking-widest hover:border-white transition-all active:scale-95"
-            >
-              View Log (Projects)
-            </button>
-          </div>
+        <section className="mb-40 min-h-[70vh] flex flex-col justify-center">
+          <FadeIn delay={0.2}>
+            <div className="inline-flex items-center gap-2 border border-blue-500/30 bg-blue-500/5 px-4 py-2 mb-8 text-[10px] text-blue-400 tracking-tighter uppercase w-fit">
+              <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
+              Status: Available for R&D Collaboration
+            </div>
+          </FadeIn>
+          
+          <FadeIn delay={0.3} direction="up" distance={40}>
+            <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 tracking-tighter leading-[0.9]">
+              Bridging the gap<br />
+              between <span className="text-blue-500">Silicon</span><br />
+              and <span className="text-steel drop-shadow-[0_0_30px_rgba(200,200,200,0.2)]">Steel</span>.
+            </h2>
+          </FadeIn>
+          
+          <FadeIn delay={0.4}>
+            <p className="max-w-2xl text-[#888] text-lg md:text-xl leading-relaxed mb-12">
+              AI & Robotics Engineer with a foundation in Mechatronics and a proven record of applying cutting-edge AI to solve complex automation challenges.
+            </p>
+          </FadeIn>
+          
+          <FadeIn delay={0.5}>
+            <div className="flex flex-wrap gap-4">
+              <motion.button 
+                onClick={() => window.location.href = 'mailto:sebastianbarrio@example.com'}
+                className="group relative bg-white text-black px-8 py-4 text-sm font-bold uppercase tracking-widest overflow-hidden"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  Initiate Contact
+                  <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </span>
+                <motion.div 
+                  className="absolute inset-0 bg-blue-500"
+                  initial={{ x: '-100%' }}
+                  whileHover={{ x: 0 }}
+                  transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                />
+              </motion.button>
+              
+              <motion.button 
+                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                className="border border-[#333] px-8 py-4 text-sm font-bold uppercase tracking-widest hover:border-white hover:bg-white/5 transition-all duration-300"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                View Log (Projects)
+              </motion.button>
+            </div>
+          </FadeIn>
         </section>
 
         {/* System Stats / Dashboard Grid */}
-        <section id="status" className="grid grid-cols-1 md:grid-cols-3 gap-1 border border-[#1f1f1f] bg-[#1f1f1f] mb-32">
-          <div className="bg-[#0a0a0a] p-8 flex flex-col gap-4">
-            <div className="flex items-center gap-2 text-[#444]">
-              <Cpu size={16} />
-              <span className="text-[10px] uppercase tracking-widest">Compute Priority</span>
+        <section id="system-status" className="mb-40">
+          <FadeIn>
+            <div className="flex items-center gap-4 mb-8">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#1f1f1f] to-[#1f1f1f]" />
+              <span className="text-[10px] uppercase tracking-[0.3em] text-[#444]">System Metrics</span>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent via-[#1f1f1f] to-[#1f1f1f]" />
             </div>
-            <div className="text-3xl font-light text-white italic">Robotics / ROS 2</div>
-            <div className="w-full h-1 bg-[#111] mt-auto">
-              <div className="w-[85%] h-full bg-blue-500" />
-            </div>
-          </div>
-          <div className="bg-[#0a0a0a] p-8 flex flex-col gap-4">
-            <div className="flex items-center gap-2 text-[#444]">
-              <Database size={16} />
-              <span className="text-[10px] uppercase tracking-widest">Neural Load</span>
-            </div>
-            <div className="text-3xl font-light text-white italic">AI / LLM Agents</div>
-            <div className="w-full h-1 bg-[#111] mt-auto">
-              <div className="w-[72%] h-full bg-blue-500" />
-            </div>
-          </div>
-          <div className="bg-[#0a0a0a] p-8 flex flex-col gap-4">
-            <div className="flex items-center gap-2 text-[#444]">
-              <Activity size={16} />
-              <span className="text-[10px] uppercase tracking-widest">Physical Integration</span>
-            </div>
-            <div className="text-3xl font-light text-white italic">Mechatronics</div>
-            <div className="w-full h-1 bg-[#111] mt-auto">
-              <div className="w-[94%] h-full bg-blue-500" />
-            </div>
-          </div>
+          </FadeIn>
+          
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-1 border border-[#1f1f1f] bg-[#1f1f1f]" staggerDelay={0.15}>
+            {SYSTEM_STATS.map((stat) => (
+              <StaggerItem key={stat.label}>
+                <motion.div 
+                  className="bg-[#0a0a0a] p-8 flex flex-col gap-4 group hover:bg-[#0f0f0f] transition-colors duration-500"
+                  whileHover={{ y: -2 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="flex items-center gap-3 text-[#444]">
+                    <stat.icon size={16} className="group-hover:text-blue-500 transition-colors" />
+                    <span className="text-[10px] uppercase tracking-widest">{stat.label}</span>
+                  </div>
+                  <div className="text-3xl font-light text-white italic">{stat.value}</div>
+                  <div className="w-full h-1 bg-[#111] mt-auto overflow-hidden">
+                    <motion.div 
+                      className="h-full bg-gradient-to-r from-blue-600 to-blue-400"
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${stat.level}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1], delay: 0.3 }}
+                    />
+                  </div>
+                </motion.div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
         </section>
 
         {/* GitHub Activity Graph */}
-        <section id="github-activity" className="mb-32">
-          <div className="flex justify-between items-end mb-6 border-b border-[#1f1f1f] pb-4">
-            <h3 className="text-sm uppercase tracking-[0.3em] text-[#666]">Activity Matrix</h3>
-            <span className="text-[10px] text-[#333]">/ github.com/papalino456</span>
-          </div>
-          <GitHubActivity />
+        <section id="github-activity" className="mb-40">
+          <FadeIn>
+            <div className="flex justify-between items-end mb-8 border-b border-[#1f1f1f] pb-4">
+              <h3 className="text-sm uppercase tracking-[0.3em] text-[#666]">Activity Matrix</h3>
+              <a 
+                href="https://github.com/papalino456" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-[10px] text-[#444] hover:text-blue-500 transition-colors flex items-center gap-1 group"
+              >
+                <Github size={12} />
+                github.com/papalino456
+                <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+              </a>
+            </div>
+          </FadeIn>
+          <FadeIn delay={0.2}>
+            <GitHubActivity />
+          </FadeIn>
         </section>
 
         {/* Tech Stack - Skill Constellation */}
-        <section id="stack" className="mb-32">
-          <div className="flex justify-between items-end mb-12 border-b border-[#1f1f1f] pb-4">
-            <h3 className="text-sm uppercase tracking-[0.3em] text-[#666]">Tech Stack</h3>
-            <span className="text-[10px] text-[#333]">/ CORE_COMPETENCIES</span>
-          </div>
+        <section id="stack" className="mb-40">
+          <FadeIn>
+            <div className="flex justify-between items-end mb-12 border-b border-[#1f1f1f] pb-4">
+              <h3 className="text-sm uppercase tracking-[0.3em] text-[#666]">Tech Stack</h3>
+              <span className="text-[10px] text-[#333]">/ CORE_COMPETENCIES</span>
+            </div>
+          </FadeIn>
 
           {/* Skill Radar Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-            {/* AI & Machine Learning */}
-            <div className="group relative bg-[#0a0a0a] border border-[#1f1f1f] p-6 hover:border-blue-500/30 transition-all duration-500">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-blue-500/10 border border-blue-500/20">
-                    <Brain size={18} className="text-blue-500" />
-                  </div>
-                  <div>
-                    <h4 className="text-white font-bold text-sm uppercase tracking-wider">AI / ML</h4>
-                    <span className="text-[10px] text-[#444] uppercase tracking-widest">Neural Systems</span>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  {[
-                    { name: 'Python', level: 95, color: 'bg-blue-500' },
-                    { name: 'Computer Vision / OpenCV', level: 90, color: 'bg-blue-400' },
-                    { name: 'YOLO / Object Detection', level: 88, color: 'bg-blue-400' },
-                    { name: 'LLM Agents / RAG', level: 82, color: 'bg-blue-300' },
-                    { name: 'PyTorch / TensorFlow', level: 78, color: 'bg-blue-300' },
-                  ].map((skill) => (
-                    <div key={skill.name} className="space-y-1.5">
-                      <div className="flex justify-between text-[10px] uppercase tracking-wider">
-                        <span className="text-[#666] group-hover:text-white transition-colors">{skill.name}</span>
-                        <span className="text-[#333] group-hover:text-blue-500 transition-colors">{skill.level}%</span>
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16" staggerDelay={0.1}>
+            {SKILL_CATEGORIES.map((category) => (
+              <StaggerItem key={category.title}>
+                <motion.div 
+                  className="group relative bg-[#0a0a0a] border border-[#1f1f1f] p-6 hover:border-blue-500/30 transition-all duration-500 h-full"
+                  whileHover={{ y: -4 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative">
+                    <div className="flex items-center gap-3 mb-8">
+                      <div className="p-2.5 bg-blue-500/10 border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors">
+                        <category.icon size={20} className="text-blue-500" />
                       </div>
-                      <div className="h-0.5 bg-[#1f1f1f] overflow-hidden">
-                        <div 
-                          className={`h-full ${skill.color} transition-all duration-1000 ease-out group-hover:animate-pulse`}
-                          style={{ width: `${skill.level}%` }}
-                        />
+                      <div>
+                        <h4 className="text-white font-bold text-sm uppercase tracking-wider">{category.title}</h4>
+                        <span className="text-[10px] text-[#444] uppercase tracking-widest">{category.subtitle}</span>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Robotics & Embedded */}
-            <div className="group relative bg-[#0a0a0a] border border-[#1f1f1f] p-6 hover:border-blue-500/30 transition-all duration-500">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-blue-500/10 border border-blue-500/20">
-                    <Bot size={18} className="text-blue-500" />
-                  </div>
-                  <div>
-                    <h4 className="text-white font-bold text-sm uppercase tracking-wider">Robotics</h4>
-                    <span className="text-[10px] text-[#444] uppercase tracking-widest">Physical Systems</span>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  {[
-                    { name: 'ROS 2 / Navigation', level: 92, color: 'bg-blue-500' },
-                    { name: 'SLAM / Path Planning', level: 88, color: 'bg-blue-400' },
-                    { name: 'C++ / Embedded', level: 85, color: 'bg-blue-400' },
-                    { name: 'ESP32 / IoT', level: 90, color: 'bg-blue-500' },
-                    { name: 'PID / Control Systems', level: 86, color: 'bg-blue-300' },
-                  ].map((skill) => (
-                    <div key={skill.name} className="space-y-1.5">
-                      <div className="flex justify-between text-[10px] uppercase tracking-wider">
-                        <span className="text-[#666] group-hover:text-white transition-colors">{skill.name}</span>
-                        <span className="text-[#333] group-hover:text-blue-500 transition-colors">{skill.level}%</span>
-                      </div>
-                      <div className="h-0.5 bg-[#1f1f1f] overflow-hidden">
-                        <div 
-                          className={`h-full ${skill.color} transition-all duration-1000 ease-out`}
-                          style={{ width: `${skill.level}%` }}
-                        />
-                      </div>
+                    <div className="space-y-5">
+                      {category.skills.map((skill) => (
+                        <SkillBar key={skill.name} name={skill.name} level={skill.level} />
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Software Engineering */}
-            <div className="group relative bg-[#0a0a0a] border border-[#1f1f1f] p-6 hover:border-blue-500/30 transition-all duration-500">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-blue-500/10 border border-blue-500/20">
-                    <Code2 size={18} className="text-blue-500" />
                   </div>
-                  <div>
-                    <h4 className="text-white font-bold text-sm uppercase tracking-wider">Software</h4>
-                    <span className="text-[10px] text-[#444] uppercase tracking-widest">Full Stack</span>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  {[
-                    { name: 'TypeScript / React', level: 88, color: 'bg-blue-500' },
-                    { name: 'Next.js / Node.js', level: 85, color: 'bg-blue-400' },
-                    { name: 'System Architecture', level: 82, color: 'bg-blue-300' },
-                    { name: 'API Design / GraphQL', level: 80, color: 'bg-blue-300' },
-                    { name: 'Testing / CI/CD', level: 84, color: 'bg-blue-400' },
-                  ].map((skill) => (
-                    <div key={skill.name} className="space-y-1.5">
-                      <div className="flex justify-between text-[10px] uppercase tracking-wider">
-                        <span className="text-[#666] group-hover:text-white transition-colors">{skill.name}</span>
-                        <span className="text-[#333] group-hover:text-blue-500 transition-colors">{skill.level}%</span>
-                      </div>
-                      <div className="h-0.5 bg-[#1f1f1f] overflow-hidden">
-                        <div 
-                          className={`h-full ${skill.color} transition-all duration-1000 ease-out`}
-                          style={{ width: `${skill.level}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+                </motion.div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
 
           {/* Skill Constellation - Orbital Visualization */}
-          <div className="border border-[#1f1f1f] bg-[#050505] p-8 relative overflow-hidden min-h-[400px]">
-            {/* Background constellation lines */}
-            <svg className="absolute inset-0 w-full h-full opacity-20 pointer-events-none">
-              <defs>
-                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1f1f1f" strokeWidth="0.5"/>
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#grid)" />
-              {/* Constellation lines connecting nodes */}
-              <line x1="15%" y1="30%" x2="35%" y2="25%" stroke="#3b82f6" strokeWidth="0.5" opacity="0.3" />
-              <line x1="35%" y1="25%" x2="55%" y2="35%" stroke="#3b82f6" strokeWidth="0.5" opacity="0.3" />
-              <line x1="55%" y1="35%" x2="75%" y2="28%" stroke="#3b82f6" strokeWidth="0.5" opacity="0.3" />
-              <line x1="25%" y1="60%" x2="45%" y2="55%" stroke="#3b82f6" strokeWidth="0.5" opacity="0.3" />
-              <line x1="45%" y1="55%" x2="65%" y2="65%" stroke="#3b82f6" strokeWidth="0.5" opacity="0.3" />
-              <line x1="15%" y1="30%" x2="25%" y2="60%" stroke="#3b82f6" strokeWidth="0.5" opacity="0.2" />
-              <line x1="35%" y1="25%" x2="45%" y2="55%" stroke="#3b82f6" strokeWidth="0.5" opacity="0.2" />
-              <line x1="75%" y1="28%" x2="65%" y2="65%" stroke="#3b82f6" strokeWidth="0.5" opacity="0.2" />
-              {/* Orbital rings */}
-              <ellipse cx="50%" cy="50%" rx="35%" ry="25%" fill="none" stroke="#1f1f1f" strokeWidth="1" />
-              <ellipse cx="50%" cy="50%" rx="25%" ry="18%" fill="none" stroke="#1f1f1f" strokeWidth="0.5" opacity="0.5" />
-            </svg>
-            
-            <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-8">
-                <Layers size={14} className="text-blue-500" />
-                <span className="text-[10px] uppercase tracking-[0.3em] text-[#444]">Technology Constellation</span>
-              </div>
+          <FadeIn delay={0.2}>
+            <div className="border border-[#1f1f1f] bg-[#050505] p-8 relative overflow-hidden min-h-[420px]">
+              {/* Background constellation lines */}
+              <svg className="absolute inset-0 w-full h-full opacity-20 pointer-events-none">
+                <defs>
+                  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1f1f1f" strokeWidth="0.5"/>
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+                {/* Constellation lines connecting nodes */}
+                <line x1="15%" y1="30%" x2="35%" y2="25%" stroke="#3b82f6" strokeWidth="0.5" opacity="0.3" />
+                <line x1="35%" y1="25%" x2="55%" y2="35%" stroke="#3b82f6" strokeWidth="0.5" opacity="0.3" />
+                <line x1="55%" y1="35%" x2="75%" y2="28%" stroke="#3b82f6" strokeWidth="0.5" opacity="0.3" />
+                <line x1="25%" y1="60%" x2="45%" y2="55%" stroke="#3b82f6" strokeWidth="0.5" opacity="0.3" />
+                <line x1="45%" y1="55%" x2="65%" y2="65%" stroke="#3b82f6" strokeWidth="0.5" opacity="0.3" />
+                <line x1="15%" y1="30%" x2="25%" y2="60%" stroke="#3b82f6" strokeWidth="0.5" opacity="0.2" />
+                <line x1="35%" y1="25%" x2="45%" y2="55%" stroke="#3b82f6" strokeWidth="0.5" opacity="0.2" />
+                <line x1="75%" y1="28%" x2="65%" y2="65%" stroke="#3b82f6" strokeWidth="0.5" opacity="0.2" />
+                {/* Orbital rings */}
+                <ellipse cx="50%" cy="50%" rx="35%" ry="25%" fill="none" stroke="#1f1f1f" strokeWidth="1" />
+                <ellipse cx="50%" cy="50%" rx="25%" ry="18%" fill="none" stroke="#1f1f1f" strokeWidth="0.5" opacity="0.5" />
+              </svg>
+              
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-10">
+                  <Layers size={14} className="text-blue-500" />
+                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#444]">Technology Constellation</span>
+                </div>
 
-              {/* Orbital Node Layout */}
-              <div className="relative h-[320px]">
-                {/* Center node - Core */}
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <div className="relative group">
-                    <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full animate-pulse" />
-                    <div className="relative w-16 h-16 bg-[#0a0a0a] border-2 border-blue-500 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/20">
-                      <Microchip size={24} className="text-blue-500" />
-                    </div>
-                    <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-wider text-blue-500 whitespace-nowrap">Core Stack</span>
+                {/* Orbital Node Layout */}
+                <div className="relative h-[340px]">
+                  {/* Center node - Core */}
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <motion.div 
+                      className="relative group"
+                      animate={{ 
+                        boxShadow: ['0 0 20px rgba(59,130,246,0.2)', '0 0 40px rgba(59,130,246,0.3)', '0 0 20px rgba(59,130,246,0.2)']
+                      }}
+                      transition={{ duration: 3, repeat: Infinity }}
+                    >
+                      <div className="w-16 h-16 bg-[#0a0a0a] border-2 border-blue-500 rounded-full flex items-center justify-center">
+                        <Microchip size={24} className="text-blue-500" />
+                      </div>
+                      <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-wider text-blue-500 whitespace-nowrap">Core Stack</span>
+                    </motion.div>
                   </div>
+
+                  {/* Orbital nodes */}
+                  {CONSTELLATION_NODES.map((node) => (
+                    <ConstellationNode key={node.label} {...node} />
+                  ))}
                 </div>
 
-                {/* Orbital nodes - Inner ring */}
-                <div className="absolute left-[25%] top-[25%]">
-                  <div className="group relative">
-                    <div className="w-12 h-12 bg-[#0a0a0a] border border-blue-400/50 hover:border-blue-400 rounded-lg flex flex-col items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-blue-500/10 cursor-crosshair">
-                      <span className="text-lg">🐍</span>
+                {/* Category Legend */}
+                <div className="flex flex-wrap justify-center gap-8 mt-8 pt-6 border-t border-[#1f1f1f]">
+                  {[
+                    { color: 'bg-blue-500', label: 'Core', shadow: true },
+                    { color: 'border border-blue-400/50', label: 'Primary' },
+                    { color: 'border border-[#444]', label: 'Secondary' },
+                    { color: 'border border-[#333] w-2 h-2', label: 'Tools' },
+                  ].map((item) => (
+                    <div key={item.label} className="flex items-center gap-2">
+                      <div className={`w-3 h-3 ${item.color} ${item.shadow ? 'rounded-full shadow-lg shadow-blue-500/30' : 'rounded-full'}`} />
+                      <span className="text-[10px] uppercase tracking-wider text-[#555]">{item.label}</span>
                     </div>
-                    <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[9px] uppercase tracking-wider text-[#666] group-hover:text-blue-400 whitespace-nowrap transition-colors">Python</span>
-                  </div>
-                </div>
-
-                <div className="absolute right-[25%] top-[22%]">
-                  <div className="group relative">
-                    <div className="w-12 h-12 bg-[#0a0a0a] border border-blue-400/50 hover:border-blue-400 rounded-lg flex flex-col items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-blue-500/10 cursor-crosshair">
-                      <span className="text-lg">🤖</span>
-                    </div>
-                    <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[9px] uppercase tracking-wider text-[#666] group-hover:text-blue-400 whitespace-nowrap transition-colors">ROS 2</span>
-                  </div>
-                </div>
-
-                <div className="absolute right-[20%] bottom-[30%]">
-                  <div className="group relative">
-                    <div className="w-12 h-12 bg-[#0a0a0a] border border-blue-400/50 hover:border-blue-400 rounded-lg flex flex-col items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-blue-500/10 cursor-crosshair">
-                      <span className="text-lg">⚡</span>
-                    </div>
-                    <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[9px] uppercase tracking-wider text-[#666] group-hover:text-blue-400 whitespace-nowrap transition-colors">C++</span>
-                  </div>
-                </div>
-
-                <div className="absolute left-[22%] bottom-[28%]">
-                  <div className="group relative">
-                    <div className="w-12 h-12 bg-[#0a0a0a] border border-blue-400/50 hover:border-blue-400 rounded-lg flex flex-col items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-blue-500/10 cursor-crosshair">
-                      <span className="text-lg">⚛️</span>
-                    </div>
-                    <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[9px] uppercase tracking-wider text-[#666] group-hover:text-blue-400 whitespace-nowrap transition-colors">React</span>
-                  </div>
-                </div>
-
-                {/* Outer ring nodes */}
-                <div className="absolute left-[8%] top-[35%]">
-                  <div className="group relative">
-                    <div className="w-10 h-10 bg-[#0a0a0a] border border-[#333] hover:border-blue-300 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:border-blue-500/50 cursor-crosshair">
-                      <span className="text-sm">👁️</span>
-                    </div>
-                    <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[9px] uppercase tracking-wider text-[#555] group-hover:text-blue-300 whitespace-nowrap transition-colors opacity-0 group-hover:opacity-100">OpenCV</span>
-                  </div>
-                </div>
-
-                <div className="absolute left-[15%] top-[60%]">
-                  <div className="group relative">
-                    <div className="w-10 h-10 bg-[#0a0a0a] border border-[#333] hover:border-blue-300 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:border-blue-500/50 cursor-crosshair">
-                      <span className="text-sm">🔥</span>
-                    </div>
-                    <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[9px] uppercase tracking-wider text-[#555] group-hover:text-blue-300 whitespace-nowrap transition-colors opacity-0 group-hover:opacity-100">PyTorch</span>
-                  </div>
-                </div>
-
-                <div className="absolute right-[10%] top-[40%]">
-                  <div className="group relative">
-                    <div className="w-10 h-10 bg-[#0a0a0a] border border-[#333] hover:border-blue-300 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:border-blue-500/50 cursor-crosshair">
-                      <span className="text-sm">🔌</span>
-                    </div>
-                    <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[9px] uppercase tracking-wider text-[#555] group-hover:text-blue-300 whitespace-nowrap transition-colors opacity-0 group-hover:opacity-100">ESP32</span>
-                  </div>
-                </div>
-
-                <div className="absolute right-[15%] bottom-[25%]">
-                  <div className="group relative">
-                    <div className="w-10 h-10 bg-[#0a0a0a] border border-[#333] hover:border-blue-300 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:border-blue-500/50 cursor-crosshair">
-                      <span className="text-sm">▲</span>
-                    </div>
-                    <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[9px] uppercase tracking-wider text-[#555] group-hover:text-blue-300 whitespace-nowrap transition-colors opacity-0 group-hover:opacity-100">Next.js</span>
-                  </div>
-                </div>
-
-                <div className="absolute left-[40%] bottom-[12%]">
-                  <div className="group relative">
-                    <div className="w-10 h-10 bg-[#0a0a0a] border border-[#333] hover:border-blue-300 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:border-blue-500/50 cursor-crosshair">
-                      <span className="text-sm">🐳</span>
-                    </div>
-                    <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[9px] uppercase tracking-wider text-[#555] group-hover:text-blue-300 whitespace-nowrap transition-colors opacity-0 group-hover:opacity-100">Docker</span>
-                  </div>
-                </div>
-
-                <div className="absolute right-[35%] top-[12%]">
-                  <div className="group relative">
-                    <div className="w-10 h-10 bg-[#0a0a0a] border border-[#333] hover:border-blue-300 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:border-blue-500/50 cursor-crosshair">
-                      <span className="text-sm">🧠</span>
-                    </div>
-                    <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[9px] uppercase tracking-wider text-[#555] group-hover:text-blue-300 whitespace-nowrap transition-colors opacity-0 group-hover:opacity-100">TensorFlow</span>
-                  </div>
-                </div>
-
-                <div className="absolute left-[38%] top-[15%]">
-                  <div className="group relative">
-                    <div className="w-10 h-10 bg-[#0a0a0a] border border-[#333] hover:border-blue-300 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:border-blue-500/50 cursor-crosshair">
-                      <span className="text-sm">🗺️</span>
-                    </div>
-                    <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[9px] uppercase tracking-wider text-[#555] group-hover:text-blue-300 whitespace-nowrap transition-colors opacity-0 group-hover:opacity-100">SLAM</span>
-                  </div>
-                </div>
-
-                {/* Satellite nodes - smallest */}
-                <div className="absolute left-[5%] top-[55%]">
-                  <div className="group relative">
-                    <div className="w-8 h-8 bg-[#0a0a0a] border border-[#222] hover:border-blue-400/40 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-125 hover:bg-blue-500/5 cursor-crosshair">
-                      <span className="text-xs">🎯</span>
-                    </div>
-                    <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-[8px] uppercase tracking-wider text-[#444] group-hover:text-blue-400 whitespace-nowrap transition-colors opacity-0 group-hover:opacity-100">YOLO</span>
-                  </div>
-                </div>
-
-                <div className="absolute right-[5%] top-[60%]">
-                  <div className="group relative">
-                    <div className="w-8 h-8 bg-[#0a0a0a] border border-[#222] hover:border-blue-400/40 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-125 hover:bg-blue-500/5 cursor-crosshair">
-                      <span className="text-xs">🐧</span>
-                    </div>
-                    <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-[8px] uppercase tracking-wider text-[#444] group-hover:text-blue-400 whitespace-nowrap transition-colors opacity-0 group-hover:opacity-100">Linux</span>
-                  </div>
-                </div>
-
-                <div className="absolute left-[55%] bottom-[8%]">
-                  <div className="group relative">
-                    <div className="w-8 h-8 bg-[#0a0a0a] border border-[#222] hover:border-blue-400/40 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-125 hover:bg-blue-500/5 cursor-crosshair">
-                      <span className="text-xs">📡</span>
-                    </div>
-                    <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-[8px] uppercase tracking-wider text-[#444] group-hover:text-blue-400 whitespace-nowrap transition-colors opacity-0 group-hover:opacity-100">MQTT</span>
-                  </div>
-                </div>
-
-                <div className="absolute right-[8%] top-[18%]">
-                  <div className="group relative">
-                    <div className="w-8 h-8 bg-[#0a0a0a] border border-[#222] hover:border-blue-400/40 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-125 hover:bg-blue-500/5 cursor-crosshair">
-                      <span className="text-xs">⚙️</span>
-                    </div>
-                    <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-[8px] uppercase tracking-wider text-[#444] group-hover:text-blue-400 whitespace-nowrap transition-colors opacity-0 group-hover:opacity-100">CUDA</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Category Legend */}
-              <div className="flex flex-wrap justify-center gap-8 mt-4 pt-6 border-t border-[#1f1f1f]">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-blue-500 rounded-full shadow-lg shadow-blue-500/30" />
-                  <span className="text-[10px] uppercase tracking-wider text-[#555]">Core</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 border border-blue-400/50 rounded-lg" />
-                  <span className="text-[10px] uppercase tracking-wider text-[#555]">Primary</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 border border-[#444] rounded-full" />
-                  <span className="text-[10px] uppercase tracking-wider text-[#555]">Secondary</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 border border-[#333] rounded-full" />
-                  <span className="text-[10px] uppercase tracking-wider text-[#444]">Tools</span>
+                  ))}
                 </div>
               </div>
             </div>
-          </div>
+          </FadeIn>
         </section>
 
-        {/* Timeline / History Section - Horizontal Layout */}
-        <section id="history" className="mb-32">
-          <div className="flex justify-between items-end mb-12 border-b border-[#1f1f1f] pb-4">
-            <h3 className="text-sm uppercase tracking-[0.3em] text-[#666]">Trajectory Log</h3>
-            <span className="text-[10px] text-[#333]">/ WORK_AND_EDUCATION</span>
-          </div>
+        {/* Timeline / History Section */}
+        <section id="history" className="mb-40">
+          <FadeIn>
+            <div className="flex justify-between items-end mb-12 border-b border-[#1f1f1f] pb-4">
+              <h3 className="text-sm uppercase tracking-[0.3em] text-[#666]">Trajectory Log</h3>
+              <span className="text-[10px] text-[#333]">/ WORK_AND_EDUCATION</span>
+            </div>
+          </FadeIn>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Entry 01 */}
-            <div className="relative pt-8 border-t border-[#1f1f1f]">
-              <div className="absolute -top-1.5 left-0 w-3 h-3 bg-blue-500 rounded-full animate-pulse" />
-              <div className="text-blue-500 font-bold text-[10px] mb-4 tracking-widest uppercase">2025 // PRESENT</div>
-              <h4 className="text-white font-bold text-lg uppercase tracking-tight mb-1">AI R&D Engineer</h4>
-              <div className="text-[#666] text-[10px] uppercase mb-4 tracking-wider">Siemens // Munich</div>
-              <p className="text-[#888] text-xs leading-relaxed">
-                ML pipelines for assembly planning and YOLO-based digitization (&gt;98% accuracy). Novel Fourier-IK methods.
-              </p>
-            </div>
-
-            {/* Entry 02 */}
-            <div className="relative pt-8 border-t border-[#1f1f1f]">
-              <div className="absolute -top-1.5 left-0 w-3 h-3 bg-[#333] rounded-full" />
-              <div className="text-[#444] font-bold text-[10px] mb-4 tracking-widest uppercase">2021 // 2025</div>
-              <h4 className="text-white font-bold text-lg uppercase tracking-tight mb-1">BSc. Mechatronics</h4>
-              <div className="text-[#666] text-[10px] uppercase mb-4 tracking-wider">ITESM // Mexico</div>
-              <p className="text-[#888] text-xs leading-relaxed">
-                Scholarship holder. Specialized in Robotics & Industrial Automation. Exchange at TU Dresden, Germany.
-              </p>
-            </div>
-
-            {/* Entry 03 */}
-            <div className="relative pt-8 border-t border-[#1f1f1f]">
-              <div className="absolute -top-1.5 left-0 w-3 h-3 bg-[#333] rounded-full" />
-              <div className="text-[#444] font-bold text-[10px] mb-4 tracking-widest uppercase">2023 // 2023</div>
-              <h4 className="text-white font-bold text-lg uppercase tracking-tight mb-1">Jr. Front-End Dev</h4>
-              <div className="text-[#666] text-[10px] uppercase mb-4 tracking-wider">La Brujula // CDMX</div>
-              <p className="text-[#888] text-xs leading-relaxed">
-                Design systems, CI/CD pipelines, and API integrations for real-time translation and automation.
-              </p>
-            </div>
-          </div>
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8" staggerDelay={0.15}>
+            {TIMELINE.map((entry, index) => (
+              <StaggerItem key={entry.period}>
+                <motion.div 
+                  className="relative pt-8 border-t border-[#1f1f1f] group"
+                  whileHover={{ y: -4 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div 
+                    className={`absolute -top-1.5 left-0 w-3 h-3 rounded-full ${entry.active ? 'bg-blue-500' : 'bg-[#333] group-hover:bg-[#444]'}`}
+                    animate={entry.active ? {
+                      scale: [1, 1.3, 1],
+                      opacity: [1, 0.7, 1]
+                    } : {}}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                  <div className={`font-bold text-[10px] mb-4 tracking-widest uppercase ${entry.active ? 'text-blue-500' : 'text-[#444] group-hover:text-[#666]'} transition-colors`}>
+                    {entry.period}
+                  </div>
+                  <h4 className="text-white font-bold text-lg uppercase tracking-tight mb-1 group-hover:text-blue-400 transition-colors">
+                    {entry.title}
+                  </h4>
+                  <div className="text-[#666] text-[10px] uppercase mb-4 tracking-wider">{entry.company}</div>
+                  <p className="text-[#888] text-xs leading-relaxed">{entry.description}</p>
+                </motion.div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
         </section>
 
         {/* Featured Project Preview */}
-        <section id="projects" className="mb-32">
-          <div className="flex justify-between items-end mb-12 border-b border-[#1f1f1f] pb-4">
-            <h3 className="text-sm uppercase tracking-[0.3em] text-[#666]">Active Repositories</h3>
-            <ChevronRight className="text-[#333]" />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {/* Project 01: RobotArm */}
-            <a 
-              href="https://github.com/papalino456/RobotArm" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group cursor-crosshair block active:scale-[0.98] transition-transform"
-            >
-              <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
-                <img 
-                  src="/portfolio-2026/projects/robotarm.png" 
-                  alt="RobotArm" 
-                  className="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity"
-                />
-                <div className="absolute inset-0 opacity-10 pointer-events-none" 
-                  style={{ backgroundImage: 'linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
-                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-white/20 uppercase group-hover:text-blue-500 transition-colors">pkg: robot-arm-cv</div>
-              </div>
-              <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">01 / RobotArm</h4>
-              <p className="text-[#666] text-sm mb-4">ESP32, IoT, and computer vision enabled servo robot arm. Features a real-time OpenCV pipeline for precise pick-and-place.</p>
-              <div className="flex gap-2">
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">C++</span>
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Python</span>
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">OpenCV</span>
-              </div>
-            </a>
+        <section id="repos" className="mb-40">
+          <FadeIn>
+            <div className="flex justify-between items-end mb-12 border-b border-[#1f1f1f] pb-4">
+              <h3 className="text-sm uppercase tracking-[0.3em] text-[#666]">Active Repositories</h3>
+              <ChevronRight className="text-[#333]" />
+            </div>
+          </FadeIn>
+          
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-8" staggerDelay={0.15}>
+            {PROJECTS.map((project) => (
+              <StaggerItem key={project.id}>
+                <motion.a 
+                  href={project.href}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="group block"
+                  whileHover={{ y: -6 }}
+                  transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                >
+                  <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden group-hover:border-blue-500/30 transition-colors duration-500">
+                    <img 
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-60" />
+                    <div className="absolute inset-0 opacity-10 pointer-events-none" 
+                      style={{ backgroundImage: 'linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-[10px] uppercase tracking-wider text-white/30 group-hover:text-blue-500 transition-colors duration-300 bg-[#0a0a0a]/80 px-3 py-1">
+                        pkg: {project.pkg}
+                      </span>
+                    </div>
+                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <ArrowUpRight size={20} className="text-blue-500" />
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-baseline gap-3 mb-3">
+                    <span className="text-[10px] text-[#444] font-mono">{project.id}</span>
+                    <h4 className="text-xl font-bold text-white group-hover:text-blue-500 transition-colors duration-300">
+                      {project.title}
+                    </h4>
+                  </div>
+                  
+                  <p className="text-[#666] text-sm mb-4 leading-relaxed">{project.description}</p>
+                  
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <span key={tag} className="text-[9px] border border-[#333] px-2.5 py-1 text-[#555] uppercase tracking-wider group-hover:border-[#444] group-hover:text-[#666] transition-colors">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </motion.a>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
 
-            {/* Project 02: RoboMop */}
-            <a 
-              href="https://github.com/papalino456/RoboMop" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group cursor-crosshair block active:scale-[0.98] transition-transform"
-            >
-              <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
-                <img 
-                  src="/portfolio-2026/projects/robomop.png" 
-                  alt="RoboMop" 
-                  className="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity"
-                />
-                <div className="absolute inset-0 opacity-10 pointer-events-none" 
-                  style={{ backgroundImage: 'linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
-                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-white/20 uppercase group-hover:text-blue-500 transition-colors">pkg: robomop-slam</div>
-              </div>
-              <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">02 / RoboMop</h4>
-              <p className="text-[#666] text-sm mb-4">Autonomous cleaning robot featuring SLAM, path planning, and a React-based monitoring dashboard.</p>
-              <div className="flex gap-2">
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Python</span>
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">React</span>
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">SLAM</span>
-              </div>
-            </a>
-
-            {/* Project 03: ISA */}
-            <a 
-              href="https://github.com/papalino456/ISA" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group cursor-crosshair block active:scale-[0.98] transition-transform"
-            >
-              <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
-                <img 
-                  src="/portfolio-2026/projects/isa.png" 
-                  alt="ISA" 
-                  className="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity"
-                />
-                <div className="absolute inset-0 opacity-10 pointer-events-none" 
-                  style={{ backgroundImage: 'linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
-                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-white/20 uppercase group-hover:text-blue-500 transition-colors">pkg: isa-watering-ai</div>
-              </div>
-              <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">03 / ISA System</h4>
-              <p className="text-[#666] text-sm mb-4">Automatic, sustainable watering system using AI and IoT based on the ESP-32 chip for scalable agriculture.</p>
-              <div className="flex gap-2">
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Embedded</span>
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">IoT</span>
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">ESP32</span>
-              </div>
-            </a>
-
-            {/* Project 04: FaceTracker */}
-            <a 
-              href="https://github.com/papalino456/AGV" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group cursor-crosshair block active:scale-[0.98] transition-transform"
-            >
-              <div className="aspect-video bg-[#111] mb-6 border border-[#1f1f1f] relative overflow-hidden">
-                <img 
-                  src="/portfolio-2026/projects/agv.png" 
-                  alt="AGV" 
-                  className="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity"
-                />
-                <div className="absolute inset-0 opacity-10 pointer-events-none" 
-                  style={{ backgroundImage: 'linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
-                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-white/20 uppercase group-hover:text-blue-500 transition-colors">pkg: agv-raspberry-pi</div>
-              </div>
-              <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">04 / AGV Robot</h4>
-              <p className="text-[#666] text-sm mb-4">Automatic Guided Vehicle using Raspberry Pi, IR line following, and PID control for industrial logistics.</p>
-              <div className="flex gap-2">
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">Python</span>
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">RaspberryPi</span>
-                <span className="text-[9px] border border-[#333] px-2 py-0.5 text-[#444] uppercase">PID</span>
-              </div>
-            </a>
-
-            {/* Terminal Style Log Component */}
-            <div className="md:col-span-2 bg-[#050505] border border-[#1f1f1f] p-6 font-mono text-[11px] leading-tight relative group">
+          {/* Terminal Style Log Component */}
+          <FadeIn delay={0.3}>
+            <div className="mt-16 bg-[#050505] border border-[#1f1f1f] p-6 font-mono text-[11px] leading-tight relative group hover:border-[#333] transition-colors">
               <div className="flex justify-between items-center mb-4 border-b border-[#1f1f1f] pb-2 text-[#444]">
                 <span>SESSION_LOG: PROACTIVE_AGENT_V3</span>
-                <span className="animate-pulse">● LIVE</span>
+                <span className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                  LIVE
+                </span>
               </div>
-              <div className="space-y-1 max-h-[84px] overflow-y-auto pr-2" style={{ scrollbarWidth: 'thin', scrollbarColor: '#333 #0a0a0a' }}>
+              <div className="space-y-1.5 max-h-[100px] overflow-y-auto pr-2 fade-edge-b" style={{ scrollbarWidth: 'thin', scrollbarColor: '#333 #0a0a0a' }}>
                 <p className="text-blue-500">[SYSTEM] Life-Systems Orchestrator: INITIALIZED</p>
                 <p className="text-[#666]">[INFO] Scope: Career | R&D | Fitness | Systems</p>
                 <p className="text-[#666]">[INFO] Lead Architect: Aoi (Blue Lobster Protocol)</p>
                 <p className="text-[#666]">[INFO] Deployment: Verified Assets (RobotArm, RoboMop, ISA, AGV)</p>
-                <p className="text-[#666]">[INFO] Fix: Replaced broken assets with GH OpenGraph renders</p>
-                <p className="text-[#666]">[INFO] Inboxes: LinkedIn/Gmail monitored. No urgent updates (Ricardo).</p>
-                <p className="text-blue-400">[HEARTBEAT] Mar 04 23:50 CST: Pipeline scan complete — 19 jobs tracked. 4 ready to apply (Google DeepMind, FieldAI, Edison Smart, Skydio). 9 in research queue. WhatsApp reconnect cycle nominal. Systems healthy.</p>
-                <p className="text-blue-400">[HEARTBEAT] Mar 04 21:00 CST: Portfolio verified (HTTP 200). No recruiter updates. CV-Tailor skill deployed — automated job-specific CV generation pipeline active. Systems nominal.</p>
-                <p className="text-[#666]">[INFO] Heartbeat: Checked system logs & portfolio health. All systems nominal.</p>
-                <p className="text-[#666]">[INFO] Knowledge: Monitoring top AI/Robotics Masters (TUM/ETH/Stanford).</p>
-                <p className="text-[#666]">[INFO] Maintenance: Synchronized long-term memory & trajectory tracking.</p>
-                <p className="text-[#666]">[INFO] Optimization: Refined proactive ideas for Career and R&D momentum.</p>
-                <p className="text-[#666]">[INFO] Health: Verified system integrity and deployment stability.</p>
-                <p className="text-[#666]">[INFO] Self-Healing: Resolved cron model mismatch for Macro-Coach.</p>
-                <p className="text-[#666]">[INFO] Monitoring: Career trajectories and R&D benchmarks synced.</p>
-                <p className="text-[#666]">[INFO] Dashboard: Initialized Phase 1 research for Masters 2027.</p>
-                <p className="text-[#666]">[INFO] Dashboard: Deployed Masters Application Tracker 2027.</p>
+                <p className="text-blue-400">[HEARTBEAT] Mar 13 19:30 CST: Portfolio makeover deployed. Premium animations active.</p>
+                <p className="text-blue-400">[HEARTBEAT] Mar 06 11:37 CST: Memory flush check passed. Systems nominal.</p>
                 <p className="text-green-500">[COMPLETED] Masters Research Phases 1 & 2: ETH/TUM/Delft/US data synced.</p>
-                <p className="text-blue-400">[DEPLOYED] Masters Dashboard v2.0: Interactive requirements & financial roadmap live.</p>
-                <p className="text-blue-400">[DESIGN] Consolidated Masters Dashboard to 'Steel & Silicon' monochromatic theme with Electric Blue accents.</p>
-                <p className="text-[#666]">[INFO] Heartbeat: Synced daily systems (Calendar/Inbox). Flagged maintenance task (DINN). Deployment: Stable.</p>
-                <p className="text-blue-400">[PROACTIVE] User feedback: Increased heartbeat frequency. New content generation: ACTIVE.</p>
-                <p className="text-blue-400">[IDEA] Research Note: Google AI's RT-2 model shows promise for bridging high-level reasoning with low-level robotic control—directly relevant to Siemens R&D trajectory.</p>
-                <p className="text-blue-400">[RESEARCH] TU Delft Cognitive Robotics Lab (Prof. Kober): Perfect alignment found. Inverse kinematics + learning-based manipulation research matches Fourier-IK expertise. Program at capacity—early application critical.</p>
-                <p className="text-blue-400">[RESEARCH] ETH Zurich ASL (Prof. Siegwart): Perfect match for Siemens background. Focus on control + autonomous systems. Deadline: Nov 30.</p>
-                <p className="text-blue-400">[RESEARCH] TUM (MSc Robotics): German B2 hurdle identified. Tuition shift to €4k-6k/sem verified.</p>
-                <p className="text-green-500">[STATUS] Job Hunter Phase 1: Lead acquisition from Amazon (Frontier AI), Samsung, and Waymo active.</p>
-                <p className="text-green-500">[ACTION] TOEFL/IELTS scheduled for February 2026. SOP draft v0.1 complete. Masters 2027 trajectory: ON TRACK.</p>
-                <p className="text-blue-400">[RESEARCH] TUM MSc Robotics documented: English sufficient (EU), May 31 2027 deadline, Munich ecosystem ideal for Siemens alumni.</p>
-                <p className="text-blue-400">[CONTENT] LinkedIn drafts (3 angles) + SOP draft ready. Job Hunter: 17 leads, top 3 prioritized (Edison Smart, FieldAI, Prehensio).</p>
-                <p className="text-[#666]">[HEARTBEAT] Portfolio verified (HTTP 200). No recruiter updates. Systems nominal.</p>
-                <p className="text-blue-400">[RESEARCH] Investigating Google's latest 'Internal Teammatching' strategies to better assist with Ricardo's upcoming follow-up.</p>
-                <p className="text-blue-400">[LEAD] Glassdoor alert: 9 Mechatronics/Robotics roles in Germany. Prehensio GmbH (Heilbronn) hiring for Grasp Planning + Perception. €50-80k range. Strong Siemens ecosystem overlap.</p>
-                <p className="text-blue-400">[DEPLOYED] GitHub Activity Matrix: Steel & Silicon themed contribution graph live. 400+ commits visualized with custom zinc-to-blue gradient.</p>
-                <p className="text-yellow-500">[DECISION] QS Discover Masters Fair (Feb 11) — Attendance cancelled. Pivoting to virtual info sessions + direct professor outreach.</p>
-                <p className="text-blue-400">[PROACTIVE] QS Discover cheat sheet created for alternative outreach: TUM/ETH/Delft contact strategy ready.</p>
-                <p className="text-[#666]">[HEARTBEAT] Afternoon check: Portfolio healthy, no recruiter updates. Deep work period active.</p>
-                <p className="text-blue-400">[HEARTBEAT] Feb 28 15:00 CST: Scanned inboxes — 6 new US research roles flagged (DeepMind Applied Robotics, Amazon FAR, Apple ML Research). Mercedes-Benz connection pending. German applications due for follow-up.</p>
-                <p className="text-blue-400">[HEARTBEAT] Feb 28 21:00 CST: Portfolio verified (HTTP 200, screenshot captured). Gmail storage at 89% — cleanup recommended. No updates from Ricardo (team-matching continues). Calendar clear next 7 days.</p>
-                <p className="text-blue-400">[HEARTBEAT] Mar 01 09:00 CST: Portfolio healthy (HTTP 200). No new emails from Ricardo/Google. DAAD deadline 214 days away (Oct 1). Systems nominal — awaiting team-matching updates.</p>
-                <p className="text-blue-400">[HEARTBEAT] Mar 06 11:37 CST: Memory flush check passed (20k/262k tokens). No recruiter updates. Google AI Pro trial activated (2TB storage). Portfolio verified (HTTP 200). Calendar clear next 7 days. Context: healthy.</p>
-                <p className="text-white font-bold">{">"} MISSION: HOLISTIC_OPTIMIZATION</p>
+                <p className="text-blue-400">[DEPLOYED] GitHub Activity Matrix: Steel & Silicon themed contribution graph live.</p>
+                <p className="text-blue-400">[RESEARCH] ETH Zurich ASL (Prof. Siegwart): Perfect match for Siemens background.</p>
+                <p className="text-green-500">[ACTION] TOEFL/IELTS scheduled for February 2026. SOP draft v0.1 complete.</p>
+                <p className="text-white font-bold">{`>`} MISSION: HOLISTIC_OPTIMIZATION</p>
               </div>
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
-                 <Terminal size={40} className="text-blue-500" />
+              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-100 transition-opacity duration-500">
+                <Terminal size={48} className="text-blue-500" />
               </div>
             </div>
-          </div>
+          </FadeIn>
         </section>
       </main>
 
       {/* Terminal Footer */}
-      <footer className="border-t border-[#1f1f1f] p-8 text-[10px] text-[#333] flex justify-between items-center">
-        <div className="flex items-center gap-4">
-          <Terminal size={12} />
-          <span>SYSTEM_VERSION: 1.0.4 // DESKTOP-5D7BUJT</span>
-        </div>
-        <div className="tracking-widest uppercase">
-          &copy; 2026 Sebastian Barrio. All rights reserved.
+      <footer className="relative z-10 border-t border-[#1f1f1f] p-8">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-4 text-[10px] text-[#333]">
+            <Terminal size={12} />
+            <span>SYSTEM_VERSION: 2.0.0 // PREMIUM_EDITION</span>
+          </div>
+          
+          <div className="flex items-center gap-6">
+            <motion.a 
+              href="https://github.com/papalino456" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-[#333] hover:text-blue-500 transition-colors"
+              whileHover={{ scale: 1.1, y: -2 }}
+            >
+              <Github size={18} />
+            </motion.a>
+            <motion.a 
+              href="https://linkedin.com/in/sebastianbarrio" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-[#333] hover:text-blue-500 transition-colors"
+              whileHover={{ scale: 1.1, y: -2 }}
+            >
+              <Linkedin size={18} />
+            </motion.a>
+            <motion.a 
+              href="mailto:sebastianbarrio@example.com"
+              className="text-[#333] hover:text-blue-500 transition-colors"
+              whileHover={{ scale: 1.1, y: -2 }}
+            >
+              <Mail size={18} />
+            </motion.a>
+          </div>
+          
+          <div className="text-[10px] text-[#333] tracking-widest uppercase">
+            &copy; 2026 Sebastian Barrio
+          </div>
         </div>
       </footer>
     </div>
