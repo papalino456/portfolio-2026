@@ -12,7 +12,7 @@ export const PROJECTS = [
     title: 'RobotArm',
     description:
       'Computer vision enabled servo robot arm with a real-time OpenCV pipeline for precise pick-and-place operations.',
-    image: '/portfolio-2026/projects/robotarm.png',
+    image: './src/assets/Robot Drawing-1.png',
     tags: ['C++', 'Python', 'OpenCV', 'ESP32'],
     href: 'https://github.com/papalino456/RobotArm',
   },

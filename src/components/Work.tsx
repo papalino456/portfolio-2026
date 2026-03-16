@@ -35,8 +35,14 @@ export default function Work() {
             >
               <div className={styles.imageWrap}>
                 <div className={styles.imagePlaceholder}>
-                  <span className={styles.placeholderId}>{p.id}</span>
-                  <span className={styles.placeholderTitle}>{p.title}</span>
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    className={styles.image}
+                    style={{ marginTop: '18px' }}
+                  />
+                  <span className={styles.placeholderId} style={{ opacity: 0.7, position: 'absolute', zIndex: 2 }}>{p.id}</span>
+                  <span className={styles.placeholderTitle} style={{ opacity: 0.7, position: 'absolute', zIndex: 2 }}>{p.title}</span>
                 </div>
               </div>
 
