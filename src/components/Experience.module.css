@@ -1,0 +1,126 @@
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: 180px 40px 1fr;
+  gap: 0;
+  min-height: 160px;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 2px;
+  padding-right: var(--space-md);
+  gap: var(--space-xs);
+}
+
+.period {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 3px 8px;
+  border-radius: 100px;
+  background: var(--accent-muted);
+  color: var(--accent);
+}
+
+.rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--border-strong);
+  background: var(--bg);
+  margin-top: 4px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.dotActive {
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-muted);
+}
+
+.line {
+  width: 1px;
+  flex: 1;
+  background: var(--border);
+  margin-top: 4px;
+}
+
+.right {
+  padding-left: var(--space-md);
+  padding-bottom: var(--space-xl);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin-bottom: 2px;
+}
+
+.company {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-sm);
+}
+
+.desc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 500px;
+}
+
+@media (max-width: 768px) {
+  .entry {
+    grid-template-columns: 24px 1fr;
+  }
+
+  .left {
+    display: none;
+  }
+
+  .rail {
+    grid-column: 1;
+  }
+
+  .right {
+    padding-left: var(--space-md);
+  }
+
+  .period {
+    display: none;
+  }
+
+  .right::before {
+    content: attr(data-period);
+  }
+}

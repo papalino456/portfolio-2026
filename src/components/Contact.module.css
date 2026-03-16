@@ -1,0 +1,100 @@
+.panel {
+  background: var(--aluminum-dark);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-xl);
+  padding: var(--space-3xl) var(--space-2xl);
+  text-align: center;
+  color: #f5f5f5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: var(--space-lg);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: var(--space-lg);
+}
+
+.italic {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.sub {
+  font-size: var(--text-base);
+  color: rgba(255, 255, 255, 0.45);
+  max-width: 420px;
+  margin: 0 auto var(--space-xl);
+  line-height: 1.7;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.linkCard {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 14px 24px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.linkCard:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.arrow {
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.linkCard:hover .arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.linkLabel {
+  min-width: 60px;
+}
+
+@media (max-width: 480px) {
+  .panel {
+    padding: var(--space-2xl) var(--space-lg);
+  }
+
+  .links {
+    flex-direction: column;
+  }
+
+  .linkCard {
+    justify-content: center;
+  }
+}
