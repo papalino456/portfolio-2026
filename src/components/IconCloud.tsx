@@ -54,10 +54,6 @@ export function IconCloud({ images, size = 400 }: IconCloudProps) {
         img.src = src
         img.onload = () => {
           offCtx.clearRect(0, 0, offscreen.width, offscreen.height)
-          offCtx.beginPath()
-          offCtx.arc(24, 24, 24, 0, Math.PI * 2)
-          offCtx.closePath()
-          offCtx.clip()
           offCtx.drawImage(img, 0, 0, 48, 48)
           imagesLoadedRef.current[index] = true
         }
