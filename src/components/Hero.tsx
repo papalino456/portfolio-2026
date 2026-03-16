@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { IconCloud } from './IconCloud'
+import HyperText from './HyperText'
 import styles from './Hero.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -62,7 +63,7 @@ export default function Hero() {
                 Engineering
               </motion.span>
               <motion.span className={`${styles.line} ${styles.italic}`} custom={2} initial="hidden" animate="visible" variants={line}>
-                intelligence
+                <HyperText text="intelligence" duration={1.2} delay={0.8} animateOnHover={true}/>
               </motion.span>
               <motion.span className={styles.line} custom={3} initial="hidden" animate="visible" variants={line}>
                 into machines

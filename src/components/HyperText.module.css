@@ -1,0 +1,26 @@
+.hyperTextContainer {
+  position: relative;
+  display: inline-block;
+  font-family: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  color: inherit;
+  white-space: pre;
+}
+
+.hyperTextInvisible {
+  visibility: hidden;
+  font-family: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+}
+
+.hyperText {
+  position: absolute;
+  inset: 0;
+  font-family: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  color: inherit;
+  white-space: pre;
+}
