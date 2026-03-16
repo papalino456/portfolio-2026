@@ -10,7 +10,7 @@ export default function Footer() {
           </span>
           <span className={styles.sep} />
           <span className={styles.note}>
-            Designed & built with precision
+            Designed & built with precision and passion
           </span>
         </div>
       </div>

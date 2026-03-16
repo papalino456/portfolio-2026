@@ -1,20 +1,34 @@
 .panel {
-  background: var(--aluminum);
+  background:
+    linear-gradient(
+      135deg,
+      #edeceb 0%,
+      #e3e2df 20%,
+      #f0efed 45%,
+      #e5e4e1 70%,
+      #ededeb 100%
+    );
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   padding: var(--space-xl);
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.04),
-    0 4px 24px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.02);
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    0 6px 24px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.03);
 }
 
 .header {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  justify-content: space-between;
   margin-bottom: var(--space-lg);
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
 }
 
 .ghIcon {
@@ -29,16 +43,37 @@
   color: var(--text-tertiary);
 }
 
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legendLabel {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.04em;
+}
+
+.legendCell {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
 .graphWrap {
-  overflow-x: auto;
-  padding-bottom: var(--space-sm);
+  overflow: hidden;
+  padding: 4px;
+  margin: -4px;
   margin-bottom: var(--space-lg);
 }
 
 .graph {
-  display: flex;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
   gap: 3px;
-  min-width: fit-content;
 }
 
 .column {
@@ -48,10 +83,21 @@
 }
 
 .cell {
-  width: 11px;
-  height: 11px;
+  aspect-ratio: 1;
+  width: 100%;
   border-radius: 2px;
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.cellSpacer {
+  aspect-ratio: 1;
+  width: 100%;
+}
+
+.cell:hover {
+  transform: scale(1.3);
+  outline: 1px solid var(--border-strong);
+  outline-offset: 1px;
 }
 
 .cellEmpty {
@@ -59,34 +105,64 @@
 }
 
 .cellLow {
-  background: rgba(232, 93, 42, 0.2);
+  background: rgba(232, 93, 42, 0.18);
 }
 
 .cellMed {
-  background: rgba(232, 93, 42, 0.45);
+  background: rgba(232, 93, 42, 0.38);
+}
+
+.cellMedHigh {
+  background: rgba(232, 93, 42, 0.6);
 }
 
 .cellHigh {
-  background: rgba(232, 93, 42, 0.8);
+  background: var(--accent);
 }
 
 .stats {
   display: flex;
-  gap: var(--space-2xl);
+  align-items: center;
+  justify-content: space-between;
   padding-top: var(--space-lg);
   border-top: 1px solid var(--border);
+}
+
+.statsLeft {
+  display: flex;
+  gap: var(--space-xl);
 }
 
 .stat {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
+  min-width: 120px;
+}
+
+.ghLink {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 0.5em 1.2em;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.ghLink:hover {
+  color: var(--text-primary);
+  border-color: var(--text-primary);
 }
 
 .statValue {
   font-family: var(--font-display);
   font-size: var(--text-2xl);
   letter-spacing: -0.02em;
+  color: var(--text-primary);
 }
 
 .statLabel {
@@ -97,8 +173,23 @@
 }
 
 @media (max-width: 768px) {
+  .panel {
+    padding: var(--space-lg);
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
   .stats {
     flex-direction: column;
     gap: var(--space-md);
+  }
+
+  .cell {
+    width: 10px;
+    height: 10px;
   }
 }

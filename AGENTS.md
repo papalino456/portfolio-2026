@@ -27,6 +27,7 @@ All portfolio content (projects, timeline, skills, social links) lives in `src/d
 
 The visual identity is a deliberate blend of three hardware/software design references:
 
+- **FactoryAI** —  Modern, brutalist and minimalist design focused on clarity and professionalism. It uses clean typography, ample white space, and simple geometric icons to appeal to developers and engineering leaders. [factory.ai](https://factory.ai)
 - **Teenage Engineering** — Industrial aluminum surfaces, monospace typography for labels and metadata, exposed-grid layouts, muted warm grays. Reference: [teenage.engineering/products/tx-6](https://teenage.engineering/products/tx-6)
 - **Nothing** — Frosted glass panels with `backdrop-filter: blur()`, transparency layering, thin 1px borders on translucent surfaces, dot-grid patterns. Reference: [nothing.tech/products/phone-2a-plus](https://nothing.tech/products/phone-2a-plus)
 - **Apple Liquid Glass (iOS 26)** — Generous whitespace, subtle depth through layered translucency, refined radius tokens, elegant serif display type contrasting with system sans-serif body text. Reference: [apple.com/ios](https://www.apple.com/ios/)

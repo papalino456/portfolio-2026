@@ -1,5 +1,4 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy Next.js site to Pages
+name: Deploy static site to Pages
 
 on:
   push:
@@ -31,18 +30,14 @@ jobs:
           cache: "npm"
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        with:
-          # Automatically inject basePath in your Next.js config file, and disable
-          # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
-          static_site_generator: next
       - name: Install dependencies
         run: npm install
-      - name: Build with Next.js
+      - name: Build
         run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: ./dist
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
