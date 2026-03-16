@@ -6,15 +6,22 @@
   padding-bottom: var(--space-3xl);
 }
 
+.heroContainer {
+  max-width: 2200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-2xl);
+  gap: var(--space-4xl);
   align-items: center;
 }
 
 .content {
   max-width: 600px;
+  justify-self: start;
 }
 
 .eyebrow {
@@ -98,6 +105,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  justify-self: end;
   flex-direction: column;
   gap: var(--space-lg);
 }

@@ -42,7 +42,7 @@ export default function Hero() {
 
   return (
     <section className={styles.hero}>
-      <div className="container">
+      <div className={styles.heroContainer}>
         <div className={styles.grid}>
           <div className={styles.content}>
             <motion.p
@@ -101,7 +101,7 @@ export default function Hero() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
-            <IconCloud images={images} size={580} />
+            <IconCloud images={images} size={450} />
           </motion.div>
         </div>
       </div>

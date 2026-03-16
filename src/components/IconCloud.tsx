@@ -44,8 +44,8 @@ export function IconCloud({ images, size = 400 }: IconCloudProps) {
 
     const newIconCanvases = images.map((src, index) => {
       const offscreen = document.createElement('canvas')
-      offscreen.width = 40
-      offscreen.height = 40
+      offscreen.width = 48
+      offscreen.height = 48
       const offCtx = offscreen.getContext('2d')
 
       if (offCtx) {
@@ -55,10 +55,10 @@ export function IconCloud({ images, size = 400 }: IconCloudProps) {
         img.onload = () => {
           offCtx.clearRect(0, 0, offscreen.width, offscreen.height)
           offCtx.beginPath()
-          offCtx.arc(20, 20, 20, 0, Math.PI * 2)
+          offCtx.arc(24, 24, 24, 0, Math.PI * 2)
           offCtx.closePath()
           offCtx.clip()
-          offCtx.drawImage(img, 0, 0, 40, 40)
+          offCtx.drawImage(img, 0, 0, 48, 48)
           imagesLoadedRef.current[index] = true
         }
       }
@@ -80,9 +80,9 @@ export function IconCloud({ images, size = 400 }: IconCloudProps) {
       const phi = i * increment
 
       newIcons.push({
-        x: Math.cos(phi) * r * 110,
-        y: y * 110,
-        z: Math.sin(phi) * r * 110,
+        x: Math.cos(phi) * r * 200,
+        y: y * 200,
+        z: Math.sin(phi) * r * 200,
         scale: 1,
         opacity: 1,
         id: i,
@@ -113,8 +113,8 @@ export function IconCloud({ images, size = 400 }: IconCloudProps) {
         const screenX = canvas.width / 2 + rotatedX
         const screenY = canvas.height / 2 + rotatedY
 
-        const scale = (rotatedZ + 200) / 300
-        const radius = 20 * scale
+        const scale = Math.max(0.45, (rotatedZ + 250) / 350)
+        const radius = 24 * scale
         const dx = x - screenX
         const dy = y - screenY
 
@@ -163,8 +163,8 @@ export function IconCloud({ images, size = 400 }: IconCloudProps) {
         const deltaY = e.clientY - lastMousePos.y
 
         rotationRef.current = {
-          x: rotationRef.current.x + deltaY * 0.002,
-          y: rotationRef.current.y + deltaX * 0.002,
+          x: rotationRef.current.x + deltaY * 0.001,
+          y: rotationRef.current.y + deltaX * 0.001,
         }
 
         setLastMousePos({ x: e.clientX, y: e.clientY })
@@ -191,7 +191,7 @@ export function IconCloud({ images, size = 400 }: IconCloudProps) {
       const dx = mousePos.x - centerX
       const dy = mousePos.y - centerY
       const distance = Math.sqrt(dx * dx + dy * dy)
-      const speed = 0.003 + (distance / maxDistance) * 0.01
+      const speed = 0.0001 + (distance / maxDistance) * 0.001
 
       if (targetRotation) {
         const elapsed = performance.now() - targetRotation.startTime
@@ -227,8 +227,8 @@ export function IconCloud({ images, size = 400 }: IconCloudProps) {
         const rotatedZ = icon.x * sinY + icon.z * cosY
         const rotatedY = icon.y * cosX + rotatedZ * sinX
 
-        const scale = (rotatedZ + 200) / 300
-        const opacity = Math.max(0.15, Math.min(1, (rotatedZ + 150) / 200))
+        const scale = Math.max(0.75, (rotatedZ + 250) / 350)
+        const opacity = Math.max(0.25, Math.min(1, (rotatedZ + 180) / 220))
 
         ctx.save()
         ctx.translate(canvas.width / 2 + rotatedX, canvas.height / 2 + rotatedY)
@@ -236,7 +236,7 @@ export function IconCloud({ images, size = 400 }: IconCloudProps) {
         ctx.globalAlpha = opacity
 
         if (iconCanvasesRef.current[index] && imagesLoadedRef.current[index]) {
-          ctx.drawImage(iconCanvasesRef.current[index], -20, -20, 40, 40)
+          ctx.drawImage(iconCanvasesRef.current[index], -24, -24, 48, 48)
         }
 
         ctx.restore()
