@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { IconCloud } from './IconCloud'
 import HyperText from './HyperText'
 import AsciiSea from './AsciiSea'
+import GlassSurface from './GlassSurface'
 import styles from './Hero.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -95,9 +96,25 @@ export default function Hero() {
               <a href="#work" className={styles.btnPrimary}>
                 View work
               </a>
-              <a href="#contact" className={styles.btnSecondary}>
-                Get in touch
-              </a>
+              <GlassSurface 
+                borderRadius={8}
+                borderWidth={0.05}
+                brightness={100}
+                opacity={0.9}
+                blur={8}
+                displace={0}
+                backgroundOpacity={0.15}
+                saturation={1.6}
+                distortionScale={-120}
+                redOffset={0}
+                greenOffset={0}
+                blueOffset={0}
+                className={styles.glassBtnWrapper}
+              >
+                <a href="#contact" className={styles.btnGlass}>
+                  Get in touch
+                </a>
+              </GlassSurface>
             </motion.div>
           </div>
 

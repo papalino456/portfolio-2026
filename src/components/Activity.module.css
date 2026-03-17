@@ -13,9 +13,9 @@
       145deg,
       #e5e3e0 0%,
       #d8d6d3 20%,
-      #c5c3c0 40%,
+rgb(234, 234, 234) 40%,
       #d1cfcc 60%,
-      #b8b6b3 80%,
+rgb(225, 225, 225) 80%,
       #ceccc9 100%
     );
   background-size: 256px 256px, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
@@ -25,11 +25,6 @@
   border-radius: var(--radius-lg);
   padding: var(--space-xl);
   /* Stronger inner shadow for depth */
-  box-shadow:
-    0 4px 6px rgba(0, 0, 0, 0.08),
-    0 12px 32px rgba(0, 0, 0, 0.12),
-    inset 0 2px 4px rgba(0, 0, 0, 0.06),
-    inset 0 4px 8px rgba(0, 0, 0, 0.04);
   position: relative;
   overflow: hidden;
 }
@@ -216,6 +211,26 @@
 .ghLink:hover {
   color: var(--text-primary);
   border-color: var(--text-primary);
+}
+
+.glassBtnWrapper {
+  display: inline-flex !important;
+}
+
+.ghLinkGlass {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 0.5em 1.2em;
+  white-space: nowrap;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.ghLinkGlass:hover {
+  color: var(--text-primary);
 }
 
 .statValue {

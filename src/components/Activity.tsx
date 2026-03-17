@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
+import GlassSurface from './GlassSurface'
 import styles from './Activity.module.css'
 
 const GITHUB_USERNAME = 'papalino456'
@@ -161,14 +162,30 @@ export default function Activity() {
                 <span className={styles.statLabel}>week streak</span>
               </div>
             </div>
-            <a
-              href={`https://github.com/${GITHUB_USERNAME}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.ghLink}
+            <GlassSurface
+              borderRadius={8}
+              borderWidth={0.05}
+              brightness={55}
+              opacity={0.9}
+              blur={8}
+              displace={0}
+              backgroundOpacity={0.12}
+              saturation={1.5}
+              distortionScale={-100}
+              redOffset={0}
+              greenOffset={6}
+              blueOffset={12}
+              className={styles.glassBtnWrapper}
             >
-              View on GitHub
-            </a>
+              <a
+                href={`https://github.com/${GITHUB_USERNAME}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.ghLinkGlass}
+              >
+                View on GitHub
+              </a>
+            </GlassSurface>
           </div>
         </motion.div>
       </div>
