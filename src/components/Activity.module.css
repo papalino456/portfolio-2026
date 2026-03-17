@@ -1,21 +1,76 @@
 .panel {
+  /* Bold mesh gradient - evokes anodized aluminum */
   background:
+    /* Grain overlay */
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.3'/%3E%3C/svg%3E"),
+    /* Main mesh gradient with multiple overlapping radial gradients */
+    radial-gradient(ellipse 80% 50% at 20% 40%, #d4d2cf 0%, transparent 50%),
+    radial-gradient(ellipse 60% 70% at 80% 20%, #c9c7c4 0%, transparent 45%),
+    radial-gradient(ellipse 70% 60% at 60% 80%, #e8e6e3 0%, transparent 55%),
+    radial-gradient(ellipse 50% 80% at 30% 90%, #bdbbb8 0%, transparent 40%),
+    /* Base linear gradient for overall tone */
     linear-gradient(
-      135deg,
-      #edeceb 0%,
-      #e3e2df 20%,
-      #f0efed 45%,
-      #e5e4e1 70%,
-      #ededeb 100%
+      145deg,
+      #e5e3e0 0%,
+      #d8d6d3 20%,
+      #c5c3c0 40%,
+      #d1cfcc 60%,
+      #b8b6b3 80%,
+      #ceccc9 100%
     );
-  border: 1px solid var(--glass-border);
+  background-size: 256px 256px, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  background-blend-mode: overlay, normal, normal, normal, normal, normal;
+  /* Bold machined edge */
+  border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: var(--radius-lg);
   padding: var(--space-xl);
+  /* Stronger inner shadow for depth */
   box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.06),
-    0 6px 24px rgba(0, 0, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+    0 4px 6px rgba(0, 0, 0, 0.08),
+    0 12px 32px rgba(0, 0, 0, 0.12),
+    inset 0 2px 4px rgba(0, 0, 0, 0.06),
+    inset 0 4px 8px rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Bold edge highlight */
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  padding: 0.5px;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.3) 40%,
+    rgba(255, 255, 255, 0.1) 60%,
+    rgba(255, 255, 255, 0.5) 80%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Additional light reflection streak */
+.panel::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 60%
+  );
+  pointer-events: none;
 }
 
 .header {
@@ -87,6 +142,10 @@
   width: 100%;
   border-radius: 2px;
   transition: transform var(--duration-fast) var(--ease-out);
+  /* Solid cells above the grain */
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  position: relative;
+  z-index: 1;
 }
 
 .cellSpacer {
@@ -96,28 +155,29 @@
 
 .cell:hover {
   transform: scale(1.3);
-  outline: 1px solid var(--border-strong);
-  outline-offset: 1px;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
 }
 
 .cellEmpty {
-  background: rgba(0, 0, 0, 0.04);
+  background: rgba(0, 0, 0, 0.06);
 }
 
 .cellLow {
-  background: rgba(232, 93, 42, 0.18);
+  background: rgba(232, 93, 42, 0.35);
 }
 
 .cellMed {
-  background: rgba(232, 93, 42, 0.38);
+  background: rgba(232, 93, 42, 0.55);
 }
 
 .cellMedHigh {
-  background: rgba(232, 93, 42, 0.6);
+  background: rgba(232, 93, 42, 0.75);
 }
 
 .cellHigh {
-  background: var(--accent);
+  background: rgba(232, 93, 42, 0.95);
 }
 
 .stats {
