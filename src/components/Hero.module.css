@@ -4,12 +4,24 @@
   align-items: center;
   padding-top: var(--space-4xl);
   padding-bottom: var(--space-3xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.asciiBackground {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 .heroContainer {
   max-width: 2200px;
   margin: 0 auto;
   padding: 0 var(--space-md);
+  position: relative;
+  z-index: 1;
 }
 
 .grid {

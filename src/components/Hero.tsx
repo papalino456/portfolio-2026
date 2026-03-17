@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { IconCloud } from './IconCloud'
 import HyperText from './HyperText'
+import AsciiSea from './AsciiSea'
 import styles from './Hero.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -45,6 +46,9 @@ export default function Hero() {
 
   return (
     <section className={styles.hero}>
+      <div className={styles.asciiBackground}>
+        <AsciiSea />
+      </div>
       <div className={styles.heroContainer}>
         <div className={styles.grid}>
           <div className={styles.content}>
