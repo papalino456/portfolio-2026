@@ -10,7 +10,7 @@ interface HyperTextProps {
   animateOnHover?: boolean
 }
 
-const LETTERS = '0123456789/*-_|[]{}()@#$%^&*()_+-=abcdefghijklmnopqrstuvwxyz'
+const LETTERS = '0123456789/*-_|[]{}()@#$%^&*()_+-='
 
 export default function HyperText({
   text,

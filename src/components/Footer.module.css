@@ -1,6 +1,19 @@
 .footer {
+  margin-top: -80px;
   padding: var(--space-xl) 0;
-  border-top: 1px solid var(--border);
+  background: var(--aluminum-dark);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  z-index: 10;
+}
+
+.copy,
+.note {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.sep {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .inner {

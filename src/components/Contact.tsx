@@ -30,44 +30,42 @@ function Icon({ name }: { name: string }) {
 
 export default function Contact() {
   return (
-    <section id="contact" className="section">
-      <div className="container">
-        <motion.div
-          className={styles.panel}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <p className={styles.label}>Get in touch</p>
-          <h2 className={styles.heading}>
-            Let's build something<br />
-            <span className={styles.italic}>extraordinary</span>
-          </h2>
-          <p className={styles.sub}>
-            Open to research collaborations, robotics projects, and engineering
-            challenges. Currently based in Munich, Germany.
-          </p>
+    <section id="contact" className={styles.section}>
+      <motion.div
+        className={styles.content}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
+      >
+        <p className={styles.label}>Get in touch</p>
+        <h2 className={styles.heading}>
+          Let's build something<br />
+          <span className={styles.italic}>extraordinary</span>
+        </h2>
+        <p className={styles.sub}>
+          Open to research collaborations, robotics projects, and engineering
+          challenges. Currently based in Munich, Germany.
+        </p>
 
-          <div className={styles.links}>
-            {SOCIAL_LINKS.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.linkCard}
-              >
-                <Icon name={link.icon} />
-                <span className={styles.linkLabel}>{link.label}</span>
-                <svg className={styles.arrow} width="14" height="14" viewBox="0 0 16 16" fill="none">
-                  <path d="M4 12L12 4M12 4H5M12 4V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </a>
-            ))}
-          </div>
-        </motion.div>
-      </div>
+        <div className={styles.links}>
+          {SOCIAL_LINKS.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.linkCard}
+            >
+              <Icon name={link.icon} />
+              <span className={styles.linkLabel}>{link.label}</span>
+              <svg className={styles.arrow} width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M4 12L12 4M12 4H5M12 4V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+          ))}
+        </div>
+      </motion.div>
     </section>
   )
 }
