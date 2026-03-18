@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 interface FlickeringGridProps {
   squareSize?: number
@@ -12,7 +12,7 @@ interface FlickeringGridProps {
 export default function FlickeringGrid({
   squareSize = 4,
   gridGap = 6,
-  flickerChance = 0.3,
+  flickerChance = 0.01,
   color = 'rgba(255, 255, 255, 0.4)',
   maxOpacity = 0.3,
   className,
@@ -20,36 +20,56 @@ export default function FlickeringGrid({
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const isInViewRef = useRef(false)
-  const [, setIsReady] = useState(false)
+  const rafIdRef = useRef<number | null>(null)
+  const gridParamsRef = useRef<{
+    cols: number
+    rows: number
+    squares: Float32Array
+    dpr: number
+    width: number
+    height: number
+  } | null>(null)
 
   useEffect(() => {
     const canvas = canvasRef.current
     const container = containerRef.current
     if (!canvas || !container) return
 
-    const ctx = canvas.getContext('2d')
+    const ctx = canvas.getContext('2d', { alpha: true })
     if (!ctx) return
 
-    let animationFrameId: number | null = null
     let resizeObserver: ResizeObserver | null = null
     let intersectionObserver: IntersectionObserver | null = null
+    let timeoutId: ReturnType<typeof setTimeout> | null = null
 
-    let gridParams: {
-      cols: number
-      rows: number
-      squares: Float32Array
-      dpr: number
-    } | null = null
+    // Parse color once
+    const parseColor = (c: string): [number, number, number] => {
+      const temp = document.createElement('canvas')
+      temp.width = temp.height = 1
+      const tctx = temp.getContext('2d')
+      if (!tctx) return [255, 255, 255]
+      tctx.fillStyle = c
+      tctx.fillRect(0, 0, 1, 1)
+      const [r, g, b] = tctx.getImageData(0, 0, 1, 1).data
+      return [r, g, b]
+    }
+    const [r, g, b] = parseColor(color)
 
     const setupCanvas = () => {
-      const dpr = window.devicePixelRatio || 1
+      const dpr = Math.min(window.devicePixelRatio || 1, 2) // Cap DPR at 2
       const width = container.clientWidth
       const height = container.clientHeight
 
       if (!width || !height) return null
 
-      canvas.width = width * dpr
-      canvas.height = height * dpr
+      // Only resize if dimensions actually changed
+      const current = gridParamsRef.current
+      if (current && current.width === width && current.height === height) {
+        return current
+      }
+
+      canvas.width = Math.floor(width * dpr)
+      canvas.height = Math.floor(height * dpr)
       canvas.style.width = `${width}px`
       canvas.style.height = `${height}px`
 
@@ -61,99 +81,99 @@ export default function FlickeringGrid({
         squares[i] = Math.random() * maxOpacity
       }
 
-      return { cols, rows, squares, dpr }
-    }
-
-    const updateSquares = (deltaTime: number) => {
-      if (!gridParams) return
-      for (let i = 0; i < gridParams.squares.length; i++) {
-        if (Math.random() < flickerChance * deltaTime) {
-          gridParams.squares[i] = Math.random() * maxOpacity
-        }
-      }
+      const params = { cols, rows, squares, dpr, width, height }
+      gridParamsRef.current = params
+      return params
     }
 
     const drawGrid = () => {
-      if (!gridParams || !ctx) return
+      const params = gridParamsRef.current
+      if (!params || !ctx) return
 
-      const { cols, rows, squares, dpr } = gridParams
-      const width = canvas.width
-      const height = canvas.height
+      const { cols, rows, squares, dpr } = params
+      const w = canvas.width
+      const h = canvas.height
 
-      ctx.clearRect(0, 0, width, height)
+      ctx.clearRect(0, 0, w, h)
+      ctx.fillStyle = `rgb(${r}, ${g}, ${b})`
 
-      const toRGBA = (color: string) => {
-        const tempCanvas = document.createElement('canvas')
-        tempCanvas.width = tempCanvas.height = 1
-        const tempCtx = tempCanvas.getContext('2d')
-        if (!tempCtx) return 'rgba(255, 255, 255,'
-        tempCtx.fillStyle = color
-        tempCtx.fillRect(0, 0, 1, 1)
-        const [r, g, b] = Array.from(tempCtx.getImageData(0, 0, 1, 1).data)
-        return `rgba(${r}, ${g}, ${b},`
-      }
-      const memoizedColor = toRGBA(color)
+      const step = (squareSize + gridGap) * dpr
+      const size = squareSize * dpr
 
-      for (let i = 0; i < cols; i++) {
-        for (let j = 0; j < rows; j++) {
-          const opacity = squares[i * rows + j]
-          if (opacity <= 0.01) continue
-          ctx.fillStyle = `${memoizedColor}${opacity})`
-          ctx.fillRect(
-            i * (squareSize + gridGap) * dpr,
-            j * (squareSize + gridGap) * dpr,
-            squareSize * dpr,
-            squareSize * dpr
-          )
+      // Batch by opacity to minimize state changes
+      for (let pass = 0; pass < 3; pass++) {
+        const minOp = pass === 0 ? 0.2 : pass === 1 ? 0.1 : 0.01
+        const maxOp = pass === 0 ? 1 : pass === 1 ? 0.2 : 0.1
+
+        let hasAny = false
+        for (let i = 0; i < cols; i++) {
+          for (let j = 0; j < rows; j++) {
+            const op = squares[j * cols + i]
+            if (op > minOp && op <= maxOp) {
+              if (!hasAny) {
+                ctx.globalAlpha = op
+                hasAny = true
+              }
+              ctx.fillRect(i * step, j * step, size, size)
+            }
+          }
         }
       }
+
+      ctx.globalAlpha = 1
     }
 
-    let lastTime = 0
-    const animate = (time: number) => {
-      if (!isInViewRef.current) {
-        animationFrameId = null
-        return
+    const updateAndDraw = () => {
+      const params = gridParamsRef.current
+      if (!params) return
+
+      // Update random squares
+      const { squares } = params
+      const updateCount = Math.max(1, Math.floor(squares.length * flickerChance))
+
+      for (let k = 0; k < updateCount; k++) {
+        const idx = (Math.random() * squares.length) | 0
+        squares[idx] = Math.random() * maxOpacity
       }
 
-      const deltaTime = (time - lastTime) / 1000
-      lastTime = time
-
-      updateSquares(deltaTime)
       drawGrid()
-      animationFrameId = requestAnimationFrame(animate)
+
+      // Schedule next update
+      if (isInViewRef.current) {
+        timeoutId = setTimeout(updateAndDraw, 500)
+      }
     }
 
     const startAnimation = () => {
-      if (!animationFrameId) {
-        lastTime = performance.now()
-        animationFrameId = requestAnimationFrame(animate)
+      if (rafIdRef.current === null) {
+        updateAndDraw()
       }
     }
 
     const stopAnimation = () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId)
-        animationFrameId = null
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+        timeoutId = null
       }
+      rafIdRef.current = null
     }
 
     // Initial setup
-    gridParams = setupCanvas()
-    if (gridParams) {
-      drawGrid()
-      setIsReady(true)
-    }
+    setupCanvas()
+    drawGrid()
 
-    // Setup observers
+    // Resize observer - debounced
+    let resizeTimeout: ReturnType<typeof setTimeout> | null = null
     resizeObserver = new ResizeObserver(() => {
-      gridParams = setupCanvas()
-      if (gridParams) {
+      if (resizeTimeout) clearTimeout(resizeTimeout)
+      resizeTimeout = setTimeout(() => {
+        setupCanvas()
         drawGrid()
-      }
+      }, 100)
     })
     resizeObserver.observe(container)
 
+    // Intersection observer
     intersectionObserver = new IntersectionObserver(
       ([entry]) => {
         isInViewRef.current = entry.isIntersecting
@@ -163,7 +183,7 @@ export default function FlickeringGrid({
           stopAnimation()
         }
       },
-      { threshold: 0 }
+      { threshold: 0, rootMargin: '50px' }
     )
     intersectionObserver.observe(canvas)
 
@@ -176,12 +196,9 @@ export default function FlickeringGrid({
 
     return () => {
       stopAnimation()
-      if (resizeObserver) {
-        resizeObserver.disconnect()
-      }
-      if (intersectionObserver) {
-        intersectionObserver.disconnect()
-      }
+      if (resizeTimeout) clearTimeout(resizeTimeout)
+      if (resizeObserver) resizeObserver.disconnect()
+      if (intersectionObserver) intersectionObserver.disconnect()
     }
   }, [squareSize, gridGap, flickerChance, color, maxOpacity])
 

@@ -34,10 +34,10 @@ export default function Contact() {
     <section id="contact" className={styles.section}>
       <div className={styles.gridBackground}>
         <FlickeringGrid
-          squareSize={3}
-          gridGap={10}
-          flickerChance={0.005}
-          color="rgba(255, 255, 255, 0.15)"
+          squareSize={4}
+          gridGap={25}
+          flickerChance={0.0000001}
+          color="rgba(255, 255, 255, 1)"
           maxOpacity={0.1}
         />
       </div>
