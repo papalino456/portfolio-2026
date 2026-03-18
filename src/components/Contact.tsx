@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { SOCIAL_LINKS } from '../data'
 import styles from './Contact.module.css'
+import FlickeringGrid from './FlickeringGrid'
 
 function Icon({ name }: { name: string }) {
   switch (name) {
@@ -31,6 +32,15 @@ function Icon({ name }: { name: string }) {
 export default function Contact() {
   return (
     <section id="contact" className={styles.section}>
+      <div className={styles.gridBackground}>
+        <FlickeringGrid
+          squareSize={3}
+          gridGap={10}
+          flickerChance={0.005}
+          color="rgba(255, 255, 255, 0.15)"
+          maxOpacity={0.1}
+        />
+      </div>
       <motion.div
         className={styles.content}
         initial={{ opacity: 0, y: 30 }}

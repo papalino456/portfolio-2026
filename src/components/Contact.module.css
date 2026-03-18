@@ -1,9 +1,22 @@
 .section {
+  position: relative;
   background: var(--aluminum-dark);
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   color: #f5f5f5;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
   margin-top: var(--space-4xl);
+  overflow: hidden;
+}
+
+.gridBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .content {
