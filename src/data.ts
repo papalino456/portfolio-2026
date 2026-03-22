@@ -90,12 +90,12 @@ export const SOCIAL_LINKS = [
   },
   {
     label: 'LinkedIn',
-    href: 'https://linkedin.com/in/sebastianpappalardo',
+    href: 'https://www.linkedin.com/in/sebastian-barrio/',
     icon: 'linkedin',
   },
   {
     label: 'Gmail',
-    href: 'mailto:sebastian@example.com',
+    href: 'mailto:sebastian.barrio.b@gmail.com',
     icon: 'mail',
   },
 ];
