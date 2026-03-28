@@ -52,19 +52,20 @@ export const PROJECTS = [
 
 export const TIMELINE = [
   {
-    period: '2025 — Present',
+    period: '2025',
     title: 'AI R&D Engineer',
     company: 'Siemens, Munich',
     description:
-      'Building ML pipelines for assembly planning and YOLO-based digitization achieving >98% accuracy. Developing novel Fourier-based inverse kinematics methods.',
+      'Built ML pipelines for assembly planning, LLM-based data harmonization and extraction, YOLO-based digitization achieving >98% accuracy and developed novel Fourier-based inverse kinematics methods.',
     active: true,
+    hideCurrentBadge: true,
   },
   {
     period: '2021 — 2025',
     title: 'BSc. Mechatronics Engineering',
     company: 'ITESM, Mexico',
     description:
-      'Scholarship holder specializing in Robotics and Industrial Automation. International exchange semester at TU Dresden, Germany.',
+      'Entrepreneurial and Academic Scholarship holder. National CENEVAL Award winner (Top 1.75% in Mexico). Specializing in Robotics and Industrial Automation. International exchange semester at TU Dresden, Germany.',
     active: false,
   },
   {

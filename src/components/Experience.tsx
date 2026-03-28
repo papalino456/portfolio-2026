@@ -20,7 +20,9 @@ export default function Experience() {
             >
               <div className={styles.left}>
                 <span className={styles.period}>{item.period}</span>
-                {item.active && <span className={styles.badge}>Current</span>}
+                {item.active && !(item as { hideCurrentBadge?: boolean }).hideCurrentBadge && (
+                  <span className={styles.badge}>Current</span>
+                )}
               </div>
 
               <div className={styles.rail}>

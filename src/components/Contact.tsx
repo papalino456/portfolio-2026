@@ -55,7 +55,7 @@ export default function Contact() {
         </h2>
         <p className={styles.sub}>
           Open to research collaborations, robotics projects, and engineering
-          challenges. Currently based in Munich, Germany.
+          challenges. Currently based in Mexico City, Mexico.
         </p>
 
         <div className={styles.links}>
