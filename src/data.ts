@@ -1,5 +1,6 @@
 import robotArmImage from './assets/RobotArm.png'
 import robomopImage from './assets/Robomop.png'
+import embeddingsClusteringImage from './assets/Embeddings.png'
 
 export const NAV_LINKS = [
   { label: 'Work', href: '#work' },
@@ -30,12 +31,12 @@ export const PROJECTS = [
   },
   {
     id: '03',
-    title: 'ISA System',
+    title: 'Embeddings Clustering',
     description:
-      'Intelligent sustainable agriculture system using AI and IoT for automated, scalable crop watering.',
-    image: '/portfolio-2026/projects/isa.png',
-    tags: ['Embedded', 'IoT', 'ESP32', 'AI'],
-    href: 'https://github.com/papalino456/ISA',
+      'Clustering embeddings for semantic similarity and characteristics extraction.',
+    image: embeddingsClusteringImage,
+    tags: ['React', 'PyTorch', 'Clustering', 'Embeddings'],
+    href: 'https://github.com/papalino456/Embeddings-Clustering',
   },
   {
     id: '04',
