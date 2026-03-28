@@ -1,6 +1,7 @@
 import robotArmImage from './assets/RobotArm.png'
 import robomopImage from './assets/Robomop.png'
 import embeddingsClusteringImage from './assets/Embeddings.png'
+import mechatronicsModelImage from './assets/MechatronicsModel.png'
 
 export const NAV_LINKS = [
   { label: 'Work', href: '#work' },
@@ -31,21 +32,21 @@ export const PROJECTS = [
   },
   {
     id: '03',
-    title: 'Embeddings Clustering',
+    title: 'Data Harmonization and Knowledge Extraction',
     description:
-      'Clustering embeddings for semantic similarity and characteristics extraction.',
+      'Data harmonization and knowledge extraction from heterogeneous sources using embeddings, clustering and LLMs.',
     image: embeddingsClusteringImage,
-    tags: ['React', 'PyTorch', 'Clustering', 'Embeddings'],
+    tags: ['React', 'PyTorch', 'Clustering', 'LLMs'],
     href: 'https://github.com/papalino456/Embeddings-Clustering',
   },
   {
     id: '04',
-    title: 'AGV Robot',
+    title: 'Mechatronics Embeddings Model',
     description:
-      'Automatic Guided Vehicle with Raspberry Pi, IR line following, and PID control for industrial logistics.',
-    image: '/portfolio-2026/projects/agv.png',
-    tags: ['Python', 'Raspberry Pi', 'PID'],
-    href: 'https://github.com/papalino456/AGV',
+      'End-to-end machine learning pipeline to train domain-specific sentence embeddings for mechatronics from scratch using low-data techniques',
+    image: mechatronicsModelImage,
+    tags: ['Embeddings', 'PyTorch', 'Machine Learning', 'Low-Data'],
+    href: 'https://github.com/papalino456/CienciaDeDatos',
   },
 ];
 
