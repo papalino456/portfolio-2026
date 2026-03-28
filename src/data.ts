@@ -1,7 +1,7 @@
 import robotArmImage from './assets/RobotArm.png'
 import robomopImage from './assets/Robomop.png'
 import embeddingsClusteringImage from './assets/Embeddings.png'
-import mechatronicsModelImage from './assets/MechatronicsModel.png'
+import mechatronicsModelImage from './assets/mechatronicsModel.png'
 
 export const NAV_LINKS = [
   { label: 'Work', href: '#work' },
