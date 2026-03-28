@@ -1,3 +1,6 @@
+import robotArmImage from './assets/RobotArm.png'
+import robomopImage from './assets/Robomop.png'
+
 export const NAV_LINKS = [
   { label: 'Work', href: '#work' },
   { label: 'Experience', href: '#experience' },
@@ -12,7 +15,7 @@ export const PROJECTS = [
     title: 'RobotArm',
     description:
       'Computer vision enabled servo robot arm with a real-time OpenCV pipeline for precise pick-and-place operations.',
-    image: './src/assets/Robot Drawing-1.png',
+    image: robotArmImage,
     tags: ['C++', 'Python', 'OpenCV', 'ESP32'],
     href: 'https://github.com/papalino456/RobotArm',
   },
@@ -21,7 +24,7 @@ export const PROJECTS = [
     title: 'RoboMop',
     description:
       'Autonomous cleaning robot featuring SLAM navigation, path planning, and a React-based monitoring dashboard.',
-    image: '/portfolio-2026/projects/robomop.png',
+    image: robomopImage,
     tags: ['Python', 'React', 'SLAM', 'ROS 2'],
     href: 'https://github.com/papalino456/RoboMop',
   },
