@@ -50,34 +50,73 @@ export const PROJECTS = [
   },
 ];
 
-export const TIMELINE = [
+/** Shown when no year range (e.g. high school); must match CSS/JS checks */
+export const PERIOD_PLACEHOLDER = '—' as const
+
+export type TimelineEntry = {
+  period: string
+  title: string
+  company: string
+  description: string
+  active?: boolean
+  hideCurrentBadge?: boolean
+}
+
+/** Reverse chronological */
+export const WORK_TIMELINE: TimelineEntry[] = [
   {
     period: '2025',
     title: 'AI R&D Engineer',
     company: 'Siemens, Munich',
     description:
-      'Built ML pipelines for assembly planning, LLM-based data harmonization and extraction, YOLO-based digitization achieving >98% accuracy and developed novel Fourier-based inverse kinematics methods.',
+      'Built ML pipelines for assembly planning, LLM-based data harmonization and extraction, YOLO-based digitization models achieving >98% accuracy and developed novel Fourier-based inverse discrete kinematics methods.',
     active: true,
     hideCurrentBadge: true,
   },
   {
-    period: '2021 — 2025',
-    title: 'BSc. Mechatronics Engineering',
-    company: 'ITESM, Mexico',
-    description:
-      'Entrepreneurial and Academic Scholarship holder. National CENEVAL Award winner (Top 1.75% in Mexico). Specializing in Robotics and Industrial Automation. International exchange semester at TU Dresden, Germany.',
-    active: false,
-  },
-  {
-    period: '2023',
+    period: '2024',
     title: 'Front-End Developer',
     company: 'La Brujula, Mexico City',
     description:
-      'Built design systems, CI/CD pipelines, and API integrations for real-time translation and workflow automation.',
+      'Built design systems, CI/CD pipelines, and API integrations for real-time translation and workflow and deployment automation.',
     active: false,
   },
-  
-];
+  {
+    period: '2019',
+    title: 'Freelance Full-Stack Developer',
+    company: 'Mexico City',
+    description:
+      'Designed and shipped full-stack web apps for small clients with React, Node.js, and Firebase; deployed on Azure with reliable cloud ops.',
+    active: false,
+  },
+]
+
+/** Reverse chronological */
+export const EDUCATION_TIMELINE: TimelineEntry[] = [
+  {
+    period: '2021 — 2025',
+    title: 'B.S. Mechatronics Engineering',
+    company: 'ITESM, Mexico',
+    description:
+      'Entrepreneurial and Academic Scholarship holder. National CENEVAL Award winner (Top 1.75% in Mexico). Specializing in Mechatronics and Industrial Automation.',
+    active: false,
+  },
+  {
+    period: '2024 — 2025',
+    title: 'Robotics Exchange Semester',
+    company: 'TU Dresden, Germany',
+    description:
+      'DAAD-KOSPIE scholarship. Studied Advanced Robot Control, Laser Robotics, Memristive Neural Networks, and Plasma Technology.',
+    active: false,
+  },
+  {
+    period: PERIOD_PLACEHOLDER,
+    title: 'High School',
+    company: 'Colegio Cristobal Colon',
+    description: 'Pre-university studies, captain of the school robotics team for 4 years, earning 1st place nationally and best round award internationally in Japan.',
+    active: false,
+  },
+]
 
 export const SKILLS = [
   { category: 'Languages', items: ['Python', 'C++', 'TypeScript', 'MATLAB'] },

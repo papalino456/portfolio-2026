@@ -1,22 +1,53 @@
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+.column {
+  min-width: 0;
+}
+
+.columnLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--border);
+}
+
+/*
+  One grid per column: date column width = widest label in THIS column (max-content),
+  so short years don’t sit in a huge empty strip — timeline stays left, copy gets the rest.
+*/
 .timeline {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: max-content 28px minmax(0, 1fr);
+  grid-auto-rows: minmax(140px, auto);
+  align-items: stretch;
+  column-gap: 0;
+  /* Pull date + rail toward the column edge so copy gains horizontal room */
+  margin-left: calc(-1 * var(--space-sm));
+  width: calc(100% + var(--space-sm));
 }
 
 .entry {
-  display: grid;
-  grid-template-columns: 180px 40px 1fr;
-  gap: 0;
-  min-height: 160px;
+  display: contents;
 }
 
 .left {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  padding-top: 2px;
-  padding-right: var(--space-md);
+  justify-content: flex-start;
+  padding-top: 10px;
+  padding-right: var(--space-sm);
   gap: var(--space-xs);
+  min-width: 0;
 }
 
 .period {
@@ -43,6 +74,8 @@
   flex-direction: column;
   align-items: center;
   position: relative;
+  align-self: stretch;
+  min-height: 100%;
 }
 
 .dot {
@@ -51,7 +84,7 @@
   border-radius: 50%;
   border: 2px solid var(--border-strong);
   background: var(--bg);
-  margin-top: 4px;
+  margin-top: 12px;
   flex-shrink: 0;
   position: relative;
   z-index: 1;
@@ -67,12 +100,13 @@
   width: 1px;
   flex: 1;
   background: var(--border);
-  margin-top: 4px;
+  margin-top: 10px;
 }
 
 .right {
-  padding-left: var(--space-md);
+  padding-left: var(--space-sm);
   padding-bottom: var(--space-xl);
+  min-width: 0;
 }
 
 .title {
@@ -96,12 +130,34 @@
   font-size: var(--text-sm);
   color: var(--text-secondary);
   line-height: 1.7;
-  max-width: 500px;
+  max-width: none;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 960px) {
+  .columns {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
 }
 
 @media (max-width: 768px) {
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0;
+    width: 100%;
+  }
+
   .entry {
+    display: grid;
     grid-template-columns: 24px 1fr;
+    gap: 0;
+    min-height: 140px;
+    align-items: stretch;
   }
 
   .left {
@@ -120,7 +176,17 @@
     display: none;
   }
 
-  .right::before {
+  .right[data-period]::before {
     content: attr(data-period);
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    letter-spacing: 0.03em;
+    margin-bottom: var(--space-xs);
+  }
+
+  .rightNoPeriodMeta::before {
+    display: none !important;
   }
 }
