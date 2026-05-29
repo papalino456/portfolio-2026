@@ -157,6 +157,8 @@ const App = () => {
       const colsCount = Math.ceil(width / charSize);
       const rowsCount = Math.ceil(height / charSize);
 
+      const rect = canvas.getBoundingClientRect();
+
       for (let y = 0; y < rowsCount; y++) {
         if (y < rowsCount * 0.4) continue;
         for (let x = 0; x < colsCount; x++) {
@@ -164,7 +166,6 @@ const App = () => {
           const posY = y * charSize;
 
           const dx = posX - mousePosRef.current.x;
-          const rect = canvas.getBoundingClientRect();
           const dy = posY - (mousePosRef.current.y - rect.top);
           const dist = Math.sqrt(dx * dx + dy * dy);
 
