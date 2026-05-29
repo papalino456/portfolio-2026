@@ -96,12 +96,12 @@ export function IconCloud({ images, size = 400 }: IconCloudProps) {
       const y = e.clientY - rect.top
       const canvas = canvasRef.current
 
-      for (const icon of iconPositions) {
-        const cosX = Math.cos(rotationRef.current.x)
-        const sinX = Math.sin(rotationRef.current.x)
-        const cosY = Math.cos(rotationRef.current.y)
-        const sinY = Math.sin(rotationRef.current.y)
+      const cosX = Math.cos(rotationRef.current.x)
+      const sinX = Math.sin(rotationRef.current.x)
+      const cosY = Math.cos(rotationRef.current.y)
+      const sinY = Math.sin(rotationRef.current.y)
 
+      for (const icon of iconPositions) {
         const rotatedX = icon.x * cosY - icon.z * sinY
         const rotatedZ = icon.x * sinY + icon.z * cosY
         const rotatedY = icon.y * cosX + rotatedZ * sinX
@@ -213,12 +213,12 @@ export function IconCloud({ images, size = 400 }: IconCloudProps) {
         }
       }
 
-      iconPositions.forEach((icon, index) => {
-        const cosX = Math.cos(rotationRef.current.x)
-        const sinX = Math.sin(rotationRef.current.x)
-        const cosY = Math.cos(rotationRef.current.y)
-        const sinY = Math.sin(rotationRef.current.y)
+      const cosX = Math.cos(rotationRef.current.x)
+      const sinX = Math.sin(rotationRef.current.x)
+      const cosY = Math.cos(rotationRef.current.y)
+      const sinY = Math.sin(rotationRef.current.y)
 
+      iconPositions.forEach((icon, index) => {
         const rotatedX = icon.x * cosY - icon.z * sinY
         const rotatedZ = icon.x * sinY + icon.z * cosY
         const rotatedY = icon.y * cosX + rotatedZ * sinX
