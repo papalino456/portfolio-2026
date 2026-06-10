@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sebastian Barrio Bejarano · AI &amp; Robotics Engineer</title>
+    <meta
+      name="description"
+      content="Portfolio of Sebastian Barrio Bejarano: AI engineer with a mechatronics foundation. Robotics planning at Siemens, autonomous mobile robots, computer vision past 98% accuracy, LLM workflows in production."
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@300..700&family=Fragment+Mono&family=Libre+Caslon+Text:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <header class="masthead">
+      <a class="wordmark" href="#top">Sebastian Barrio Bejarano</a>
+      <nav class="masthead-nav" aria-label="Sections">
+        <a href="#work">Work</a>
+        <a href="#record">Record</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="masthead-cv" href="/CV_Sebastian_Barrio_Bejarano.pdf" download>Download CV</a>
+    </header>
+
+    <main id="top">
+      <!-- ============ SHEET 01 · HERO ============ -->
+      <section class="band band-hero" aria-labelledby="hero-title">
+        <p class="hero-meta">AI ENGINEER · MECHATRONICS · ESTADO DE MEXICO, MX</p>
+        <h1 id="hero-title" class="hero-display">
+          Engineering
+          <span class="flip-word" id="flip-word"><span class="sr-only">intelligence</span><span class="flip-visual" aria-hidden="true">intelligence</span></span>
+          into machines.
+        </h1>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="hero-sub">
+              I build the layer between algorithms and actuators: robotics
+              planning at Siemens, an autonomous industrial maintenance robot,
+              vision models past 98% accuracy, LLM workflows in production.
+              Open to AI and robotics engineering roles, in English, Spanish,
+              or German.
+            </p>
+            <div class="hero-actions">
+              <a class="btn" href="#work">See the work</a>
+              <a class="btn btn-quiet" href="mailto:sebastian.barrio.b@gmail.com">Email Sebastian</a>
+            </div>
+          </div>
+          <figure class="fig fig-hero">
+            <div class="fig-stack" data-fig="hero">
+              <canvas
+                role="img"
+                aria-label="Live halftone simulation of a robot arm solving inverse kinematics toward a moving target"
+              ></canvas>
+            </div>
+            <div class="fig-switch" role="group" aria-label="Choose the hero simulation">
+              <button class="fig-opt" data-scene="ik" aria-pressed="true">FIG. 01A · INVERSE KINEMATICS</button>
+              <button class="fig-opt" data-scene="rrt" aria-pressed="false">01B · RRT PLANNER</button>
+              <button class="fig-opt" data-scene="slam" aria-pressed="false">01C · SLAM EXPLORATION</button>
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============ SHEET 02 · SELECTED WORK ============ -->
+      <section class="band" id="work" aria-labelledby="work-title">
+        <h2 id="work-title">Selected work</h2>
+
+        <article class="work-entry">
+          <div class="work-text">
+            <h3>Assembly-by-disassembly planning</h3>
+            <p class="work-meta">SIEMENS, MUNICH · 2025 · PYTHON, C#, RL, SIEMENS NX</p>
+            <p>
+              An end-to-end pipeline that plans how a product gets assembled by
+              computing how it comes apart: automated sequence generation and
+              pruning, path-finding with ML-RRT, D* and reinforcement learning,
+              and interactive AI-generated instructions exported to VR in Siemens
+              NX. It includes a graph algorithm that places CAD components in 3D
+              under connection and collision constraints, and a Fourier-transform
+              method that estimates solution density across the inverse-kinematics
+              configuration space, cutting placement computation time sharply.
+            </p>
+          </div>
+          <figure class="fig">
+            <div class="fig-stack" data-fig="ikfield">
+              <canvas
+                role="img"
+                aria-label="Halftone density field of inverse-kinematics solutions around a three-link robot arm, with reach limits drawn as dashed arcs"
+              ></canvas>
+            </div>
+            <figcaption>FIG. 02 · SOLUTION DENSITY, IK CONFIGURATION SPACE</figcaption>
+          </figure>
+        </article>
+
+        <article class="work-entry">
+          <div class="work-text">
+            <h3>RoboMop, autonomous maintenance robot</h3>
+            <p class="work-meta">ITESM + DASVENT · 2025 · C++, PYTHON, SLAM, WEBSOCKETS</p>
+            <p>
+              The full software stack for an autonomous mobile robot working
+              industrial floors: concurrent real-time systems in C++ and Python,
+              2D occupancy-grid SLAM, and sensor fusion under strict time
+              synchronization constraints. Coverage path-planning handles
+              navigation and obstacle avoidance; a React and Node.js telemetry
+              interface streams live maps over WebSockets for monitoring and
+              remote teleoperation.
+            </p>
+          </div>
+          <figure class="fig">
+            <div class="fig-stack" data-fig="slam">
+              <canvas
+                role="img"
+                aria-label="Occupancy-grid SLAM map: explored rooms in white, unknown space as gray halftone, a lidar scan fanning out from the robot, and its path drawn in blue"
+              ></canvas>
+            </div>
+            <figcaption>FIG. 03 · OCCUPANCY GRID + LIDAR SCAN, 2D SLAM</figcaption>
+          </figure>
+        </article>
+
+        <article class="work-entry">
+          <div class="work-text">
+            <h3>Single-line diagram digitization</h3>
+            <p class="work-meta">SIEMENS, MUNICH · 2025 · PYTORCH, YOLO, LLM, REACT</p>
+            <p>
+              A custom-architecture YOLO model and computer vision system that
+              turns electrical single-line diagrams into structured digital data,
+              at over 98% detection accuracy. Paired with LLM- and embedding-based
+              workflows for semantic data harmonization and clustering, and a
+              React tool stakeholders use to curate, cleanse, review and
+              visualize the results.
+            </p>
+          </div>
+          <figure class="fig">
+            <div class="fig-stack" data-fig="diagram">
+              <canvas
+                role="img"
+                aria-label="Electrical single-line diagram as a halftone print, with blue detection boxes and confidence scores around each symbol"
+              ></canvas>
+            </div>
+            <figcaption>FIG. 04 · SYMBOL DETECTION ON A SINGLE-LINE DIAGRAM</figcaption>
+          </figure>
+        </article>
+
+        <article class="work-entry">
+          <div class="work-text">
+            <h3>Vision-guided 4-DoF robot arm</h3>
+            <p class="work-meta">ITESM · 2024 · OPENCV, C++, ESP32, IK</p>
+            <p>
+              A pick-and-place arm driven end to end: real-time OpenCV detection
+              with fiducial-based positioning, geometric inverse kinematics
+              designed and validated for a 4-DoF arm and wrist, and ESP32
+              firmware in C++ exposing a Wi-Fi socket server with state
+              acknowledgments and over-the-air updates. A single Python control
+              loop closes camera capture, path planning, TCP communication, and
+              task execution.
+            </p>
+          </div>
+          <figure class="fig">
+            <div class="fig-stack" data-fig="linkage">
+              <canvas
+                role="img"
+                aria-label="Side view of a four-link robot arm sweeping between poses, earlier positions fading like a long exposure, end-effector path traced in blue"
+              ></canvas>
+            </div>
+            <figcaption>FIG. 05 · LINKAGE SWEEP, 4 DEGREES OF FREEDOM</figcaption>
+          </figure>
+        </article>
+
+        <div class="also">
+          <h3 class="also-title">Also built</h3>
+          <ul class="index-list">
+            <li class="index-row">
+              <span class="index-name">Automated manufacturing cell with VR digital twin</span>
+              <span class="index-detail">Robotic arms, CNC, PLCs and IoT sensors integrated into one cell; VR twin for operator training</span>
+              <span class="index-year">ROCKWELL · 2024</span>
+            </li>
+            <li class="index-row">
+              <span class="index-name">Production design system and CI/CD pipelines</span>
+              <span class="index-detail">Reusable frontend system, API integrations, automated test and deploy for a production site</span>
+              <span class="index-year">LA BRÚJULA · 2024</span>
+            </li>
+            <li class="index-row">
+              <span class="index-name">Full-stack web applications for small clients</span>
+              <span class="index-detail">React, Node.js and Firebase apps deployed and maintained on cloud infrastructure</span>
+              <span class="index-year">FREELANCE · 2019–20</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============ SHEET 03 · RECORD + CAPABILITIES ============ -->
+      <section class="band" id="record" aria-labelledby="record-title">
+        <div class="record-grid">
+          <div class="record-col">
+            <h2 id="record-title">Record</h2>
+            <ol class="index-list record-list">
+              <li class="index-row">
+                <span class="index-name">AI Research Scientist Intern, Siemens</span>
+                <span class="index-detail">Robotics planning, computer vision, LLM workflows · Munich, Germany</span>
+                <span class="index-year">MAR–AUG 2025</span>
+              </li>
+              <li class="index-row">
+                <span class="index-name">Front-End Developer Intern, La Brújula</span>
+                <span class="index-detail">Design system, API integrations, CI/CD · Mexico City</span>
+                <span class="index-year">FEB–JUN 2024</span>
+              </li>
+              <li class="index-row">
+                <span class="index-name">Freelance Full-Stack Developer</span>
+                <span class="index-detail">React, Node.js, Firebase for small clients · Mexico City</span>
+                <span class="index-year">2019–2020</span>
+              </li>
+            </ol>
+
+            <h2 class="h2-follow">Education</h2>
+            <ol class="index-list record-list">
+              <li class="index-row">
+                <span class="index-name">B.S. Mechatronics Engineering, Tecnológico de Monterrey</span>
+                <span class="index-detail">National CENEVAL Award winner; academic and entrepreneurial scholarships</span>
+                <span class="index-year">MEXICO</span>
+              </li>
+              <li class="index-row">
+                <span class="index-name">Exchange semester, TU Dresden</span>
+                <span class="index-detail">DAAD-KOSPIE scholar; advanced robot control, neural networks and memristive hardware</span>
+                <span class="index-year">GERMANY</span>
+              </li>
+            </ol>
+          </div>
+
+          <div class="record-col" id="capabilities">
+            <h2>Capabilities</h2>
+            <dl class="spec-table" aria-label="Technical capabilities">
+              <div class="spec-row"><dt>AI / ML</dt><dd>PyTorch · TensorFlow · OpenCV · YOLO</dd></div>
+              <div class="spec-row"><dt>LLM systems</dt><dd>Workflows · Embeddings · Agents · Clustering</dd></div>
+              <div class="spec-row"><dt>Robotics</dt><dd>SLAM · Sensor fusion · IK · Path planning</dd></div>
+              <div class="spec-row"><dt>Embedded</dt><dd>ESP32 · ROS2 · Firmware · PCB design</dd></div>
+              <div class="spec-row"><dt>Software</dt><dd>Python · C++ · C# · TypeScript</dd></div>
+              <div class="spec-row"><dt>Web</dt><dd>React · Node.js · SQL · Firebase</dd></div>
+              <div class="spec-row"><dt>Ops</dt><dd>Docker · AWS · Azure · CI/CD · MLOps</dd></div>
+              <div class="spec-row"><dt>CAD</dt><dd>Fusion 360 · SolidWorks · CATIA · Simulink</dd></div>
+              <div class="spec-row"><dt>Languages</dt><dd>Spanish native · English C2 · German B2</dd></div>
+            </dl>
+
+            <h2 class="h2-follow">Honors</h2>
+            <ul class="spec-table" aria-label="Awards and certificates">
+              <li class="spec-row"><span>National CENEVAL Award, EGEL+ IMECATRO</span><span>2025</span></li>
+              <li class="spec-row"><span>DAAD-KOSPIE Scholarship, Germany</span><span>2024</span></li>
+              <li class="spec-row"><span>Google AI Professional Certificate</span><span>2026</span></li>
+              <li class="spec-row"><span>HarvardX CS50AI, Python</span><span>2020</span></li>
+              <li class="spec-row"><span>RoboCup Rescue CoSpace, Best Presentation, Japan</span><span>2017</span></li>
+              <li class="spec-row"><span>TMR Rescue Robotics CoSpace, First Place</span><span>2017</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SHEET 04 · CONTACT ============ -->
+      <section class="band band-contact" id="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title">
+          Hiring for AI or robotics?<br />Write to me.
+        </h2>
+        <div class="contact-actions">
+          <a class="btn btn-paper" href="mailto:sebastian.barrio.b@gmail.com">Email sebastian.barrio.b@gmail.com</a>
+          <a class="btn btn-paper-quiet" href="https://www.linkedin.com/in/sebastian-barrio/">Open LinkedIn profile</a>
+        </div>
+        <p class="contact-fine">
+          Estado de Mexico, MX · +52 55 5474 9070 · Replies in English, Spanish, or German
+        </p>
+      </section>
+    </main>
+
+    <footer class="colophon">
+      <p>
+        © 2026 Sebastian Barrio Bejarano. Set in Libre Caslon, Archivo and
+        Fragment Mono. Every figure is drawn procedurally and dithered live on
+        canvas; nothing on this page is a stock image.
+      </p>
+    </footer>
+  </body>
+</html>
