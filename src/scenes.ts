@@ -77,8 +77,8 @@ export function ikField(): Scene {
       // links as hollow capsules
       ctx.lineCap = "round";
       const segs: [number, number, number, number, number][] = [
-        [bx, by, j1x, j1y, 6],
-        [j1x, j1y, eex, eey, 4.8],
+        [bx, by, j1x, j1y, 10.5],
+        [j1x, j1y, eex, eey, 8.4],
       ];
       ctx.strokeStyle = "#111";
       for (const [ax, ay, zx, zy, lw] of segs) {
@@ -90,13 +90,32 @@ export function ikField(): Scene {
       }
       ctx.strokeStyle = "#fff";
       for (const [ax, ay, zx, zy, lw] of segs) {
-        ctx.lineWidth = lw - 2.6;
+        ctx.lineWidth = lw - 3.6;
         ctx.beginPath();
         ctx.moveTo(ax, ay);
         ctx.lineTo(zx, zy);
         ctx.stroke();
       }
       ctx.lineCap = "butt";
+
+      // gripper: square-U parallel jaws facing along the last link
+      {
+        const dx = Math.cos(a2);
+        const dy = Math.sin(a2);
+        const px = -dy;
+        const py = dx;
+        const HALF = 4.5;
+        const FING = 7.5;
+        ctx.strokeStyle = "#111";
+        ctx.lineWidth = 1.8;
+        ctx.lineJoin = "miter";
+        ctx.beginPath();
+        ctx.moveTo(eex + px * HALF + dx * FING, eey + py * HALF + dy * FING);
+        ctx.lineTo(eex + px * HALF, eey + py * HALF);
+        ctx.lineTo(eex - px * HALF, eey - py * HALF);
+        ctx.lineTo(eex - px * HALF + dx * FING, eey - py * HALF + dy * FING);
+        ctx.stroke();
+      }
 
       // base plate
       ctx.fillStyle = "#111";
@@ -115,7 +134,7 @@ export function ikField(): Scene {
       ] as const) {
         ctx.fillStyle = "#fff";
         ctx.beginPath();
-        ctx.arc(jx, jy, 2.6, 0, Math.PI * 2);
+        ctx.arc(jx, jy, 3.8, 0, Math.PI * 2);
         ctx.fill();
         ctx.strokeStyle = "#111";
         ctx.lineWidth = 1.4;
@@ -523,7 +542,7 @@ export function linkageSweep(): Scene {
       const last = pose(1);
       eePath.push(last.ee);
       const chain: [number, number][] = [[bx, by], last.j1, last.j2, last.ee];
-      const linkW = [7, 5.8, 4.6];
+      const linkW = [12, 10, 8];
       ctx.strokeStyle = "#111";
       for (let i = 0; i < 3; i++) {
         ctx.lineWidth = linkW[i];
@@ -534,7 +553,7 @@ export function linkageSweep(): Scene {
       }
       ctx.strokeStyle = "#fff";
       for (let i = 0; i < 3; i++) {
-        ctx.lineWidth = linkW[i] - 2.8;
+        ctx.lineWidth = linkW[i] - 4;
         ctx.beginPath();
         ctx.moveTo(chain[i][0], chain[i][1]);
         ctx.lineTo(chain[i + 1][0], chain[i + 1][1]);
@@ -544,17 +563,23 @@ export function linkageSweep(): Scene {
 
       // final pose details
       const fin = pose(1);
-      // gripper claw
-      ctx.strokeStyle = "#111";
-      ctx.lineWidth = 1.8;
-      const ga = fin.t3;
-      for (const off of [0.5, -0.5]) {
+      // gripper: square-U parallel jaws (y is flipped in this scene)
+      {
+        const ga = fin.t3;
+        const dx = Math.cos(ga);
+        const dy = -Math.sin(ga);
+        const px = -dy;
+        const py = dx;
+        const HALF = 4.5;
+        const FING = 7.5;
+        ctx.strokeStyle = "#111";
+        ctx.lineWidth = 1.8;
+        ctx.lineJoin = "miter";
         ctx.beginPath();
-        ctx.moveTo(fin.ee[0], fin.ee[1]);
-        ctx.lineTo(
-          fin.ee[0] + Math.cos(ga + off) * 7,
-          fin.ee[1] - Math.sin(ga + off) * 7,
-        );
+        ctx.moveTo(fin.ee[0] + px * HALF + dx * FING, fin.ee[1] + py * HALF + dy * FING);
+        ctx.lineTo(fin.ee[0] + px * HALF, fin.ee[1] + py * HALF);
+        ctx.lineTo(fin.ee[0] - px * HALF, fin.ee[1] - py * HALF);
+        ctx.lineTo(fin.ee[0] - px * HALF + dx * FING, fin.ee[1] - py * HALF + dy * FING);
         ctx.stroke();
       }
 
@@ -562,7 +587,7 @@ export function linkageSweep(): Scene {
       for (const [jx, jy] of [[bx, by - 2], fin.j1, fin.j2] as const) {
         ctx.fillStyle = "#fff";
         ctx.beginPath();
-        ctx.arc(jx, jy, 3.2, 0, Math.PI * 2);
+        ctx.arc(jx, jy, 4.4, 0, Math.PI * 2);
         ctx.fill();
         ctx.strokeStyle = "#111";
         ctx.lineWidth = 1.5;

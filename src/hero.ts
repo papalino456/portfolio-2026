@@ -123,7 +123,7 @@ export function heroIK(ptr: PointerState): Scene {
       ctx.setLineDash([]);
 
       // arm: links as hollow tapered capsules, not bare lines
-      const linkW = [8, 6.5, 5];
+      const linkW = [14, 11, 8.5];
       ctx.lineCap = "round";
       ctx.strokeStyle = "#111";
       for (let i = 0; i < 3; i++) {
@@ -135,7 +135,7 @@ export function heroIK(ptr: PointerState): Scene {
       }
       ctx.strokeStyle = "#fff";
       for (let i = 0; i < 3; i++) {
-        ctx.lineWidth = linkW[i] - 3;
+        ctx.lineWidth = linkW[i] - 4;
         ctx.beginPath();
         ctx.moveTo(joints[i][0], joints[i][1]);
         ctx.lineTo(joints[i + 1][0], joints[i + 1][1]);
@@ -157,7 +157,7 @@ export function heroIK(ptr: PointerState): Scene {
       for (const [jx, jy] of joints) {
         ctx.fillStyle = "#fff";
         ctx.beginPath();
-        ctx.arc(jx, jy, 3.4, 0, Math.PI * 2);
+        ctx.arc(jx, jy, 5, 0, Math.PI * 2);
         ctx.fill();
         ctx.strokeStyle = "#111";
         ctx.lineWidth = 1.6;
@@ -167,6 +167,28 @@ export function heroIK(ptr: PointerState): Scene {
         ctx.arc(jx, jy, 1.2, 0, Math.PI * 2);
         ctx.fill();
       }
+
+      // gripper: square-U parallel jaws facing along the last link
+      const ga = Math.atan2(
+        joints[3][1] - joints[2][1],
+        joints[3][0] - joints[2][0],
+      );
+      const dx = Math.cos(ga);
+      const dy = Math.sin(ga);
+      const px = -dy;
+      const py = dx;
+      const ee3 = joints[3];
+      const HALF = 6;
+      const FING = 10;
+      ctx.strokeStyle = "#111";
+      ctx.lineWidth = 2.2;
+      ctx.lineJoin = "miter";
+      ctx.beginPath();
+      ctx.moveTo(ee3[0] + px * HALF + dx * FING, ee3[1] + py * HALF + dy * FING);
+      ctx.lineTo(ee3[0] + px * HALF, ee3[1] + py * HALF);
+      ctx.lineTo(ee3[0] - px * HALF, ee3[1] - py * HALF);
+      ctx.lineTo(ee3[0] - px * HALF + dx * FING, ee3[1] - py * HALF + dy * FING);
+      ctx.stroke();
 
       // target reticle: spot ink, erased and redrawn so it stays crisp
       // while the slow-fading EE trace shares the channel
