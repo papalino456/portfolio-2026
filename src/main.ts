@@ -85,7 +85,7 @@ if (flipWrap && !reduced) {
   // hidden measurer inherits the headline font, so widths track clamp()
   const meas = document.createElement("span");
   meas.style.cssText =
-    "position:absolute;visibility:hidden;white-space:nowrap;pointer-events:none;";
+    "position:fixed;left:0;top:0;visibility:hidden;white-space:nowrap;pointer-events:none;";
   meas.setAttribute("aria-hidden", "true");
   flipWrap.appendChild(meas);
   const widthOf = (t: string) => {

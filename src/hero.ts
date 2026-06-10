@@ -25,6 +25,20 @@ export function heroIK(ptr: PointerState): Scene {
   let joints: [number, number][] = [];
   let tgt = { x: 0, y: 0 };
   let prevEE: [number, number] | null = null;
+  let prevTgt: [number, number] | null = null;
+
+  const reticlePath = (c: CanvasRenderingContext2D, x: number, y: number) => {
+    c.beginPath();
+    c.arc(x, y, 5, 0, Math.PI * 2);
+    c.moveTo(x - 8, y);
+    c.lineTo(x - 3, y);
+    c.moveTo(x + 3, y);
+    c.lineTo(x + 8, y);
+    c.moveTo(x, y - 8);
+    c.lineTo(x, y - 3);
+    c.moveTo(x, y + 3);
+    c.lineTo(x, y + 8);
+  };
 
   const fabrik = (tx: number, ty: number) => {
     const total = L.reduce((a, b) => a + b, 0);
@@ -74,6 +88,7 @@ export function heroIK(ptr: PointerState): Scene {
       ];
       tgt = { x: w * 0.5, y: h * 0.4 };
       prevEE = null;
+      prevTgt = null;
     },
     draw({ ctx, spot, w, h }: SceneContext, t: number) {
       // ghost-trail fade for the arm, slower fade for the EE trace
@@ -153,20 +168,21 @@ export function heroIK(ptr: PointerState): Scene {
         ctx.fill();
       }
 
-      // target reticle
-      ctx.strokeStyle = "rgba(0,0,0,0.85)";
-      ctx.lineWidth = 1.2;
-      ctx.beginPath();
-      ctx.arc(tgt.x, tgt.y, 5, 0, Math.PI * 2);
-      ctx.moveTo(tgt.x - 8, tgt.y);
-      ctx.lineTo(tgt.x - 3, tgt.y);
-      ctx.moveTo(tgt.x + 3, tgt.y);
-      ctx.lineTo(tgt.x + 8, tgt.y);
-      ctx.moveTo(tgt.x, tgt.y - 8);
-      ctx.lineTo(tgt.x, tgt.y - 3);
-      ctx.moveTo(tgt.x, tgt.y + 3);
-      ctx.lineTo(tgt.x, tgt.y + 8);
-      ctx.stroke();
+      // target reticle: spot ink, erased and redrawn so it stays crisp
+      // while the slow-fading EE trace shares the channel
+      if (prevTgt) {
+        spot.globalCompositeOperation = "destination-out";
+        spot.strokeStyle = "rgba(0,0,0,1)";
+        spot.lineWidth = 3;
+        reticlePath(spot, prevTgt[0], prevTgt[1]);
+        spot.stroke();
+        spot.globalCompositeOperation = "source-over";
+      }
+      spot.strokeStyle = "rgba(0,0,0,0.85)";
+      spot.lineWidth = 1.2;
+      reticlePath(spot, tgt.x, tgt.y);
+      spot.stroke();
+      prevTgt = [tgt.x, tgt.y];
 
       // end-effector trace in spot ink
       const ee = joints[3];
