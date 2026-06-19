@@ -643,24 +643,30 @@ p {
   align-items: baseline;
 }
 
-/* ---------------- capabilities ---------------- */
+/* ---------------- capabilities: spec appendix to the record ---------------- */
 
-.cap-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-  gap: clamp(2rem, 5vw, 4.5rem);
-  align-items: start;
+.cap-block {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--hairline);
+  scroll-margin-top: clamp(1.5rem, 4vw, 3rem);
 }
 
-.cap-note {
-  max-width: 38ch;
-  margin-top: 1rem;
-  color: var(--ink-soft);
-  font-size: 1rem;
+.cap-block .record-sub {
+  margin-bottom: 0.85rem;
 }
 
 .spec-table {
   list-style: none;
+}
+
+/* two columns so the toolset fills the band width without stretching the
+   dt-to-dd gap across the full 1200px measure */
+.spec-table--cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(2rem, 5vw, 4rem);
+  border-top: 1px solid var(--hairline);
 }
 
 .spec-row {
@@ -672,10 +678,6 @@ p {
   border-bottom: 1px solid var(--hairline);
   font-family: var(--font-mono);
   font-size: 0.78125rem;
-}
-
-.spec-row:first-child {
-  border-top: 1px solid var(--hairline);
 }
 
 .spec-row dt {
@@ -806,10 +808,13 @@ p {
   .tile--robomop { min-height: 340px; }
   .tile--sld { min-height: 200px; }
 
-  .cap-grid,
   .record-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .spec-table--cols {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .hero-grid {
