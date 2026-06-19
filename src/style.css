@@ -10,6 +10,7 @@
   --ink-soft: oklch(0.42 0 0);
   --spot: oklch(0.55 0.17 258);
   --spot-deep: oklch(0.46 0.15 258);
+  --spot-light: oklch(0.9 0.05 258);
   --hairline: oklch(0.84 0.005 258);
 
   --font-display: "Libre Caslon Text", "Times New Roman", serif;
@@ -47,6 +48,7 @@ body {
   font-size: 1.0625rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 /* edge dither bleed: dot gradient in the true margins only,
@@ -175,11 +177,6 @@ h1 {
 
 h2 {
   font-size: clamp(1.9rem, 3.2vw, 2.8rem);
-  margin-bottom: clamp(1.75rem, 4vw, 3rem);
-}
-
-.h2-follow {
-  margin-top: clamp(2.5rem, 6vw, 4.5rem);
 }
 
 h3 {
@@ -250,6 +247,7 @@ p {
   letter-spacing: 0.08em;
   color: var(--ink-soft);
   margin-bottom: clamp(1.25rem, 3vw, 2.25rem);
+  overflow-wrap: break-word;
 }
 
 .hero-sub {
@@ -321,35 +319,10 @@ p {
 
 .fig-hero .fig-stack {
   aspect-ratio: 4 / 3;
-}
-
-.work-entry .fig-stack {
-  aspect-ratio: 4 / 3;
-}
-
-figcaption {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.05em;
-  color: var(--ink-soft);
-  margin-top: 0.6rem;
-  display: flex;
-  gap: 0.5rem;
-}
-
-figcaption::before {
-  content: "";
-  flex: 0 0 8px;
-  height: 8px;
-  margin-top: 3px;
-  background: var(--spot);
+  touch-action: pan-y;
 }
 
 /* hero scene switcher: caption rows as controls */
-
-.fig-hero .fig-stack {
-  touch-action: pan-y;
-}
 
 .fig-switch {
   display: flex;
@@ -396,102 +369,295 @@ figcaption::before {
   border-color: var(--spot);
 }
 
-.fig-hero figcaption::before {
-  display: none;
+/* ---------------- selected work: bento ---------------- */
+
+.work-head {
+  margin-bottom: clamp(1.75rem, 4vw, 3rem);
 }
 
-/* ---------------- work entries ---------------- */
-
-.work-entry {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: clamp(1.75rem, 4vw, 4rem);
-  align-items: center;
-  padding-block: clamp(2.25rem, 5vw, 4rem);
-}
-
-.work-entry + .work-entry {
-  border-top: 1px solid var(--hairline);
-}
-
-.work-entry:nth-of-type(even) .work-text {
-  order: 2;
-}
-
-.work-meta {
-  font-family: var(--font-mono);
-  font-size: 0.71875rem;
-  letter-spacing: 0.07em;
-  color: var(--spot-deep);
-  margin: 0.7rem 0 1.1rem;
-}
-
-.work-text p:not(.work-meta) {
+.work-lede {
   max-width: 58ch;
+  margin-top: 0.85rem;
+  color: var(--ink-soft);
   font-size: 1rem;
 }
 
-/* ---------------- index rows (also / record) ---------------- */
-
-.also {
-  border-top: 1px solid var(--hairline);
-  padding-top: clamp(2rem, 4vw, 3rem);
-}
-
-.also-title {
-  margin-bottom: 1.5rem;
-}
-
-.index-list {
-  list-style: none;
-}
-
-.index-row {
+.bento {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr) auto;
-  gap: 0.5rem 2rem;
-  align-items: baseline;
-  padding-block: 1.05rem;
-  border-bottom: 1px solid var(--hairline);
+  gap: clamp(0.45rem, 0.9vw, 0.8rem);
+  /* proportions transcribed directly from the mockup grid */
+  aspect-ratio: 330 / 312;
+  grid-template-columns: 75fr 165fr 90fr;
+  grid-template-rows: 77fr 95fr 70fr 70fr;
+  grid-template-areas:
+    "banner  banner  banner"
+    "embed   robomop exp"
+    "awards  robomop arm"
+    "sld     sld     arm";
 }
 
-.index-name {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  line-height: 1.25;
+.tile--banner { grid-area: banner; }
+.tile--embed { grid-area: embed; }
+.tile--awards { grid-area: awards; }
+.tile--robomop { grid-area: robomop; }
+.tile--exp { grid-area: exp; }
+.tile--arm { grid-area: arm; }
+.tile--sld { grid-area: sld; }
+
+.tile {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  border: 1px solid var(--hairline);
+  background: var(--paper);
+  overflow: hidden;
+  cursor: pointer;
+  isolation: isolate;
+  transition: border-color 260ms var(--ease-mech);
 }
 
-.index-detail {
-  color: var(--ink-soft);
-  font-size: 0.875rem;
+.tile:hover,
+.tile:focus-visible,
+.tile.is-open {
+  border-color: var(--spot);
 }
 
-.index-year {
+.tile .fig-stack {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: var(--paper);
+}
+
+/* resting label, bottom-left, on a soft paper scrim */
+.tile-face {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 2;
+  padding: clamp(0.65rem, 1.3vw, 1.1rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  background: linear-gradient(
+    to top,
+    var(--paper) 14%,
+    oklch(0.985 0.002 258 / 0.72) 55%,
+    transparent
+  );
+  transition: opacity 360ms var(--ease-mech), transform 460ms var(--ease-mech);
+}
+
+.tile-idx {
   font-family: var(--font-mono);
-  font-size: 0.71875rem;
+  font-size: 0.6875rem;
   letter-spacing: 0.06em;
-  color: var(--ink-soft);
+  color: var(--spot-deep);
+}
+
+.tile-name {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 0.9rem + 0.7vw, 1.35rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+.tile--banner .tile-name {
+  font-size: clamp(1.2rem, 1rem + 1.1vw, 1.9rem);
+}
+
+/* revealed cobalt detail panel */
+.tile-detail {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  padding: clamp(0.85rem, 1.7vw, 1.6rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.55rem;
+  background: var(--spot-deep);
+  color: var(--paper);
+  opacity: 0;
+  transform: translateY(10%);
+  transition: opacity 380ms var(--ease-mech), transform 520ms var(--ease-mech);
+  pointer-events: none;
+  overflow: auto;
+}
+
+.tile-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.05rem, 0.9rem + 0.7vw, 1.45rem);
+  line-height: 1.12;
+  letter-spacing: -0.012em;
+  color: var(--paper);
+}
+
+.tile--embed .tile-title,
+.tile--arm .tile-title,
+.tile--awards .tile-title,
+.tile--exp .tile-title {
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.2rem);
+}
+
+.tile:hover .tile-detail,
+.tile:focus-visible .tile-detail,
+.tile.is-open .tile-detail {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.tile:hover .tile-face,
+.tile:focus-visible .tile-face,
+.tile.is-open .tile-face {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.tile-meta {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.05em;
+  color: var(--spot-light);
+}
+
+.tile-desc {
+  font-size: clamp(0.8rem, 0.74rem + 0.3vw, 0.95rem);
+  line-height: 1.5;
+  max-width: 60ch;
+  color: oklch(0.97 0.01 258);
+}
+
+.tile--embed .tile-desc,
+.tile--arm .tile-desc {
+  font-size: clamp(0.76rem, 0.72rem + 0.2vw, 0.86rem);
+  line-height: 1.42;
+}
+
+.tile-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.tile-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  font-size: 0.78rem;
+  line-height: 1.3;
+  border-top: 1px solid oklch(0.985 0.002 258 / 0.22);
+}
+
+.tile-list li:first-child {
+  border-top: none;
+}
+
+.tile-list li span:last-child {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--spot-light);
   white-space: nowrap;
 }
 
-/* ---------------- record / capabilities ---------------- */
+/* ---------------- record: experience · education · honors ---------------- */
+
+.record-head {
+  margin-bottom: clamp(1.75rem, 4vw, 3rem);
+}
+
+.record-lede {
+  max-width: 52ch;
+  margin-top: 0.85rem;
+  color: var(--ink-soft);
+  font-size: 1rem;
+}
 
 .record-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(2.5rem, 6vw, 5.5rem);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
 }
 
-.record-list .index-row {
+.record-sub {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--spot);
+  margin-bottom: 0.35rem;
+}
+
+.record-sub:not(:first-child) {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.cv-list {
+  list-style: none;
+}
+
+.cv-row {
+  display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-areas:
-    "name year"
-    "detail year";
+  column-gap: 1.5rem;
+  padding-block: 0.9rem;
+  border-top: 1px solid var(--hairline);
 }
 
-.record-list .index-name { grid-area: name; }
-.record-list .index-detail { grid-area: detail; }
-.record-list .index-year { grid-area: year; }
+.cv-list > .cv-row:last-child {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.cv-name {
+  grid-column: 1;
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.cv-detail {
+  grid-column: 1;
+  margin-top: 0.3rem;
+  color: var(--ink-soft);
+  font-size: 0.84rem;
+  line-height: 1.45;
+  max-width: 54ch;
+}
+
+.cv-year {
+  grid-column: 2;
+  grid-row: 1;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--spot);
+  white-space: nowrap;
+  text-align: right;
+}
+
+.cv-row--flat {
+  align-items: baseline;
+}
+
+/* ---------------- capabilities ---------------- */
+
+.cap-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.cap-note {
+  max-width: 38ch;
+  margin-top: 1rem;
+  color: var(--ink-soft);
+  font-size: 1rem;
+}
 
 .spec-table {
   list-style: none;
@@ -502,26 +668,24 @@ figcaption::before {
   justify-content: space-between;
   align-items: baseline;
   gap: 1.5rem;
-  padding-block: 0.7rem;
+  padding-block: 0.75rem;
   border-bottom: 1px solid var(--hairline);
   font-family: var(--font-mono);
   font-size: 0.78125rem;
 }
 
-.spec-row dt,
-.spec-row > span:first-child {
-  color: var(--ink-soft);
-  letter-spacing: 0.06em;
+.spec-row:first-child {
+  border-top: 1px solid var(--hairline);
 }
 
-/* only true labels get the datasheet caps; honors rows are sentences */
 .spec-row dt {
+  color: var(--ink-soft);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   flex-shrink: 0;
 }
 
-.spec-row dd,
-.spec-row > span:last-child {
+.spec-row dd {
   text-align: right;
 }
 
@@ -593,62 +757,111 @@ figcaption::before {
   margin-inline: auto;
 }
 
+/* ---------------- reveal on enter ----------------
+   Resting state is visible by default; motion is added only when JS
+   confirms it should run (adds .anim), so a no-JS or headless render
+   never ships blank. */
+
+.anim .reveal {
+  opacity: 0;
+  transform: translateY(22px);
+}
+
+.anim .reveal.in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.8s var(--ease-mech), transform 0.8s var(--ease-mech);
+}
+
+.anim .hero-meta.reveal.in { transition-delay: 0.04s; }
+.anim #hero-title.reveal.in { transition-delay: 0.1s; }
+.anim .hero-sub.reveal.in { transition-delay: 0.18s; }
+.anim .hero-actions.reveal.in { transition-delay: 0.26s; }
+.anim .fig-hero.reveal.in { transition-delay: 0.32s; }
+
+.anim .bento .tile.reveal.in:nth-child(2) { transition-delay: 0.06s; }
+.anim .bento .tile.reveal.in:nth-child(3) { transition-delay: 0.12s; }
+.anim .bento .tile.reveal.in:nth-child(4) { transition-delay: 0.18s; }
+.anim .bento .tile.reveal.in:nth-child(5) { transition-delay: 0.24s; }
+.anim .bento .tile.reveal.in:nth-child(6) { transition-delay: 0.3s; }
+.anim .bento .tile.reveal.in:nth-child(7) { transition-delay: 0.36s; }
+
 /* ---------------- responsive ---------------- */
 
-@media (max-width: 960px) {
-  .hero-grid,
-  .work-entry,
-  .record-grid {
-    grid-template-columns: minmax(0, 1fr);
+@media (max-width: 980px) {
+  .bento {
+    aspect-ratio: auto;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: none;
+    grid-auto-rows: minmax(150px, auto);
+    grid-template-areas:
+      "banner  banner"
+      "robomop robomop"
+      "embed   exp"
+      "awards  arm"
+      "sld     sld";
   }
 
-  .work-entry:nth-of-type(even) .work-text {
-    order: 0;
+  .tile--banner { min-height: 210px; }
+  .tile--robomop { min-height: 340px; }
+  .tile--sld { min-height: 200px; }
+
+  .cap-grid,
+  .record-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .hero-copy {
     padding-bottom: 0;
   }
-
-  .index-row {
-    grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-areas:
-      "name year"
-      "detail year";
-  }
-
-  .index-row .index-name { grid-area: name; }
-  .index-row .index-detail { grid-area: detail; }
-  .index-row .index-year { grid-area: year; }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 600px) {
+  .bento {
+    grid-template-columns: 1fr;
+    grid-auto-rows: minmax(240px, auto);
+    grid-template-areas:
+      "banner"
+      "robomop"
+      "embed"
+      "sld"
+      "arm"
+      "exp"
+      "awards";
+  }
+
+  .tile--banner,
+  .tile--robomop,
+  .tile--sld {
+    min-height: 260px;
+  }
+}
+
+@media (max-width: 640px) {
   .masthead {
-    gap: 0.75rem 1.25rem;
+    gap: 0.85rem 1.25rem;
+  }
+
+  .wordmark {
+    flex: 1 0 100%;
   }
 
   .masthead-nav {
     margin-left: 0;
-    gap: 1rem;
+    gap: 1.25rem;
+    flex-wrap: wrap;
   }
+}
 
-  .spec-row {
-    flex-direction: column;
-    gap: 0.15rem;
-  }
-
-  .spec-row dd,
-  .spec-row > span:last-child {
-    text-align: left;
-  }
-
-  .index-row,
-  .record-list .index-row {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "year"
-      "name"
-      "detail";
+@media (max-width: 420px) {
+  .hero-meta {
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
   }
 }
 

@@ -64,6 +64,7 @@ export class DitherFig {
   private t = 0;
   private running = false;
   private visible = false;
+  private reducedTimers: number[] = [];
 
   constructor(container: HTMLElement, scene: Scene, cellPx = 3) {
     this.canvas = container.querySelector("canvas")!;
@@ -236,26 +237,40 @@ export class DitherFig {
     this.canvas.getContext("2d")!.putImageData(this.out, 0, 0);
   }
 
+  private oneFrame() {
+    this.t += 1 / 60;
+    this.scene.draw(this.sceneCtx(), this.t);
+    this.composite();
+    if (this.scene.animatedOverlay && this.overlayCanvas) {
+      const octx = this.overlayCanvas.getContext("2d")!;
+      octx.clearRect(0, 0, this.cssW, this.cssH);
+      this.scene.animatedOverlay(octx, this.cssW, this.cssH);
+    }
+  }
+
   private syncLoop() {
     const shouldRun = !!this.scene.animated && this.visible && !REDUCED.matches;
     if (shouldRun && !this.running) {
       this.running = true;
       const step = () => {
         if (!this.running) return;
-        this.t += 1 / 60;
-        this.scene.draw(this.sceneCtx(), this.t);
-        this.composite();
-        if (this.scene.animatedOverlay && this.overlayCanvas) {
-          const octx = this.overlayCanvas.getContext("2d")!;
-          octx.clearRect(0, 0, this.cssW, this.cssH);
-          this.scene.animatedOverlay(octx, this.cssW, this.cssH);
-        }
+        this.oneFrame();
         this.raf = requestAnimationFrame(step);
       };
       this.raf = requestAnimationFrame(step);
     } else if (!shouldRun && this.running) {
       this.running = false;
       cancelAnimationFrame(this.raf);
+    }
+
+    // Reduced motion: no continuous loop, but content that loads
+    // asynchronously (logo bitmaps) still needs a resting frame, so do a
+    // few staged one-shot renders instead of animating.
+    if (this.scene.animated && this.visible && REDUCED.matches) {
+      for (const id of this.reducedTimers) clearTimeout(id);
+      this.reducedTimers = [0, 250, 700, 1500, 2600].map((ms) =>
+        window.setTimeout(() => this.oneFrame(), ms),
+      );
     }
   }
 }

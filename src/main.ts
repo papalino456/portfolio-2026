@@ -1,23 +1,57 @@
 import "./style.css";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { DitherFig } from "./dither";
-import { ikField, slamGrid, sldDiagram, linkageSweep } from "./scenes";
+import {
+  slamGrid,
+  sldDiagram,
+  linkageSweep,
+  explodedAssembly,
+  embeddingClusters,
+} from "./scenes";
 import { heroIK, heroRRT, heroSLAM, type PointerState } from "./hero";
+import { logoCycle, AWARD_LOGOS, EXPERIENCE_LOGOS } from "./logos";
 
-/* ---------------- static dithered figures ---------------- */
+/* ---------------- bento figures ---------------- */
 
-const figs: Record<string, () => ReturnType<typeof ikField>> = {
-  ikfield: ikField,
+const figs: Record<string, () => ReturnType<typeof slamGrid>> = {
+  exploded: explodedAssembly,
+  embedding: embeddingClusters,
   slam: slamGrid,
-  diagram: sldDiagram,
   linkage: linkageSweep,
+  diagram: sldDiagram,
 };
 
-for (const el of document.querySelectorAll<HTMLElement>("[data-fig]")) {
+for (const el of document.querySelectorAll<HTMLElement>('[data-fig]:not([data-fig="hero"])')) {
   const make = figs[el.dataset.fig!];
   if (make) new DitherFig(el, make());
 }
+
+for (const el of document.querySelectorAll<HTMLElement>("[data-logos]")) {
+  const set = el.dataset.logos === "awards" ? AWARD_LOGOS : EXPERIENCE_LOGOS;
+  new DitherFig(el, logoCycle(set), 2);
+}
+
+/* ---------------- bento tile reveal: tap + keyboard ---------------- */
+
+const tiles = document.querySelectorAll<HTMLElement>(".tile");
+for (const tile of tiles) {
+  tile.addEventListener("click", () => {
+    const open = tile.classList.contains("is-open");
+    for (const t of tiles) t.classList.remove("is-open");
+    if (!open) tile.classList.add("is-open");
+  });
+  tile.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      tile.click();
+    }
+  });
+}
+document.addEventListener("click", (e) => {
+  if (!(e.target as HTMLElement).closest(".tile")) {
+    for (const t of tiles) t.classList.remove("is-open");
+  }
+});
 
 /* ---------------- hero: switchable live simulations ---------------- */
 
@@ -79,7 +113,6 @@ const flipWrap = document.getElementById("flip-word");
 if (flipWrap && !reduced) {
   const visual = flipWrap.querySelector<HTMLElement>(".flip-visual")!;
   const WORDS = ["vision", "planning", "control", "learning"];
-  const HOME = "intelligence";
   const ALPHA = "abcdefghijklmnopqrstuvwxyz";
 
   // hidden measurer inherits the headline font, so widths track clamp()
@@ -147,7 +180,7 @@ if (flipWrap && !reduced) {
 
   /** one pass: vision → planning → control → learning → intelligence,
       then stop; loops only while hovered */
-  const SEQ = [...WORDS, HOME];
+  const SEQ = [...WORDS, "intelligence"];
   const runSequence = (i: number) => {
     running = true;
     morphTo(SEQ[i], () => {
@@ -181,65 +214,26 @@ if (flipWrap && !reduced) {
   });
 }
 
-/* ---------------- motion ---------------- */
+/* ---------------- enter reveals ----------------
+   Default state is visible (CSS). Only when motion is allowed do we add
+   .anim (which hides .reveal) and then restore each element with .in as it
+   scrolls into view, with a failsafe so nothing can stay hidden. */
 
 if (!reduced) {
-  gsap.registerPlugin(ScrollTrigger);
-
-  gsap.from(".band-hero .hero-meta, #hero-title, .hero-copy > *", {
-    y: 28,
-    opacity: 0,
-    duration: 0.9,
-    ease: "expo.out",
-    stagger: 0.09,
-    delay: 0.1,
-  });
-
-  gsap.from(".fig-hero", {
-    opacity: 0,
-    duration: 1.1,
-    ease: "expo.out",
-    delay: 0.35,
-  });
-
-  for (const entry of document.querySelectorAll(".work-entry")) {
-    gsap.from(entry.querySelectorAll(".work-text > *, figcaption"), {
-      scrollTrigger: { trigger: entry, start: "top 78%" },
-      y: 22,
-      opacity: 0,
-      duration: 0.8,
-      ease: "expo.out",
-      stagger: 0.07,
-    });
-  }
-
-  for (const list of document.querySelectorAll(".index-list")) {
-    gsap.from(list.querySelectorAll(".index-row"), {
-      scrollTrigger: { trigger: list, start: "top 85%" },
-      y: 16,
-      opacity: 0,
-      duration: 0.7,
-      ease: "expo.out",
-      stagger: 0.06,
-    });
-  }
-
-  for (const row of document.querySelectorAll(".spec-table")) {
-    gsap.from(row.querySelectorAll(".spec-row"), {
-      scrollTrigger: { trigger: row, start: "top 88%" },
-      opacity: 0,
-      duration: 0.6,
-      ease: "power2.out",
-      stagger: 0.04,
-    });
-  }
-
-  gsap.from("#contact-title, .contact-actions, .contact-fine", {
-    scrollTrigger: { trigger: "#contact", start: "top 72%" },
-    y: 24,
-    opacity: 0,
-    duration: 0.9,
-    ease: "expo.out",
-    stagger: 0.1,
-  });
+  document.documentElement.classList.add("anim");
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          e.target.classList.add("in");
+          io.unobserve(e.target);
+        }
+      }
+    },
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+  );
+  for (const el of document.querySelectorAll(".reveal")) io.observe(el);
+  window.setTimeout(() => {
+    for (const el of document.querySelectorAll(".reveal:not(.in)")) el.classList.add("in");
+  }, 2600);
 }

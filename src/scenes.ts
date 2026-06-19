@@ -641,3 +641,307 @@ export function linkageSweep(): Scene {
     },
   };
 }
+
+/* ============================================================
+   FIG. 01 · Exploded assembly (wide banner)
+   A horizontal exploded view: fastener stack arrayed along a
+   dash-dot assembly axis, the way a CAD bill-of-materials reads.
+   ============================================================ */
+
+export function explodedAssembly(): Scene {
+  return {
+    draw({ ctx, spot, w, h }: SceneContext) {
+      const cy = h * 0.5;
+      const R = h * 0.21;
+      ctx.lineJoin = "round";
+      ctx.lineCap = "butt";
+
+      const hexPath = (cx: number, cyy: number, r: number, rot = 0) => {
+        ctx.beginPath();
+        for (let k = 0; k < 6; k++) {
+          const a = rot + (k / 6) * Math.PI * 2;
+          k === 0
+            ? ctx.moveTo(cx + Math.cos(a) * r, cyy + Math.sin(a) * r)
+            : ctx.lineTo(cx + Math.cos(a) * r, cyy + Math.sin(a) * r);
+        }
+        ctx.closePath();
+      };
+
+      const hatchClip = (path: () => void, top: number, bot: number) => {
+        ctx.save();
+        path();
+        ctx.clip();
+        ctx.strokeStyle = "rgba(0,0,0,0.42)";
+        ctx.lineWidth = 0.7;
+        const span = bot - top;
+        for (let x = -span; x < w; x += 4) {
+          ctx.beginPath();
+          ctx.moveTo(x, bot);
+          ctx.lineTo(x + span, top);
+          ctx.stroke();
+        }
+        ctx.restore();
+      };
+
+      const xs = [0.11, 0.27, 0.435, 0.595, 0.755, 0.905].map((f) => f * w);
+
+      // --- assembly axis: dash-dot centerline in spot ink ---
+      spot.strokeStyle = "rgba(0,0,0,0.92)";
+      spot.lineWidth = 1.4;
+      spot.setLineDash([11, 4, 2, 4]);
+      spot.beginPath();
+      spot.moveTo(0.035 * w, cy);
+      spot.lineTo(0.965 * w, cy);
+      spot.stroke();
+      spot.setLineDash([]);
+      spot.beginPath(); // direction arrowhead
+      spot.moveTo(0.965 * w, cy);
+      spot.lineTo(0.945 * w, cy - 4.5);
+      spot.lineTo(0.945 * w, cy + 4.5);
+      spot.closePath();
+      spot.fill();
+
+      // small assembly chevrons between stations, spot ink
+      spot.strokeStyle = "rgba(0,0,0,0.7)";
+      spot.lineWidth = 1.2;
+      for (let i = 0; i < xs.length - 1; i++) {
+        const mx = (xs[i] + xs[i + 1]) / 2;
+        spot.beginPath();
+        spot.moveTo(mx - 2.5, cy - 4);
+        spot.lineTo(mx + 2.5, cy);
+        spot.lineTo(mx - 2.5, cy + 4);
+        spot.stroke();
+      }
+
+      ctx.strokeStyle = "#111";
+      ctx.fillStyle = "#fff";
+
+      // 1 · hex bolt head + shaft stub
+      {
+        const x = xs[0];
+        ctx.lineWidth = 1.5;
+        hexPath(x, cy, R * 0.66, Math.PI / 6);
+        ctx.fill();
+        ctx.stroke();
+        hatchClip(() => hexPath(x, cy, R * 0.66, Math.PI / 6), cy - R * 0.66, cy + R * 0.66);
+        // shaft stub to the right
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(x + R * 0.5, cy - R * 0.16, R * 0.5, R * 0.32);
+        ctx.strokeRect(x + R * 0.5, cy - R * 0.16, R * 0.5, R * 0.32);
+        for (let tx = x + R * 0.58; tx < x + R * 1.0; tx += 3.2) {
+          ctx.beginPath();
+          ctx.moveTo(tx, cy - R * 0.16);
+          ctx.lineTo(tx, cy + R * 0.16);
+          ctx.stroke();
+        }
+      }
+
+      // 2 · washer (annulus)
+      {
+        const x = xs[1];
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.ellipse(x, cy, R * 0.34, R * 0.78, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.ellipse(x, cy, R * 0.17, R * 0.4, 0, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      // 3 · fastened plate (front face + isometric depth, two holes)
+      {
+        const x = xs[2];
+        const pw = R * 0.52;
+        const ph = R * 1.5;
+        const dep = R * 0.34;
+        ctx.lineWidth = 1.5;
+        // depth (top + side parallelograms)
+        ctx.beginPath();
+        ctx.moveTo(x - pw / 2, cy - ph / 2);
+        ctx.lineTo(x - pw / 2 + dep, cy - ph / 2 - dep * 0.7);
+        ctx.lineTo(x + pw / 2 + dep, cy - ph / 2 - dep * 0.7);
+        ctx.lineTo(x + pw / 2, cy - ph / 2);
+        ctx.closePath();
+        ctx.fillStyle = "#fff";
+        ctx.fill();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x + pw / 2, cy - ph / 2);
+        ctx.lineTo(x + pw / 2 + dep, cy - ph / 2 - dep * 0.7);
+        ctx.lineTo(x + pw / 2 + dep, cy + ph / 2 - dep * 0.7);
+        ctx.lineTo(x + pw / 2, cy + ph / 2);
+        ctx.closePath();
+        ctx.stroke();
+        // front face
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(x - pw / 2, cy - ph / 2, pw, ph);
+        ctx.strokeRect(x - pw / 2, cy - ph / 2, pw, ph);
+        for (const hy of [cy - ph * 0.26, cy + ph * 0.26]) {
+          ctx.beginPath();
+          ctx.arc(x, hy, R * 0.13, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      }
+
+      // 4 · spacer sleeve (short cylinder)
+      {
+        const x = xs[3];
+        const sw = R * 0.6;
+        const sh = R * 0.9;
+        ctx.lineWidth = 1.4;
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(x - sw / 2, cy - sh / 2, sw, sh);
+        ctx.strokeRect(x - sw / 2, cy - sh / 2, sw, sh);
+        ctx.beginPath();
+        ctx.ellipse(x - sw / 2, cy, R * 0.12, sh / 2, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.ellipse(x + sw / 2, cy, R * 0.12, sh / 2, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        hatchClip(
+          () => ctx.rect(x - sw / 2, cy - sh / 2, sw, sh),
+          cy - sh / 2,
+          cy + sh / 2,
+        );
+      }
+
+      // 5 · flange housing (circle flange with bolt circle)
+      {
+        const x = xs[4];
+        ctx.lineWidth = 1.6;
+        ctx.fillStyle = "#fff";
+        ctx.beginPath();
+        ctx.arc(x, cy, R * 0.92, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.arc(x, cy, R * 0.6, 0, Math.PI * 2);
+        ctx.stroke();
+        for (let k = 0; k < 6; k++) {
+          const a = (k / 6) * Math.PI * 2;
+          ctx.beginPath();
+          ctx.arc(x + Math.cos(a) * R * 0.76, cy + Math.sin(a) * R * 0.76, R * 0.08, 0, Math.PI * 2);
+          ctx.fillStyle = "#111";
+          ctx.fill();
+        }
+        ctx.fillStyle = "#fff";
+        ctx.beginPath();
+        ctx.arc(x, cy, R * 0.22, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      }
+
+      // 6 · hex nut
+      {
+        const x = xs[5];
+        ctx.lineWidth = 1.5;
+        ctx.fillStyle = "#fff";
+        hexPath(x, cy, R * 0.6, Math.PI / 6);
+        ctx.fill();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(x, cy, R * 0.26, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+    },
+  };
+}
+
+/* ============================================================
+   FIG. 02 · Embedding space + clustering
+   A 2-D projection of an embedding: gaussian point clusters with
+   faint boundaries, one query node and its nearest neighbours in
+   spot ink.
+   ============================================================ */
+
+export function embeddingClusters(): Scene {
+  return {
+    draw({ ctx, spot, w, h }: SceneContext) {
+      // small seeded PRNG so the layout is stable across redraws
+      let s = 0x2f6b1a3d;
+      const rnd = () => {
+        s |= 0;
+        s = (s + 0x6d2b79f5) | 0;
+        let x = Math.imul(s ^ (s >>> 15), 1 | s);
+        x = (x + Math.imul(x ^ (x >>> 7), 61 | x)) ^ x;
+        return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+      };
+      const gauss = () => (rnd() + rnd() + rnd() - 1.5) / 1.5;
+
+      // plot frame ticks
+      ctx.strokeStyle = "rgba(0,0,0,0.25)";
+      ctx.lineWidth = 1;
+      for (let k = 0; k <= 8; k++) {
+        const gx = 0.08 * w + (k / 8) * 0.84 * w;
+        ctx.beginPath();
+        ctx.moveTo(gx, 0.94 * h);
+        ctx.lineTo(gx, 0.94 * h + 3);
+        ctx.stroke();
+        const gy = 0.08 * h + (k / 8) * 0.84 * h;
+        ctx.beginPath();
+        ctx.moveTo(0.06 * w, gy);
+        ctx.lineTo(0.06 * w - 3, gy);
+        ctx.stroke();
+      }
+
+      const centers: [number, number, number][] = [
+        [0.32 * w, 0.34 * h, 0.1],
+        [0.7 * w, 0.3 * h, 0.085],
+        [0.38 * w, 0.72 * h, 0.095],
+        [0.74 * w, 0.68 * h, 0.08],
+      ];
+
+      const allPts: [number, number][] = [];
+      for (const [cx, cyc, spread] of centers) {
+        const pts: [number, number][] = [];
+        const n = 16;
+        for (let i = 0; i < n; i++) {
+          const px = cx + gauss() * spread * w;
+          const py = cyc + gauss() * spread * h * 1.4;
+          pts.push([px, py]);
+          allPts.push([px, py]);
+        }
+        // faint cluster boundary as a dashed ellipse around the spread
+        ctx.strokeStyle = "rgba(0,0,0,0.22)";
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath();
+        ctx.ellipse(cx, cyc, spread * w * 1.9, spread * h * 2.5, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        // points
+        ctx.fillStyle = "#111";
+        for (const [px, py] of pts) {
+          ctx.beginPath();
+          ctx.arc(px, py, 1.7, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // query node + k nearest neighbours in spot ink
+      const q: [number, number] = [0.52 * w, 0.5 * h];
+      const dists = allPts
+        .map((p) => [p, Math.hypot(p[0] - q[0], p[1] - q[1])] as [[number, number], number])
+        .sort((a, b) => a[1] - b[1])
+        .slice(0, 5);
+      spot.strokeStyle = "rgba(0,0,0,0.85)";
+      spot.lineWidth = 1.2;
+      for (const [p] of dists) {
+        spot.beginPath();
+        spot.moveTo(q[0], q[1]);
+        spot.lineTo(p[0], p[1]);
+        spot.stroke();
+        spot.beginPath();
+        spot.arc(p[0], p[1], 2.4, 0, Math.PI * 2);
+        spot.stroke();
+      }
+      spot.fillStyle = "rgba(0,0,0,0.95)";
+      spot.beginPath();
+      spot.arc(q[0], q[1], 3.4, 0, Math.PI * 2);
+      spot.fill();
+    },
+  };
+}
