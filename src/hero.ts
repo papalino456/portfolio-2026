@@ -466,8 +466,9 @@ export function heroSLAM(): Scene {
     wp = { x: robot.x, y: robot.y };
     path = [[robot.x, robot.y]];
 
-    // everything starts unknown
-    ctx.fillStyle = "#9d9d9d";
+    // everything starts unknown — light enough to dither to a sparse stipple,
+    // not a solid slab, so the figure sits on the paper instead of in a box
+    ctx.fillStyle = "#bcbcbc";
     ctx.fillRect(0, 0, w, h);
     spot.clearRect(0, 0, w, h);
   };

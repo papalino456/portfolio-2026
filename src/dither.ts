@@ -45,6 +45,42 @@ const SPOT: [number, number, number] = [56, 107, 212];
 
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)");
 
+const smoothstep = (a: number, b: number, x: number) => {
+  const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+  return t * t * (3 - 2 * t);
+};
+
+/**
+ * Per-cell opacity falloff that gives a freeform figure an organic, non-
+ * rectangular silhouette. The boundary is a lumpy ellipse (a few low-frequency
+ * angular harmonics), and the Bayer threshold turns the smooth falloff into a
+ * ragged stipple edge instead of a clean curve, so the figure dissolves into
+ * the paper rather than reading as a masked rectangle. Centre is biased right
+ * so the figure fades hardest on its text-facing side and bleeds off the right.
+ */
+function buildEdgeMask(cw: number, ch: number): Float32Array {
+  const m = new Float32Array(cw * ch);
+  const cx = cw * 0.52;
+  const cy = ch * 0.5;
+  const rx = cw * 0.56;
+  const ry = ch * 0.6;
+  for (let y = 0; y < ch; y++) {
+    for (let x = 0; x < cw; x++) {
+      const dx = x - cx;
+      const dy = y - cy;
+      const th = Math.atan2(dy, dx);
+      const lump =
+        1 +
+        0.16 * Math.sin(3 * th + 1.7) +
+        0.1 * Math.sin(5 * th - 2.0) +
+        0.06 * Math.sin(7 * th + 0.8);
+      const d = Math.sqrt((dx / rx) ** 2 + (dy / ry) ** 2) / lump;
+      m[y * cw + x] = 1 - smoothstep(0.58, 1.0, d);
+    }
+  }
+  return m;
+}
+
 export class DitherFig {
   private canvas: HTMLCanvasElement;
   private overlayCanvas: HTMLCanvasElement | null = null;
@@ -65,11 +101,14 @@ export class DitherFig {
   private running = false;
   private visible = false;
   private reducedTimers: number[] = [];
+  private freeform: boolean;
+  private edgeMask: Float32Array | null = null;
 
-  constructor(container: HTMLElement, scene: Scene, cellPx = 3) {
+  constructor(container: HTMLElement, scene: Scene, cellPx = 3, freeform = false) {
     this.canvas = container.querySelector("canvas")!;
     this.scene = scene;
     this.cellPx = cellPx;
+    this.freeform = freeform;
 
     this.flashEl = document.createElement("div");
     this.flashEl.style.cssText =
@@ -112,6 +151,8 @@ export class DitherFig {
 
     this.canvas.width = this.cw;
     this.canvas.height = this.ch;
+
+    this.edgeMask = this.freeform ? buildEdgeMask(this.cw, this.ch) : null;
 
     this.buf = document.createElement("canvas");
     this.buf.width = this.cw;
@@ -207,16 +248,19 @@ export class DitherFig {
       .getImageData(0, 0, this.cw, this.ch).data;
     const o = this.out.data;
 
+    const em = this.edgeMask;
     for (let y = 0; y < this.ch; y++) {
       const row = BAYER[y & 7];
       for (let x = 0; x < this.cw; x++) {
         const i = (y * this.cw + x) * 4;
         const thr = (row[x & 7] + 0.5) / 64;
+        // organic falloff toward the figure's edge (freeform figures only)
+        const m = em ? em[y * this.cw + x] : 1;
 
         // darkness of the ink channel (drawn black on white)
-        const dInk = 1 - (ink[i] + ink[i + 1] + ink[i + 2]) / 765;
+        const dInk = (1 - (ink[i] + ink[i + 1] + ink[i + 2]) / 765) * m;
         // spot channel uses alpha coverage (drawn black onto transparent)
-        const dSpot = spot[i + 3] / 255;
+        const dSpot = (spot[i + 3] / 255) * m;
 
         if (dInk > thr) {
           o[i] = INK[0];

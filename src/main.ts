@@ -56,15 +56,20 @@ document.addEventListener("click", (e) => {
 /* ---------------- hero: switchable live simulations ---------------- */
 
 const heroContainer = document.querySelector<HTMLElement>('[data-fig="hero"]')!;
+const heroSection = heroContainer.closest<HTMLElement>(".band-hero")!;
 const pointer: PointerState = { x: 0.5, y: 0.4, active: false };
 
-heroContainer.addEventListener("pointermove", (e) => {
+// The figure is a freeform layer sitting behind the title and copy, so track the
+// cursor across the whole hero (not just the canvas) and map it into the figure's
+// own box: the arm reaches toward the cursor even while it hovers the text.
+const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
+heroSection.addEventListener("pointermove", (e) => {
   const rect = heroContainer.getBoundingClientRect();
-  pointer.x = (e.clientX - rect.left) / rect.width;
-  pointer.y = (e.clientY - rect.top) / rect.height;
+  pointer.x = clamp01((e.clientX - rect.left) / rect.width);
+  pointer.y = clamp01((e.clientY - rect.top) / rect.height);
   pointer.active = true;
 });
-heroContainer.addEventListener("pointerleave", () => {
+heroSection.addEventListener("pointerleave", () => {
   pointer.active = false;
 });
 
@@ -88,7 +93,8 @@ const heroScenes = {
 
 type HeroKey = keyof typeof heroScenes;
 
-const heroFig = new DitherFig(heroContainer, heroScenes.ik.make());
+// freeform = organic, non-rectangular silhouette (hero only; bento tiles stay framed)
+const heroFig = new DitherFig(heroContainer, heroScenes.ik.make(), 3, true);
 const heroCanvas = heroContainer.querySelector("canvas")!;
 const sceneButtons = document.querySelectorAll<HTMLButtonElement>(".fig-opt");
 

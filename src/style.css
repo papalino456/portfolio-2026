@@ -157,6 +157,9 @@ a {
   border-top: none;
   padding-top: clamp(3rem, 6vw, 5rem);
   padding-bottom: clamp(3.5rem, 7vw, 6rem);
+  /* containing block + stacking context for the freeform figure layer */
+  position: relative;
+  isolation: isolate;
 }
 
 /* ---------------- type ---------------- */
@@ -207,6 +210,18 @@ p {
 .hero-display {
   font-size: clamp(2.75rem, 6.5vw, 5.5rem);
   line-height: 1.04;
+  position: relative;
+  z-index: 1;
+  /* paper halo hugging the glyphs: stacked blurs build a soft white cushion in
+     the exact shape of the text, lifting it off the figure. invisible on the
+     clean paper areas (paper on paper), only shows where it covers the dither. */
+  text-shadow:
+    0 0 14px var(--paper),
+    0 0 14px var(--paper),
+    0 0 14px var(--paper),
+    0 0 26px var(--paper),
+    0 0 26px var(--paper),
+    0 0 44px var(--paper);
 }
 
 .flip-word {
@@ -225,19 +240,16 @@ p {
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: clamp(2rem, 4.5vw, 4.5rem);
-  align-items: stretch;
+  grid-template-columns: minmax(0, 1fr);
   margin-top: clamp(1.75rem, 3.5vw, 3rem);
+  position: relative;
+  z-index: 1;
 }
 
-/* copy column spans the figure's height: text at the top edge,
-   actions anchored to the bottom edge */
 .hero-copy {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 2rem;
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
   padding-top: clamp(0.25rem, 1.5vw, 1.5rem);
 }
 
@@ -248,11 +260,25 @@ p {
   color: var(--ink-soft);
   margin-bottom: clamp(1.25rem, 3vw, 2.25rem);
   overflow-wrap: break-word;
+  position: relative;
+  z-index: 1;
+  text-shadow:
+    0 0 8px var(--paper),
+    0 0 8px var(--paper),
+    0 0 12px var(--paper);
 }
 
 .hero-sub {
   max-width: 52ch;
   font-size: 1.125rem;
+  /* paper halo so the body copy stays readable over the dither */
+  text-shadow:
+    0 0 10px var(--paper),
+    0 0 10px var(--paper),
+    0 0 10px var(--paper),
+    0 0 18px var(--paper),
+    0 0 18px var(--paper),
+    0 0 28px var(--paper);
 }
 
 .hero-actions {
@@ -291,6 +317,20 @@ p {
   background: oklch(0.93 0.004 258);
 }
 
+/* pixel glyph inside a button */
+.btn-ico {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.btn-pix {
+  width: 0.95em;
+  height: 0.95em;
+  fill: currentColor;
+  flex: none;
+}
+
 /* ---------------- figures ---------------- */
 
 .fig {
@@ -320,6 +360,12 @@ p {
 .fig-hero .fig-stack {
   aspect-ratio: 4 / 3;
   touch-action: pan-y;
+  /* free the hero figure from its plate: no frame, no fill, no hard clip.
+     the organic silhouette is carved procedurally in the dither itself
+     (buildEdgeMask in dither.ts), so no CSS mask is needed here. */
+  border: none;
+  background: transparent;
+  overflow: visible;
 }
 
 /* hero scene switcher: caption rows as controls */
@@ -345,6 +391,11 @@ p {
   align-items: baseline;
   gap: 0.5rem;
   transition: color 200ms var(--ease-mech);
+  /* caption sits on the figure; paper halo keeps it readable over the stipple */
+  text-shadow:
+    0 0 8px var(--paper),
+    0 0 8px var(--paper),
+    0 0 12px var(--paper);
 }
 
 .fig-opt::before {
@@ -367,6 +418,53 @@ p {
 .fig-opt[aria-pressed="true"]::before {
   background: var(--spot);
   border-color: var(--spot);
+}
+
+/* desktop: the hero figure becomes a freeform layer behind the title + copy,
+   bleeding past the right margin and drifting under the right of the type */
+@media (min-width: 981px) {
+  .band-hero {
+    min-height: min(92vh, 900px);
+  }
+
+  /* copy keeps a tight left measure; the figure owns the right and beyond */
+  .hero-grid {
+    max-width: 32rem;
+  }
+
+  .fig-hero {
+    position: absolute;
+    /* nudged down and pulled left (wider) so the figure sits closer to the title */
+    top: clamp(3rem, 6vw, 6rem);
+    bottom: clamp(1rem, 2vw, 2rem);
+    /* the section padding box spans the full viewport. on normal screens this
+       resolves to 0 (figure reaches the page edge, bleeding across the right
+       margin); on ultrawide it stops the figure just past the content edge
+       instead of letting it run to the far edge. */
+    right: max(0px, calc(var(--band-pad) - clamp(2rem, 5vw, 6rem)));
+    width: clamp(38rem, 62%, 64rem);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 0; /* behind the text, which sits at z-index: 1 */
+    pointer-events: none; /* never intercept selecting the copy */
+  }
+
+  .fig-hero .fig-stack {
+    flex: 1 1 auto;
+    min-height: 0;
+    aspect-ratio: auto; /* fill the tall figure box instead of locking 4 / 3 */
+    width: 100%;
+    height: auto;
+  }
+
+  /* caption stays interactive and anchored at the foot of the figure */
+  .fig-switch {
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+    flex: 0 0 auto;
+  }
 }
 
 /* ---------------- selected work: bento ---------------- */
